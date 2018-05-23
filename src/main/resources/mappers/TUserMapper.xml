@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jskj.wisdom.dao.TUserDAO">
+    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.TUser">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="id_number" jdbcType="VARCHAR" property="idNumber"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="is_delete" jdbcType="VARCHAR" property="isDelete"/>
+        <result column="is_register" jdbcType="VARCHAR" property="isRegister"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, username, password, nickname, mobile, id_number, create_time, create_id, update_time,
+        update_id, remark, is_delete, is_register
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.TUser"
+            useGeneratedKeys="true">
+        insert into t_user (id, username, password,
+        nickname, mobile, id_number,
+        create_time, create_id, update_time,
+        update_id, remark, is_delete,
+        is_register)
+        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{nickname,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR},
+        #{isRegister,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.TUser"
+            useGeneratedKeys="true">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="idNumber != null">
+                id_number,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="isRegister != null">
+                is_register,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id,jdbcType=BIGINT},
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="idNumber != null">
+                #{idNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="isRegister != null">
+                #{isRegister,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into t_user (id, username, password,
+        nickname, mobile, id_number,
+        create_time, create_id, update_time,
+        update_id, remark, is_delete,
+        is_register)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.username,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR},
+            #{item.nickname,jdbcType=VARCHAR}, #{item.mobile,jdbcType=VARCHAR}, #{item.idNumber,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP}, #{item.createId,jdbcType=BIGINT},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT}, #{item.remark,jdbcType=VARCHAR}, #{item.isDelete,jdbcType=VARCHAR},
+            #{item.isRegister,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+    <insert id="insertBatchSelective" keyColumn="id" keyProperty="id" parameterType="java.util.List"
+            useGeneratedKeys="true">
+        insert into t_user
+        (id, username, password, nickname, mobile, id_number, create_time, create_id, update_time,
+        update_id, remark, is_delete, is_register)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">
+                    #{item.id,jdbcType=BIGINT},
+                </if>
+                <if test="item.id == null">
+                    NULL,
+                </if>
+                <if test="item.username != null">
+                    #{item.username,jdbcType=VARCHAR},
+                </if>
+                <if test="item.username == null">
+                    NULL,
+                </if>
+                <if test="item.password != null">
+                    #{item.password,jdbcType=VARCHAR},
+                </if>
+                <if test="item.password == null">
+                    NULL,
+                </if>
+                <if test="item.nickname != null">
+                    #{item.nickname,jdbcType=VARCHAR},
+                </if>
+                <if test="item.nickname == null">
+                    NULL,
+                </if>
+                <if test="item.mobile != null">
+                    #{item.mobile,jdbcType=VARCHAR},
+                </if>
+                <if test="item.mobile == null">
+                    NULL,
+                </if>
+                <if test="item.idNumber != null">
+                    #{item.idNumber,jdbcType=VARCHAR},
+                </if>
+                <if test="item.idNumber == null">
+                    NULL,
+                </if>
+                <if test="item.createTime != null">
+                    #{item.createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.createTime == null">
+                    NULL,
+                </if>
+                <if test="item.createId != null">
+                    #{item.createId,jdbcType=BIGINT},
+                </if>
+                <if test="item.createId == null">
+                    NULL,
+                </if>
+                <if test="item.updateTime != null">
+                    #{item.updateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.updateTime == null">
+                    NULL,
+                </if>
+                <if test="item.updateId != null">
+                    #{item.updateId,jdbcType=BIGINT},
+                </if>
+                <if test="item.updateId == null">
+                    NULL,
+                </if>
+                <if test="item.remark != null">
+                    #{item.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="item.remark == null">
+                    NULL,
+                </if>
+                <if test="item.isDelete != null">
+                    #{item.isDelete,jdbcType=VARCHAR},
+                </if>
+                <if test="item.isDelete == null">
+                    NULL,
+                </if>
+                <if test="item.isRegister != null">
+                    #{item.isRegister,jdbcType=VARCHAR},
+                </if>
+                <if test="item.isRegister == null">
+                    NULL,
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.TUser">
+        update t_user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="idNumber != null">
+                id_number = #{idNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="isRegister != null">
+                is_register = #{isRegister,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.TUser">
+        update t_user
+        set username = #{username,jdbcType=VARCHAR},
+            password = #{password,jdbcType=VARCHAR},
+            nickname = #{nickname,jdbcType=VARCHAR},
+            mobile = #{mobile,jdbcType=VARCHAR},
+            id_number = #{idNumber,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            create_id = #{createId,jdbcType=BIGINT},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            remark = #{remark,jdbcType=VARCHAR},
+            is_delete = #{isDelete,jdbcType=VARCHAR},
+            is_register = #{isRegister,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id !=null ">
+                id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="username != null">
+                and username = #{username,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="nickname != null">
+                and nickname = #{nickname,jdbcType=VARCHAR}
+            </if>
+            <if test="mobile != null">
+                and mobile = #{mobile,jdbcType=VARCHAR}
+            </if>
+            <if test="idNumber != null">
+                and id_number = #{idNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createId != null">
+                and create_id = #{createId,jdbcType=BIGINT}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateId != null">
+                and update_id = #{updateId,jdbcType=BIGINT}
+            </if>
+            <if test="remark != null">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="isDelete != null">
+                and is_delete = #{isDelete,jdbcType=VARCHAR}
+            </if>
+            <if test="isRegister != null">
+                and is_register = #{isRegister,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.TUser" resultMap="BaseResultMap">
+        select
+        distinct
+        <include refid="Base_Column_List"/>
+        from t_user
+        <include refid="searchBy"/>
+    </select>
+</mapper>
