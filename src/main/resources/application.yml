@@ -1,0 +1,40 @@
+# Copyright © 2017 dragonSaberCaptain. All rights reserved.
+# @Description: 整个项目的配置文件
+# @author: dragonSaberCaptain
+# @date: 2018/5/3 14:51 星期四
+spring:
+  application:
+    name: wisdom
+  profiles:
+#    运行环境（dev/prod) 数据库（mysql/oracle）
+    active: dev,mysql
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+  data:
+    mongodb:
+      uri: mongodb://tshan_jv:javapwd@117.173.135.6:27017/gsis
+  session:
+#    加入pring session 配置
+    store-type: redis
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+  http:
+    encoding.charset: UTF-8
+    encoding.enabled: true
+    encoding.force: true
+  transaction:
+    rollback-on-commit-failure: true
+mybatis:
+  typeAliasesPackage: com.jskj.wisdom.model
+  mapperLocations: classpath:/mappers/*.xml,classpath:/mappers/system/*.xml
+  configLocations: classpath:/mybatis/mybatis-config.xml
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    org.springframework.security: debug
+

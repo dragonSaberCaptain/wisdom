@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jskj.wisdom.dao.system.SysRolePermissionDAO">
+    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.system.SysRolePermission">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="is_delete" jdbcType="VARCHAR" property="isDelete"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="permissionid" jdbcType="BIGINT" property="permissionid"/>
+        <result column="role_id" jdbcType="BIGINT" property="roleId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, create_id, create_time, is_delete, remark, update_id, update_time, permissionid,
+        role_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role_permission
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from sys_role_permission
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.system.SysRolePermission"
+            useGeneratedKeys="true">
+        insert into sys_role_permission (create_id, create_time, is_delete,
+            remark, update_id, update_time,
+            permissionid, role_id)
+        values (#{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR},
+            #{remark,jdbcType=VARCHAR}, #{updateId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP},
+            #{permissionid,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.jskj.wisdom.model.system.SysRolePermission" useGeneratedKeys="true">
+        insert into sys_role_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="permissionid != null">
+                permissionid,
+            </if>
+            <if test="roleId != null">
+                role_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="permissionid != null">
+                #{permissionid,jdbcType=BIGINT},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into sys_role_permission (create_id, create_time, is_delete,
+        remark, update_id, update_time,
+        permissionid, role_id)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.createId,jdbcType=BIGINT}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.isDelete,jdbcType=VARCHAR},
+            #{item.remark,jdbcType=VARCHAR}, #{item.updateId,jdbcType=BIGINT}, #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.permissionid,jdbcType=BIGINT}, #{item.roleId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+    <insert id="insertBatchSelective" keyColumn="id" keyProperty="id" parameterType="java.util.List"
+            useGeneratedKeys="true">
+        insert into sys_role_permission
+        (create_id, create_time, is_delete, remark, update_id, update_time, permissionid,
+        role_id)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.createId != null">
+                    #{item.createId,jdbcType=BIGINT},
+                </if>
+                <if test="item.createId == null">
+                    NULL,
+                </if>
+                <if test="item.createTime != null">
+                    #{item.createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.createTime == null">
+                    NULL,
+                </if>
+                <if test="item.isDelete != null">
+                    #{item.isDelete,jdbcType=VARCHAR},
+                </if>
+                <if test="item.isDelete == null">
+                    NULL,
+                </if>
+                <if test="item.remark != null">
+                    #{item.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="item.remark == null">
+                    NULL,
+                </if>
+                <if test="item.updateId != null">
+                    #{item.updateId,jdbcType=BIGINT},
+                </if>
+                <if test="item.updateId == null">
+                    NULL,
+                </if>
+                <if test="item.updateTime != null">
+                    #{item.updateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.updateTime == null">
+                    NULL,
+                </if>
+                <if test="item.permissionid != null">
+                    #{item.permissionid,jdbcType=BIGINT},
+                </if>
+                <if test="item.permissionid == null">
+                    NULL,
+                </if>
+                <if test="item.roleId != null">
+                    #{item.roleId,jdbcType=BIGINT},
+                </if>
+                <if test="item.roleId == null">
+                    NULL,
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.system.SysRolePermission">
+        update sys_role_permission
+        <set>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="permissionid != null">
+                permissionid = #{permissionid,jdbcType=BIGINT},
+            </if>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.system.SysRolePermission">
+        update sys_role_permission
+        set create_id = #{createId,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            is_delete = #{isDelete,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            permissionid = #{permissionid,jdbcType=BIGINT},
+            role_id = #{roleId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

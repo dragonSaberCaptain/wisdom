@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jskj.wisdom.dao.TRoomDAO">
+    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.TRoom">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="pcell_id" jdbcType="BIGINT" property="pcellId"/>
+        <result column="room_name" jdbcType="VARCHAR" property="roomName"/>
+        <result column="room_number" jdbcType="VARCHAR" property="roomNumber"/>
+        <result column="room_lease_category" jdbcType="VARCHAR" property="roomLeaseCategory"/>
+        <result column="room_tower" jdbcType="VARCHAR" property="roomTower"/>
+        <result column="room_rke" jdbcType="VARCHAR" property="roomRke"/>
+        <result column="room_unit" jdbcType="VARCHAR" property="roomUnit"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="Is_delete" jdbcType="VARCHAR" property="isDelete"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, pcell_id, room_name, room_number, room_lease_category, room_tower, room_rke,
+        room_unit, create_time, create_id, update_time, update_id, remark, Is_delete
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_room
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_room
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.TRoom"
+            useGeneratedKeys="true">
+        insert into t_room (id, pcell_id, room_name,
+        room_number, room_lease_category, room_tower,
+        room_rke, room_unit, create_time,
+        create_id, update_time, update_id,
+        remark, Is_delete)
+        values (#{id,jdbcType=BIGINT}, #{pcellId,jdbcType=BIGINT}, #{roomName,jdbcType=VARCHAR},
+        #{roomNumber,jdbcType=VARCHAR}, #{roomLeaseCategory,jdbcType=VARCHAR}, #{roomTower,jdbcType=VARCHAR},
+        #{roomRke,jdbcType=VARCHAR}, #{roomUnit,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT},
+        #{remark,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.TRoom"
+            useGeneratedKeys="true">
+        insert into t_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="pcellId != null">
+                pcell_id,
+            </if>
+            <if test="roomName != null">
+                room_name,
+            </if>
+            <if test="roomNumber != null">
+                room_number,
+            </if>
+            <if test="roomLeaseCategory != null">
+                room_lease_category,
+            </if>
+            <if test="roomTower != null">
+                room_tower,
+            </if>
+            <if test="roomRke != null">
+                room_rke,
+            </if>
+            <if test="roomUnit != null">
+                room_unit,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="isDelete != null">
+                Is_delete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id,jdbcType=BIGINT},
+            <if test="pcellId != null">
+                #{pcellId,jdbcType=BIGINT},
+            </if>
+            <if test="roomName != null">
+                #{roomName,jdbcType=VARCHAR},
+            </if>
+            <if test="roomNumber != null">
+                #{roomNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="roomLeaseCategory != null">
+                #{roomLeaseCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="roomTower != null">
+                #{roomTower,jdbcType=VARCHAR},
+            </if>
+            <if test="roomRke != null">
+                #{roomRke,jdbcType=VARCHAR},
+            </if>
+            <if test="roomUnit != null">
+                #{roomUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into t_room (id, pcell_id, room_name,
+        room_number, room_lease_category,
+        room_tower, room_rke, room_unit,
+        create_time, create_id, update_time,
+        update_id, remark, Is_delete
+        )
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.pcellId,jdbcType=BIGINT}, #{item.roomName,jdbcType=VARCHAR},
+            #{item.roomNumber,jdbcType=VARCHAR}, #{item.roomLeaseCategory,jdbcType=VARCHAR},
+            #{item.roomTower,jdbcType=VARCHAR}, #{item.roomRke,jdbcType=VARCHAR}, #{item.roomUnit,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP}, #{item.createId,jdbcType=BIGINT},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT}, #{item.remark,jdbcType=VARCHAR}, #{item.isDelete,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <insert id="insertBatchSelective" keyColumn="id" keyProperty="id" parameterType="java.util.List"
+            useGeneratedKeys="true">
+        insert into t_room
+        (id, pcell_id, room_name, room_number, room_lease_category, room_tower, room_rke,
+        room_unit, create_time, create_id, update_time, update_id, remark, Is_delete)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">
+                    #{item.id,jdbcType=BIGINT},
+                </if>
+                <if test="item.id == null">
+                    NULL,
+                </if>
+                <if test="item.pcellId != null">
+                    #{item.pcellId,jdbcType=BIGINT},
+                </if>
+                <if test="item.pcellId == null">
+                    NULL,
+                </if>
+                <if test="item.roomName != null">
+                    #{item.roomName,jdbcType=VARCHAR},
+                </if>
+                <if test="item.roomName == null">
+                    NULL,
+                </if>
+                <if test="item.roomNumber != null">
+                    #{item.roomNumber,jdbcType=VARCHAR},
+                </if>
+                <if test="item.roomNumber == null">
+                    NULL,
+                </if>
+                <if test="item.roomLeaseCategory != null">
+                    #{item.roomLeaseCategory,jdbcType=VARCHAR},
+                </if>
+                <if test="item.roomLeaseCategory == null">
+                    NULL,
+                </if>
+                <if test="item.roomTower != null">
+                    #{item.roomTower,jdbcType=VARCHAR},
+                </if>
+                <if test="item.roomTower == null">
+                    NULL,
+                </if>
+                <if test="item.roomRke != null">
+                    #{item.roomRke,jdbcType=VARCHAR},
+                </if>
+                <if test="item.roomRke == null">
+                    NULL,
+                </if>
+                <if test="item.roomUnit != null">
+                    #{item.roomUnit,jdbcType=VARCHAR},
+                </if>
+                <if test="item.roomUnit == null">
+                    NULL,
+                </if>
+                <if test="item.createTime != null">
+                    #{item.createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.createTime == null">
+                    NULL,
+                </if>
+                <if test="item.createId != null">
+                    #{item.createId,jdbcType=BIGINT},
+                </if>
+                <if test="item.createId == null">
+                    NULL,
+                </if>
+                <if test="item.updateTime != null">
+                    #{item.updateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.updateTime == null">
+                    NULL,
+                </if>
+                <if test="item.updateId != null">
+                    #{item.updateId,jdbcType=BIGINT},
+                </if>
+                <if test="item.updateId == null">
+                    NULL,
+                </if>
+                <if test="item.remark != null">
+                    #{item.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="item.remark == null">
+                    NULL,
+                </if>
+                <if test="item.isDelete != null">
+                    #{item.isDelete,jdbcType=VARCHAR},
+                </if>
+                <if test="item.isDelete == null">
+                    NULL,
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.TRoom">
+        update t_room
+        <set>
+            <if test="pcellId != null">
+                pcell_id = #{pcellId,jdbcType=BIGINT},
+            </if>
+            <if test="roomName != null">
+                room_name = #{roomName,jdbcType=VARCHAR},
+            </if>
+            <if test="roomNumber != null">
+                room_number = #{roomNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="roomLeaseCategory != null">
+                room_lease_category = #{roomLeaseCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="roomTower != null">
+                room_tower = #{roomTower,jdbcType=VARCHAR},
+            </if>
+            <if test="roomRke != null">
+                room_rke = #{roomRke,jdbcType=VARCHAR},
+            </if>
+            <if test="roomUnit != null">
+                room_unit = #{roomUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                Is_delete = #{isDelete,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.TRoom">
+        update t_room
+        set pcell_id = #{pcellId,jdbcType=BIGINT},
+            room_name = #{roomName,jdbcType=VARCHAR},
+            room_number = #{roomNumber,jdbcType=VARCHAR},
+            room_lease_category = #{roomLeaseCategory,jdbcType=VARCHAR},
+            room_tower = #{roomTower,jdbcType=VARCHAR},
+            room_rke = #{roomRke,jdbcType=VARCHAR},
+            room_unit = #{roomUnit,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            create_id = #{createId,jdbcType=BIGINT},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            remark = #{remark,jdbcType=VARCHAR},
+            Is_delete = #{isDelete,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id !=null ">
+                id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="pcellId != null">
+                and pcell_id = #{pcellId,jdbcType=BIGINT}
+            </if>
+            <if test="roomName != null">
+                and room_name = #{roomName,jdbcType=VARCHAR}
+            </if>
+            <if test="roomNumber != null">
+                and room_number = #{roomNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="roomLeaseCategory != null">
+                and room_lease_category = #{roomLeaseCategory,jdbcType=VARCHAR}
+            </if>
+            <if test="roomTower != null">
+                and room_tower = #{roomTower,jdbcType=VARCHAR}
+            </if>
+            <if test="roomRke != null">
+                and room_rke = #{roomRke,jdbcType=VARCHAR}
+            </if>
+            <if test="roomUnit != null">
+                and room_unit = #{roomUnit,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createId != null">
+                and create_id = #{createId,jdbcType=BIGINT}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateId != null">
+                and update_id = #{updateId,jdbcType=BIGINT}
+            </if>
+            <if test="remark != null">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="isDelete != null">
+                and Is_delete = #{isDelete,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.TRoom" resultMap="BaseResultMap">
+        select
+        distinct
+        <include refid="Base_Column_List"/>
+        from t_room
+        <include refid="searchBy"/>
+    </select>
+</mapper>
