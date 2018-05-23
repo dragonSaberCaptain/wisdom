@@ -37,7 +37,6 @@ public class Application {
      */
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        System.out.printf("--------------Application.main: %s %n", "666");
         logger.info("My Spring Boot Application Started Success");
     }
 }
