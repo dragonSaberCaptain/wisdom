@@ -237,3 +237,4 @@ fastlane/readme.md
 ### SVN template
 .svn/
 
+/generator/

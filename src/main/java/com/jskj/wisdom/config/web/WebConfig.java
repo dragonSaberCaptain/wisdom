@@ -23,8 +23,13 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
+
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+        //允许访问静态资源
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
     }
 
     @Override
@@ -35,7 +40,8 @@ public class WebConfig implements WebMvcConfigurer {
         stringList.add("/swagger-resources/**");
         stringList.add("/swagger-ui.html");
         stringList.add("/static/**");
-        //拦截规则：除了open，其他都拦截判断
+        stringList.add("/error");
+        //拦截规则:排除上面的，其余的都拦截
         registry.addInterceptor(new ApiInterceptor()).addPathPatterns("/**").excludePathPatterns(stringList);
     }
 }

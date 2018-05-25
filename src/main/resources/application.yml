@@ -21,8 +21,11 @@ spring:
     store-type: redis
   mvc:
     view:
-      prefix: /templates/
-      suffix: .html
+      prefix: /jsp/
+      suffix: .jsp
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
   http:
     encoding.charset: UTF-8
     encoding.enabled: true
