@@ -238,3 +238,4 @@ fastlane/readme.md
 .svn/
 
 /src/main/resources/mybatis/generatorConfig.xml
+/generator/
