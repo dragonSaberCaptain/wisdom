@@ -7,9 +7,9 @@ import java.util.Date;
 /**
  * @author LastChaosCaptain
  */
-public class SProperty implements Serializable {
+public class SNotice implements Serializable {
     //串行版本ID
-    private static final long serialVersionUID = -5908144861682051693L;
+    private static final long serialVersionUID = -869001330091428772L;
 
     // 主键id
     private Long id;
@@ -32,20 +32,18 @@ public class SProperty implements Serializable {
     // 更新时间
     private Date updateTime;
 
-    // 描述
+    // 公告详情描述
     private String depict;
 
-    // 图片地址
-    private String picPath;
+    // 公告图片地址
+    private String noticePath;
 
-    // 状态
+    // 公告状态
     private String status;
 
-    // 用户id
-    private Long userId;
-
     /**
-     * 获取 主键id s_property.id
+     * 获取 主键id s_notice.id
+     *
      * @return 主键id
      */
     public Long getId() {
@@ -53,7 +51,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 设置 主键id s_property.id
+     * 设置 主键id s_notice.id
+     *
      * @param id 主键id
      */
     public void setId(Long id) {
@@ -61,7 +60,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 获取 创建者 s_property.create_id
+     * 获取 创建者 s_notice.create_id
+     *
      * @return 创建者
      */
     public Long getCreateId() {
@@ -69,7 +69,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 设置 创建者 s_property.create_id
+     * 设置 创建者 s_notice.create_id
+     *
      * @param createId 创建者
      */
     public void setCreateId(Long createId) {
@@ -77,7 +78,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 获取 创建时间 s_property.create_time
+     * 获取 创建时间 s_notice.create_time
+     *
      * @return 创建时间
      */
     public Date getCreateTime() {
@@ -85,7 +87,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 设置 创建时间 s_property.create_time
+     * 设置 创建时间 s_notice.create_time
+     *
      * @param createTime 创建时间
      */
     public void setCreateTime(Date createTime) {
@@ -93,7 +96,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 获取 是否删除：0否 1是  默认：0 s_property.is_delete
+     * 获取 是否删除：0否 1是  默认：0 s_notice.is_delete
+     *
      * @return 是否删除：0否 1是  默认：0
      */
     public String getIsDelete() {
@@ -101,7 +105,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 设置 是否删除：0否 1是  默认：0 s_property.is_delete
+     * 设置 是否删除：0否 1是  默认：0 s_notice.is_delete
+     *
      * @param isDelete 是否删除：0否 1是  默认：0
      */
     public void setIsDelete(String isDelete) {
@@ -109,7 +114,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 获取 备注 s_property.remark
+     * 获取 备注 s_notice.remark
+     *
      * @return 备注
      */
     public String getRemark() {
@@ -117,7 +123,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 设置 备注 s_property.remark
+     * 设置 备注 s_notice.remark
+     *
      * @param remark 备注
      */
     public void setRemark(String remark) {
@@ -125,7 +132,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 获取 更新者 s_property.update_id
+     * 获取 更新者 s_notice.update_id
+     *
      * @return 更新者
      */
     public Long getUpdateId() {
@@ -133,7 +141,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 设置 更新者 s_property.update_id
+     * 设置 更新者 s_notice.update_id
+     *
      * @param updateId 更新者
      */
     public void setUpdateId(Long updateId) {
@@ -141,7 +150,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 获取 更新时间 s_property.update_time
+     * 获取 更新时间 s_notice.update_time
+     *
      * @return 更新时间
      */
     public Date getUpdateTime() {
@@ -149,7 +159,8 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 设置 更新时间 s_property.update_time
+     * 设置 更新时间 s_notice.update_time
+     *
      * @param updateTime 更新时间
      */
     public void setUpdateTime(Date updateTime) {
@@ -157,75 +168,57 @@ public class SProperty implements Serializable {
     }
 
     /**
-     * 获取 描述 s_property.depict
+     * 获取 公告详情描述 s_notice.depict
      *
-     * @return 描述
+     * @return 公告详情描述
      */
     public String getDepict() {
         return depict;
     }
 
     /**
-     * 设置 描述 s_property.depict
+     * 设置 公告详情描述 s_notice.depict
      *
-     * @param depict 描述
+     * @param depict 公告详情描述
      */
     public void setDepict(String depict) {
         this.depict = depict == null ? null : depict.trim();
     }
 
     /**
-     * 获取 图片地址 s_property.pic_path
+     * 获取 公告图片地址 s_notice.notice_path
      *
-     * @return 图片地址
+     * @return 公告图片地址
      */
-    public String getPicPath() {
-        return picPath;
+    public String getNoticePath() {
+        return noticePath;
     }
 
     /**
-     * 设置 图片地址 s_property.pic_path
+     * 设置 公告图片地址 s_notice.notice_path
      *
-     * @param picPath 图片地址
+     * @param noticePath 公告图片地址
      */
-    public void setPicPath(String picPath) {
-        this.picPath = picPath == null ? null : picPath.trim();
+    public void setNoticePath(String noticePath) {
+        this.noticePath = noticePath == null ? null : noticePath.trim();
     }
 
     /**
-     * 获取 状态 s_property.status
+     * 获取 公告状态 s_notice.status
      *
-     * @return 状态
+     * @return 公告状态
      */
     public String getStatus() {
         return status;
     }
 
     /**
-     * 设置 状态 s_property.status
+     * 设置 公告状态 s_notice.status
      *
-     * @param status 状态
+     * @param status 公告状态
      */
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
-    }
-
-    /**
-     * 获取 用户id s_property.user_id
-     *
-     * @return 用户id
-     */
-    public Long getUserId() {
-        return userId;
-    }
-
-    /**
-     * 设置 用户id s_property.user_id
-     *
-     * @param userId 用户id
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     @Override
@@ -242,9 +235,8 @@ public class SProperty implements Serializable {
         sb.append(", updateId=").append(updateId);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", depict=").append(depict);
-        sb.append(", picPath=").append(picPath);
+        sb.append(", noticePath=").append(noticePath);
         sb.append(", status=").append(status);
-        sb.append(", userId=").append(userId);
         sb.append("]");
         return sb.toString();
     }
@@ -260,7 +252,7 @@ public class SProperty implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        SProperty other = (SProperty) that;
+        SNotice other = (SNotice) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
                 && (this.getCreateId() == null ? other.getCreateId() == null : this.getCreateId().equals(other.getCreateId()))
                 && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
@@ -269,9 +261,8 @@ public class SProperty implements Serializable {
                 && (this.getUpdateId() == null ? other.getUpdateId() == null : this.getUpdateId().equals(other.getUpdateId()))
                 && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
                 && (this.getDepict() == null ? other.getDepict() == null : this.getDepict().equals(other.getDepict()))
-                && (this.getPicPath() == null ? other.getPicPath() == null : this.getPicPath().equals(other.getPicPath()))
-                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-                && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()));
+                && (this.getNoticePath() == null ? other.getNoticePath() == null : this.getNoticePath().equals(other.getNoticePath()))
+                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
     @Override
@@ -286,9 +277,8 @@ public class SProperty implements Serializable {
         result = prime * result + ((getUpdateId() == null) ? 0 : getUpdateId().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getDepict() == null) ? 0 : getDepict().hashCode());
-        result = prime * result + ((getPicPath() == null) ? 0 : getPicPath().hashCode());
+        result = prime * result + ((getNoticePath() == null) ? 0 : getNoticePath().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         return result;
     }
 }

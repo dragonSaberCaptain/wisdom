@@ -237,4 +237,4 @@ fastlane/readme.md
 ### SVN template
 .svn/
 
-/generator/
+/src/main/resources/mybatis/generatorConfig.xml

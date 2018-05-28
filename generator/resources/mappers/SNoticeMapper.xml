@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jskj.wisdom.dao.SPropertyDAO">
-    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.SProperty">
+<mapper namespace="com.jskj.wisdom.dao.SNoticeDAO">
+    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.SNotice">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="create_id" jdbcType="BIGINT" property="createId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -10,38 +10,37 @@
         <result column="update_id" jdbcType="BIGINT" property="updateId"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="depict" jdbcType="VARCHAR" property="depict"/>
-        <result column="pic_path" jdbcType="VARCHAR" property="picPath"/>
+        <result column="notice_path" jdbcType="VARCHAR" property="noticePath"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
-        <result column="user_id" jdbcType="BIGINT" property="userId"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, create_id, create_time, is_delete, remark, update_id, update_time, depict, pic_path,
-        status, user_id
+        id, create_id, create_time, is_delete, remark, update_id, update_time, depict, notice_path,
+        status
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from s_property
+        from s_notice
         where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from s_property
+        delete from s_notice
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.SProperty"
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.SNotice"
             useGeneratedKeys="true">
-        insert into s_property (create_id, create_time, is_delete,
+        insert into s_notice (create_id, create_time, is_delete,
             remark, update_id, update_time,
-            depict, pic_path, status,
-            user_id)
+            depict, notice_path, status
+            )
         values (#{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR},
             #{remark,jdbcType=VARCHAR}, #{updateId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP},
-            #{depict,jdbcType=VARCHAR}, #{picPath,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
-            #{userId,jdbcType=BIGINT})
+            #{depict,jdbcType=VARCHAR}, #{noticePath,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+            )
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.SProperty"
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.SNotice"
             useGeneratedKeys="true">
-        insert into s_property
+        insert into s_notice
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="createId != null">
                 create_id,
@@ -64,14 +63,11 @@
             <if test="depict != null">
                 depict,
             </if>
-            <if test="picPath != null">
-                pic_path,
+            <if test="noticePath != null">
+                notice_path,
             </if>
             <if test="status != null">
                 status,
-            </if>
-            <if test="userId != null">
-                user_id,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -96,35 +92,32 @@
             <if test="depict != null">
                 #{depict,jdbcType=VARCHAR},
             </if>
-            <if test="picPath != null">
-                #{picPath,jdbcType=VARCHAR},
+            <if test="noticePath != null">
+                #{noticePath,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
                 #{status,jdbcType=VARCHAR},
             </if>
-            <if test="userId != null">
-                #{userId,jdbcType=BIGINT},
-            </if>
         </trim>
     </insert>
     <insert id="insertBatch" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
-        insert into s_property (create_id, create_time, is_delete,
+        insert into s_notice (create_id, create_time, is_delete,
         remark, update_id, update_time,
-        depict, pic_path, status,
-        user_id)
+        depict, notice_path, status
+        )
         values
         <foreach collection="list" index="index" item="item" separator=",">
             (#{item.createId,jdbcType=BIGINT}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.isDelete,jdbcType=VARCHAR},
             #{item.remark,jdbcType=VARCHAR}, #{item.updateId,jdbcType=BIGINT}, #{item.updateTime,jdbcType=TIMESTAMP},
-            #{item.depict,jdbcType=VARCHAR}, #{item.picPath,jdbcType=VARCHAR}, #{item.status,jdbcType=VARCHAR},
-            #{item.userId,jdbcType=BIGINT})
+            #{item.depict,jdbcType=VARCHAR}, #{item.noticePath,jdbcType=VARCHAR}, #{item.status,jdbcType=VARCHAR}
+            )
         </foreach>
     </insert>
     <insert id="insertBatchSelective" keyColumn="id" keyProperty="id" parameterType="java.util.List"
             useGeneratedKeys="true">
-        insert into s_property
-        (create_id, create_time, is_delete, remark, update_id, update_time, depict, pic_path,
-        status, user_id)
+        insert into s_notice
+        (create_id, create_time, is_delete, remark, update_id, update_time, depict, notice_path,
+        status)
         values
         <foreach collection="list" index="index" item="item" separator=",">
             <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -170,10 +163,10 @@
                 <if test="item.depict == null">
                     NULL,
                 </if>
-                <if test="item.picPath != null">
-                    #{item.picPath,jdbcType=VARCHAR},
+                <if test="item.noticePath != null">
+                    #{item.noticePath,jdbcType=VARCHAR},
                 </if>
-                <if test="item.picPath == null">
+                <if test="item.noticePath == null">
                     NULL,
                 </if>
                 <if test="item.status != null">
@@ -182,17 +175,11 @@
                 <if test="item.status == null">
                     NULL,
                 </if>
-                <if test="item.userId != null">
-                    #{item.userId,jdbcType=BIGINT},
-                </if>
-                <if test="item.userId == null">
-                    NULL,
-                </if>
             </trim>
         </foreach>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.SProperty">
-        update s_property
+    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.SNotice">
+        update s_notice
         <set>
             <if test="createId != null">
                 create_id = #{createId,jdbcType=BIGINT},
@@ -215,20 +202,17 @@
             <if test="depict != null">
                 depict = #{depict,jdbcType=VARCHAR},
             </if>
-            <if test="picPath != null">
-                pic_path = #{picPath,jdbcType=VARCHAR},
+            <if test="noticePath != null">
+                notice_path = #{noticePath,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
                 status = #{status,jdbcType=VARCHAR},
             </if>
-            <if test="userId != null">
-                user_id = #{userId,jdbcType=BIGINT},
-            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.SProperty">
-        update s_property
+    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.SNotice">
+        update s_notice
         set create_id = #{createId,jdbcType=BIGINT},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             is_delete = #{isDelete,jdbcType=VARCHAR},
@@ -236,55 +220,8 @@
             update_id = #{updateId,jdbcType=BIGINT},
             update_time = #{updateTime,jdbcType=TIMESTAMP},
             depict = #{depict,jdbcType=VARCHAR},
-            pic_path = #{picPath,jdbcType=VARCHAR},
-            status = #{status,jdbcType=VARCHAR},
-            user_id = #{userId,jdbcType=BIGINT}
+            notice_path = #{noticePath,jdbcType=VARCHAR},
+            status = #{status,jdbcType=VARCHAR}
         where id = #{id,jdbcType=BIGINT}
     </update>
-
-    <!-- 基本的sql查询条件公共引用 -->
-    <sql id="searchBy">
-        <trim prefix="where" prefixOverrides="and|or">
-            <if test=" id !=null ">
-                id = #{id,jdbcType=BIGINT}
-            </if>
-            <if test="createId != null">
-                and create_id = #{createId,jdbcType=BIGINT}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="isDelete != null">
-                and is_delete = #{isDelete,jdbcType=VARCHAR}
-            </if>
-            <if test="remark != null">
-                and remark = #{remark,jdbcType=VARCHAR}
-            </if>
-            <if test="updateId != null">
-                and update_id = #{updateId,jdbcType=BIGINT}
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="depict != null">
-                and depict = #{depict,jdbcType=VARCHAR}
-            </if>
-            <if test="picPath != null">
-                and pic_path = #{picPath,jdbcType=VARCHAR}
-            </if>
-            <if test="status != null">
-                and status = #{status,jdbcType=VARCHAR}
-            </if>
-            <if test="userId != null">
-                and user_id = #{userId,jdbcType=BIGINT}
-            </if>
-        </trim>
-    </sql>
-    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.SProperty" resultMap="BaseResultMap">
-        select
-        distinct
-        <include refid="Base_Column_List"/>
-        from s_property
-        <include refid="searchBy"/>
-    </select>
 </mapper>

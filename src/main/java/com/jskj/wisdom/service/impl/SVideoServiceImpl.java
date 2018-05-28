@@ -34,8 +34,8 @@ public class SVideoServiceImpl implements SVideoService {
     private              SVideoDAO sVideoDAO;
 
     @Override
-    public PageInfo<SVideo> selectBySelective(Long pid, boolean picToBase64, String pageNum, String pageSize) {
-        PageHelper.startPage(Integer.parseInt(pageNum) - 1, Integer.parseInt(pageSize));
+    public PageInfo<SVideo> selectBySelective(Long pid, boolean picToBase64, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum - 1, pageSize);
         SVideo sVideo = new SVideo();
         sVideo.setPid(pid);
         List<SVideo> listTUsers = selectBySelective(sVideo);

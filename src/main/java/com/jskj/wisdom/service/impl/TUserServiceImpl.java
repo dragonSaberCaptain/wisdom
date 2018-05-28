@@ -92,27 +92,22 @@ public class TUserServiceImpl implements TUserService {
     }
 
     @Override
-    public PageInfo<TUser> selectBySelective(TUser tUser, String pageNum, String pageSize) {
-        PageHelper.startPage(Integer.parseInt(pageNum) - 1, Integer.parseInt(pageSize));
+    public PageInfo<TUser> selectBySelective(TUser tUser, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum - 1, pageSize);
+        tUser.setIsDelete(Global.ZERO_STRING);
+        tUser.setIsRegister(Global.ONE_STRING);
         List<TUser> listTUsers = selectBySelective(tUser);
+        //脱敏处理
+        for (TUser listTUser : listTUsers) {
+            listTUser.setIdNumber(VerifyUtil.idDesensitization(listTUser.getIdNumber()));
+            listTUser.setMobile(VerifyUtil.mobileDesensitization(listTUser.getMobile()));
+        }
         return new PageInfo<>(listTUsers);
     }
 
     @Override
     public List<TUser> selectBySelective(TUser tUser) {
-        tUser.setIsDelete(Global.ZERO_STRING);
-        tUser.setIsRegister(Global.ONE_STRING);
-        List<TUser> tUsers = tUserDAO.selectBySelective(tUser);
-        if (tUsers.size() == 0) {
-            logger.error("用户不存在或已删除或未注册");
-            throw new UserException(UserEnum.NOT_FOUND);
-        }
-        logger.info("脱敏处理");
-        for (TUser user : tUsers) {
-            user.setIdNumber(VerifyUtil.idDesensitization(user.getIdNumber()));
-            user.setMobile(VerifyUtil.mobileDesensitization(user.getMobile()));
-        }
-        return tUsers;
+        return tUserDAO.selectBySelective(tUser);
     }
 
     @Override
@@ -135,7 +130,6 @@ public class TUserServiceImpl implements TUserService {
                 throw new UserException(UserEnum.NO_REGISTER);
             }
         }
-        System.out.printf("----TUserServiceImpl.insertSelective: %s %n", " document.toJson()" + document.toJson());
         MongodbUser mongodbUser = JSON.parseObject(document.toJson(), MongodbUser.class);
 
         Date date = new Date();

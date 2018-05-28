@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2018-05-10 13:28 星期四
  */
 public interface SVideoService {
-    PageInfo<SVideo> selectBySelective(Long pid, boolean picToBase64, String pageNum, String pageSize);
+    PageInfo<SVideo> selectBySelective(Long pid, boolean picToBase64, int pageNum, int pageSize);
 
     List<SVideo> selectBySelective(SVideo record);
 

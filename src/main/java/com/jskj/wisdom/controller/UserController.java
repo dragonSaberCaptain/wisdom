@@ -61,8 +61,8 @@ public class UserController {
             @ApiResponse(code = 500, message = "服务器内部异常")})
     public UserVo getUsersBySelective(
             @RequestBody @ApiParam(name = "用户对象 ", value = "传入json格式") TUser tUser,
-            @RequestParam(name = "pageNum", defaultValue = "1", required = false) String pageNum,
-            @RequestParam(name = "pageSize", defaultValue = "30", required = false) String pageSize) {
+            @RequestParam(name = "pageNum", defaultValue = "1", required = false) int pageNum,
+            @RequestParam(name = "pageSize", defaultValue = "30", required = false) int pageSize) {
         PageInfo<TUser> tUserPageInfo = tUserService.selectBySelective(tUser, pageNum, pageSize);
         if (tUserPageInfo.getSize() > 0) {
             return new UserVo(UserEnum.OK, tUserPageInfo);

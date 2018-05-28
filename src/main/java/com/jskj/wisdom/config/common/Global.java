@@ -52,6 +52,10 @@ public class Global {
      */
     public static final String VIDEO_PICTURE_PATH = "C:/picture/video_picture/";
 
+    public static final String PROPERTY_PICTURE_PATH = "C:/picture/property_picture/";
+
+    public static final String NOTICE_PICTURE_PATH = "C:/picture/notice_picture/";
+
     //---------------------------------------------------------------ip-------------------------------------------------------------------------------
 
     public static final String LOCALHOST = "127.0.0.1";

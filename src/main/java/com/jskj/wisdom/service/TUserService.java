@@ -28,7 +28,7 @@ public interface TUserService {
      * @author dragonSaberCaptain
      * @date 2018-05-14 09:12:25
      */
-    PageInfo<TUser> selectBySelective(TUser tUser, String pageNum, String pageSize);
+    PageInfo<TUser> selectBySelective(TUser tUser, int pageNum, int pageSize);
 
     List<TUser> selectBySelective(TUser tUser);
 

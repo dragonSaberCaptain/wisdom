@@ -31,7 +31,7 @@ public enum ResultEnum {
     /**
      * 9005(文件路径错误)
      */
-    FILE_PATH_ERROR("1006", "图片地址错误"),
+    FILE_PATH_ERROR("1006", "文件路径错误"),
 
     /**
      * 9006(IO异常)

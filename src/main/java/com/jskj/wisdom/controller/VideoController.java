@@ -30,7 +30,7 @@ public class VideoController {
     private SVideoService sVideoService;
 
     @GetMapping("/video/getVideosBySelective")
-    @ApiOperation(value = "获取视频(按条件)", notes = "根据查询条件获取放列列表(视频地址和预览图)")
+    @ApiOperation(value = "获取视频(按小区id)", notes = "根据小区id获取放列列表(视频地址和预览图)")
     @ResponseBody
     @ApiResponses({@ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 1002, message = "失败"),
@@ -38,8 +38,8 @@ public class VideoController {
     public VideoVo getVideosBySelective(
             @RequestParam(value = "pid") Long pid,
             @RequestParam(value = "picToBase64", defaultValue = "false", required = false) boolean picToBase64,
-            @RequestParam(name = "pageNum", defaultValue = "1", required = false) String pageNum,
-            @RequestParam(name = "pageSize", defaultValue = "30", required = false) String pageSize) {
+            @RequestParam(name = "pageNum", defaultValue = "1", required = false) int pageNum,
+            @RequestParam(name = "pageSize", defaultValue = "30", required = false) int pageSize) {
         PageInfo<SVideo> tUserPageInfo = sVideoService.selectBySelective(pid, picToBase64, pageNum, pageSize);
         if (tUserPageInfo.getSize() > 0) {
             return new VideoVo(VideoEnum.OK, tUserPageInfo);
@@ -126,13 +126,13 @@ public class VideoController {
         return new VideoVo(VideoEnum.FAIL);
     }
 
-    @DeleteMapping("/video/deleteVideo")
+    @DeleteMapping("/video/deleteVideoById")
     @ApiOperation(value = "删除视频(永久)", notes = "根据ID删除,请谨慎处理")
     @ResponseBody
     @ApiResponses({@ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 1002, message = "失败"),
             @ApiResponse(code = 500, message = "服务器内部异常")})
-    public VideoVo deleteVideo(@RequestParam(name = "id") Long id) {
+    public VideoVo deleteVideoById(@RequestParam(name = "id") Long id) {
         int num = sVideoService.deleteByPrimaryKey(id);
         if (num > 0) {
             return new VideoVo(VideoEnum.OK);

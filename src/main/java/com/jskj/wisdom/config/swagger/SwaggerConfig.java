@@ -55,7 +55,9 @@ public class SwaggerConfig {
                 regex(Global.OPEN + "/.*"),
                 regex("/user/.*"),
                 regex("/video/.*"),
-                regex("/fluorit/.*")
+                regex("/fluorit/.*"),
+                regex("/notice/.*"),
+                regex("/property/.*")
         );
     }
 

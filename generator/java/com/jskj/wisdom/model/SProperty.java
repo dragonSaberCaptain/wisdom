@@ -4,7 +4,7 @@ package com.jskj.wisdom.model;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
+/** 
  * @author LastChaosCaptain
  */
 public class SProperty implements Serializable {
@@ -44,7 +44,7 @@ public class SProperty implements Serializable {
     // 用户id
     private Long userId;
 
-    /**
+    /** 
      * 获取 主键id s_property.id
      * @return 主键id
      */
@@ -52,7 +52,7 @@ public class SProperty implements Serializable {
         return id;
     }
 
-    /**
+    /** 
      * 设置 主键id s_property.id
      * @param id 主键id
      */
@@ -60,7 +60,7 @@ public class SProperty implements Serializable {
         this.id = id;
     }
 
-    /**
+    /** 
      * 获取 创建者 s_property.create_id
      * @return 创建者
      */
@@ -68,7 +68,7 @@ public class SProperty implements Serializable {
         return createId;
     }
 
-    /**
+    /** 
      * 设置 创建者 s_property.create_id
      * @param createId 创建者
      */
@@ -76,7 +76,7 @@ public class SProperty implements Serializable {
         this.createId = createId;
     }
 
-    /**
+    /** 
      * 获取 创建时间 s_property.create_time
      * @return 创建时间
      */
@@ -84,7 +84,7 @@ public class SProperty implements Serializable {
         return createTime;
     }
 
-    /**
+    /** 
      * 设置 创建时间 s_property.create_time
      * @param createTime 创建时间
      */
@@ -92,7 +92,7 @@ public class SProperty implements Serializable {
         this.createTime = createTime;
     }
 
-    /**
+    /** 
      * 获取 是否删除：0否 1是  默认：0 s_property.is_delete
      * @return 是否删除：0否 1是  默认：0
      */
@@ -100,7 +100,7 @@ public class SProperty implements Serializable {
         return isDelete;
     }
 
-    /**
+    /** 
      * 设置 是否删除：0否 1是  默认：0 s_property.is_delete
      * @param isDelete 是否删除：0否 1是  默认：0
      */
@@ -108,7 +108,7 @@ public class SProperty implements Serializable {
         this.isDelete = isDelete == null ? null : isDelete.trim();
     }
 
-    /**
+    /** 
      * 获取 备注 s_property.remark
      * @return 备注
      */
@@ -116,7 +116,7 @@ public class SProperty implements Serializable {
         return remark;
     }
 
-    /**
+    /** 
      * 设置 备注 s_property.remark
      * @param remark 备注
      */
@@ -124,7 +124,7 @@ public class SProperty implements Serializable {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    /**
+    /** 
      * 获取 更新者 s_property.update_id
      * @return 更新者
      */
@@ -132,7 +132,7 @@ public class SProperty implements Serializable {
         return updateId;
     }
 
-    /**
+    /** 
      * 设置 更新者 s_property.update_id
      * @param updateId 更新者
      */
@@ -140,7 +140,7 @@ public class SProperty implements Serializable {
         this.updateId = updateId;
     }
 
-    /**
+    /** 
      * 获取 更新时间 s_property.update_time
      * @return 更新时间
      */
@@ -148,7 +148,7 @@ public class SProperty implements Serializable {
         return updateTime;
     }
 
-    /**
+    /** 
      * 设置 更新时间 s_property.update_time
      * @param updateTime 更新时间
      */
@@ -156,72 +156,64 @@ public class SProperty implements Serializable {
         this.updateTime = updateTime;
     }
 
-    /**
+    /** 
      * 获取 描述 s_property.depict
-     *
      * @return 描述
      */
     public String getDepict() {
         return depict;
     }
 
-    /**
+    /** 
      * 设置 描述 s_property.depict
-     *
      * @param depict 描述
      */
     public void setDepict(String depict) {
         this.depict = depict == null ? null : depict.trim();
     }
 
-    /**
+    /** 
      * 获取 图片地址 s_property.pic_path
-     *
      * @return 图片地址
      */
     public String getPicPath() {
         return picPath;
     }
 
-    /**
+    /** 
      * 设置 图片地址 s_property.pic_path
-     *
      * @param picPath 图片地址
      */
     public void setPicPath(String picPath) {
         this.picPath = picPath == null ? null : picPath.trim();
     }
 
-    /**
+    /** 
      * 获取 状态 s_property.status
-     *
      * @return 状态
      */
     public String getStatus() {
         return status;
     }
 
-    /**
+    /** 
      * 设置 状态 s_property.status
-     *
      * @param status 状态
      */
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
     }
 
-    /**
+    /** 
      * 获取 用户id s_property.user_id
-     *
      * @return 用户id
      */
     public Long getUserId() {
         return userId;
     }
 
-    /**
+    /** 
      * 设置 用户id s_property.user_id
-     *
      * @param userId 用户id
      */
     public void setUserId(Long userId) {
@@ -262,22 +254,22 @@ public class SProperty implements Serializable {
         }
         SProperty other = (SProperty) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getCreateId() == null ? other.getCreateId() == null : this.getCreateId().equals(other.getCreateId()))
-                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-                && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
-                && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
-                && (this.getUpdateId() == null ? other.getUpdateId() == null : this.getUpdateId().equals(other.getUpdateId()))
-                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-                && (this.getDepict() == null ? other.getDepict() == null : this.getDepict().equals(other.getDepict()))
-                && (this.getPicPath() == null ? other.getPicPath() == null : this.getPicPath().equals(other.getPicPath()))
-                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-                && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()));
+            && (this.getCreateId() == null ? other.getCreateId() == null : this.getCreateId().equals(other.getCreateId()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
+            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
+            && (this.getUpdateId() == null ? other.getUpdateId() == null : this.getUpdateId().equals(other.getUpdateId()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getDepict() == null ? other.getDepict() == null : this.getDepict().equals(other.getDepict()))
+            && (this.getPicPath() == null ? other.getPicPath() == null : this.getPicPath().equals(other.getPicPath()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()));
     }
 
     @Override
     public int hashCode() {
-        final int prime  = 31;
-        int       result = 1;
+        final int prime = 31;
+        int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getCreateId() == null) ? 0 : getCreateId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
