@@ -18,14 +18,14 @@ public class SVideo implements Serializable {
     @ApiModelProperty(value = "主键id", name = "id")
     private Long id;
 
-    @ApiModelProperty(value = "创建时间", name = "createTime")
+    @ApiModelProperty(value = "创建时间", name = "createTime", hidden = true)
     private Date createTime;
 
     @JsonIgnore
     @ApiModelProperty(value = "创建者", name = "createId", hidden = true)
     private Long createId;
 
-    @ApiModelProperty(value = "更新时间", name = "updateTime")
+    @ApiModelProperty(value = "更新时间", name = "updateTime", hidden = true)
     private Date updateTime;
 
     @JsonIgnore

@@ -2,12 +2,15 @@
 # @Description: 整个项目的配置文件
 # @author: dragonSaberCaptain
 # @date: 2018/5/3 14:51 星期四
+server:
+  #服务器端口
+  port: 80
 spring:
   application:
     name: wisdom
   profiles:
 #    运行环境（dev/prod) 数据库（mysql/oracle）
-    active: dev,mysql
+    active: dev,mysql,redis
   jpa:
     show-sql: true
     generate-ddl: true

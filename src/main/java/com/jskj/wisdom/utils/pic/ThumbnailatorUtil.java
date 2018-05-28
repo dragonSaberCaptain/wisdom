@@ -5,8 +5,6 @@ import net.coobird.thumbnailator.geometry.Position;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -316,26 +314,14 @@ public class ThumbnailatorUtil {
         return buf;
     }
 
-    public static BufferedImage ImgBufferedImage(String source, HttpServletResponse response, double scale, String format) {
-        BufferedImage       buf = null;
-        ServletOutputStream out = null;
+    public static BufferedImage ImgBufferedImage(String source, double scale) {
+        BufferedImage buf;
         try {
-            out = response.getOutputStream();
             buf = Thumbnails.of(source).scale(scale).asBufferedImage();
-            ImageIO.write(buf, format, out);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (out != null) {
-                try {
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            return null;
         }
         return buf;
     }
-
 }

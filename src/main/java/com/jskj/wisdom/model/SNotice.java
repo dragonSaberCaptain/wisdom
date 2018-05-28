@@ -1,6 +1,9 @@
 /* https://github.com/orange1438 */
 package com.jskj.wisdom.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,37 +11,38 @@ import java.util.Date;
  * @author LastChaosCaptain
  */
 public class SNotice implements Serializable {
-    //串行版本ID
     private static final long serialVersionUID = -869001330091428772L;
 
-    // 主键id
+    @ApiModelProperty(value = "主键id", name = "id")
     private Long id;
 
-    // 创建者
+    @JsonIgnore
+    @ApiModelProperty(value = "创建者", name = "createId", hidden = true)
     private Long createId;
 
-    // 创建时间
+    @ApiModelProperty(value = "创建时间", name = "createTime", hidden = true)
     private Date createTime;
 
-    // 是否删除：0否 1是  默认：0  默认：0
+    @ApiModelProperty(value = "是否删除：0否 1是  默认：0  默认：0", name = "isDelete")
     private String isDelete;
 
-    // 备注
+    @ApiModelProperty(value = "备注", name = "remark")
     private String remark;
 
-    // 更新者
+    @JsonIgnore
+    @ApiModelProperty(value = "更新者", name = "updateId", hidden = true)
     private Long updateId;
 
-    // 更新时间
+    @ApiModelProperty(value = "更新时间", name = "updateTime", hidden = true)
     private Date updateTime;
 
-    // 公告详情描述
+    @ApiModelProperty(value = "公告详情描述", name = "depict")
     private String depict;
 
-    // 公告图片地址
+    @ApiModelProperty(value = "公告图片地址", name = "noticePath")
     private String noticePath;
 
-    // 公告状态
+    @ApiModelProperty(value = "公告状态", name = "status")
     private String status;
 
     /**

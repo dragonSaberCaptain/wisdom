@@ -1,5 +1,6 @@
 package com.jskj.wisdom.service.impl;
 
+import com.jskj.wisdom.config.common.Global;
 import com.jskj.wisdom.dao.TRoomDAO;
 import com.jskj.wisdom.model.TRoom;
 import com.jskj.wisdom.service.TRoomService;
@@ -23,6 +24,9 @@ public class TRoomServiceImpl implements TRoomService {
 
     @Override
     public List<TRoom> selectBySelective(TRoom tRoom) {
+        if (tRoom != null) {
+            tRoom.setIsDelete(Global.ZERO_STRING);
+        }
         return tRoomDAO.selectBySelective(tRoom);
     }
 }

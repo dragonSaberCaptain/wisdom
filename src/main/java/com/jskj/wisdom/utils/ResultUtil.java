@@ -1,7 +1,9 @@
 package com.jskj.wisdom.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jskj.wisdom.config.common.Global;
 import com.jskj.wisdom.enums.ResultEnum;
+import com.jskj.wisdom.enums.UserEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,48 +44,45 @@ public class ResultUtil {
         }
     }
 
+    public static void writeJson(Object obj, Object data, HttpServletResponse resp) {
+        Map<String, Object> rec = new LinkedHashMap<>();
+        try {
+            resp.setContentType("application/json");
+            resp.setCharacterEncoding("utf8");
+            PrintWriter pw = resp.getWriter();
+            String      str;
+            if (obj instanceof String) {
+                str = obj.toString();
+            } else {
+                if (obj instanceof UserEnum) {
+                    UserEnum userEnum = (UserEnum) obj;
+                    rec.put(Global.CODE, userEnum.getCode());
+                    rec.put(Global.MSG, userEnum.getMsg());
+                    rec.put(Global.DATA, data);
+                    str = rec.toString();
+                } else if (obj instanceof ResultEnum) {
+                    ResultEnum videoEnum = (ResultEnum) obj;
+                    rec.put(Global.CODE, videoEnum.getCode());
+                    rec.put(Global.MSG, videoEnum.getMsg());
+                    rec.put(Global.DATA, data);
+                    str = rec.toString();
+                } else {
+                    str = toString(obj);
+                }
+            }
+            pw.print(str);
+            pw.flush();
+            pw.close();
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
     public static String toString(Object o) {
         try {
             return mapper.writeValueAsString(o);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
-    }
-
-    public static void result(ResultEnum resultEnum, HttpServletResponse httpServletResponse) {
-        Map<String, Object> rec = new LinkedHashMap<String, Object>();
-        rec.put("code", resultEnum.getCode());
-        rec.put("msg", resultEnum.getMsg());
-        ResultUtil.writeJson(rec, httpServletResponse);
-    }
-
-    public static void result(ResultEnum resultEnum, Object object, HttpServletResponse httpServletResponse) {
-        Map<String, Object> rec = new LinkedHashMap<String, Object>();
-        rec.put("code", resultEnum.getCode());
-        rec.put("msg", resultEnum.getMsg());
-        rec.put("data", object);
-        ResultUtil.writeJson(rec, httpServletResponse);
-    }
-
-    public static void result(String code, String message, Object object, HttpServletResponse httpServletResponse) {
-        Map<String, Object> rec = new LinkedHashMap<String, Object>();
-        rec.put("code", code);
-        rec.put("msg", message);
-        rec.put("data", object);
-        ResultUtil.writeJson(rec, httpServletResponse);
-    }
-
-    public static void result(String code, String message, HttpServletResponse httpServletResponse) {
-        Map<String, Object> rec = new LinkedHashMap<String, Object>();
-        rec.put("code", code);
-        rec.put("msg", message);
-        ResultUtil.writeJson(rec, httpServletResponse);
-    }
-
-    public static void Result(int code, String message, HttpServletResponse httpServletResponse) {
-        Map<String, Object> rec = new LinkedHashMap<String, Object>();
-        rec.put("code", code);
-        rec.put("msg", message);
-        ResultUtil.writeJson(rec, httpServletResponse);
     }
 }

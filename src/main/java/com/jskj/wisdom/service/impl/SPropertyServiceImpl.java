@@ -4,9 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jskj.wisdom.config.common.Global;
 import com.jskj.wisdom.dao.SPropertyDAO;
+import com.jskj.wisdom.enums.ResultEnum;
+import com.jskj.wisdom.exception.PropertyException;
 import com.jskj.wisdom.model.SProperty;
 import com.jskj.wisdom.service.SPropertyService;
+import com.jskj.wisdom.utils.pic.PicUtil;
+import com.jskj.wisdom.utils.string.StringUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -31,18 +36,36 @@ public class SPropertyServiceImpl implements SPropertyService {
     }
 
     @Override
-    public int insert(SProperty record) {
+    public int insert(SProperty record, double scale, MultipartFile imageFile) {
+        String url = null;
+        if (imageFile != null) {
+            if (imageFile.getSize() >= Global.FILE_SIZE) {
+                throw new PropertyException(ResultEnum.FILE_TOO_BIG);
+            }
+            url = PicUtil.savePic(Global.PROPERTY_PICTURE_PATH, imageFile, scale);
+        }
+
         Date date = new Date();
         record.setCreateTime(date);
         record.setUpdateTime(date);
+        record.setPicPath(url);
         return sPropertyDAO.insert(record);
     }
 
     @Override
-    public int insertSelective(SProperty record) {
+    public int insertSelective(SProperty record, double scale, MultipartFile imageFile) {
+        String url = null;
+        if (imageFile != null) {
+            if (imageFile.getSize() >= Global.FILE_SIZE) {
+                throw new PropertyException(ResultEnum.FILE_TOO_BIG);
+            }
+            url = PicUtil.savePic(Global.PROPERTY_PICTURE_PATH, imageFile, scale);
+        }
+
         Date date = new Date();
         record.setCreateTime(date);
         record.setUpdateTime(date);
+        record.setPicPath(url);
         return sPropertyDAO.insertSelective(record);
     }
 
@@ -66,16 +89,20 @@ public class SPropertyServiceImpl implements SPropertyService {
     @Override
     public PageInfo<SProperty> selectBySelective(SProperty record, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum - 1, pageSize);
-        List<SProperty> sProperties = selectBySelective(record);
+        List<SProperty> sProperties = sPropertyDAO.selectBySelective(record);
+        String          result;
         for (SProperty sProperty : sProperties) {
-            sProperty.setPicPath(Global.PROPERTY_PICTURE_PATH + sProperty.getPicPath());
+            if (StringUtil.isBlank(sProperty.getPicPath())) {
+                continue;
+            }
+            result = "http://" + Global.HOST + "/open/getPic?source=" + sProperty.getPicPath() + "&scale=0.5&format=jpg";
+            sProperty.setPicPath(result);
         }
         return new PageInfo<>(sProperties);
     }
 
     @Override
     public List<SProperty> selectBySelective(SProperty record) {
-        record.setIsDelete(Global.ZERO_STRING);
         return sPropertyDAO.selectBySelective(record);
     }
 }

@@ -1,5 +1,7 @@
 package com.jskj.wisdom.enums;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * Copyright © 2018 dragonSaberCaptain. All rights reserved.
  *
@@ -36,9 +38,9 @@ public enum UserEnum {
     VERIFICATION_CODE_TIMEOUT("1006", "验证码已超时"),
 
     /**
-     * 1007(验证未通过, 验证码不正确)
+     * 1007(验证码不正确)
      */
-    VERIFICATION_FAILURE("1007", "验证未通过,验证码不正确"),
+    VERIFICATION_FAILURE("1007", "验证码不正确"),
 
     /**
      * 1008(手机号不唯一)
@@ -78,6 +80,21 @@ public enum UserEnum {
      * 1015(禁止登陆)
      */
     PROHIBIT_LANDING("1015", "禁止登陆"),
+
+    /**
+     * 2000(token不存在或已过期，请重新登陆)
+     */
+    TOKEN_NO_FIND("2000", "token不存在或已过期，请重新登陆"),
+
+    /**
+     * 2001(验证失败,token错误)
+     */
+    TOKEN_ERROR("2001", "验证失败,token错误"),
+
+    /**
+     * 2002(token不能为空)
+     */
+    TOKEN_NOT_EMPTY("2002", "token不能为空"),
 
     // ****************************【其他错误】****************************
 
@@ -135,4 +152,11 @@ public enum UserEnum {
         return msg;
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("code", code)
+                .append("msg", msg)
+                .toString();
+    }
 }

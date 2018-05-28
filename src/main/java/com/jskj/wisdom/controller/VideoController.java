@@ -1,19 +1,17 @@
 package com.jskj.wisdom.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
-import com.jskj.wisdom.config.common.Global;
-import com.jskj.wisdom.enums.VideoEnum;
+import com.jskj.wisdom.enums.ResultEnum;
 import com.jskj.wisdom.model.SVideo;
 import com.jskj.wisdom.service.SVideoService;
-import com.jskj.wisdom.utils.pic.ThumbnailatorUtil;
-import com.jskj.wisdom.vo.VideoVo;
+import com.jskj.wisdom.vo.ResultVo;
 import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Copyright © 2018 dragonSaberCaptain. All rights reserved.
@@ -30,21 +28,23 @@ public class VideoController {
     private SVideoService sVideoService;
 
     @GetMapping("/video/getVideosBySelective")
-    @ApiOperation(value = "获取视频(按小区id)", notes = "根据小区id获取放列列表(视频地址和预览图)")
+    @ApiOperation(value = "获取视频(按条件分页)", notes = "根据小区id获取放列列表(视频地址和预览图)")
     @ResponseBody
     @ApiResponses({@ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 1002, message = "失败"),
             @ApiResponse(code = 500, message = "服务器内部异常")})
-    public VideoVo getVideosBySelective(
-            @RequestParam(value = "pid") Long pid,
-            @RequestParam(value = "picToBase64", defaultValue = "false", required = false) boolean picToBase64,
+    public ResultVo getVideosBySelective(
+            @RequestParam(value = "searchParams", required = false) String searchParams,
             @RequestParam(name = "pageNum", defaultValue = "1", required = false) int pageNum,
             @RequestParam(name = "pageSize", defaultValue = "30", required = false) int pageSize) {
-        PageInfo<SVideo> tUserPageInfo = sVideoService.selectBySelective(pid, picToBase64, pageNum, pageSize);
+
+        SVideo sVideo = JSON.parseObject(searchParams, SVideo.class);
+
+        PageInfo<SVideo> tUserPageInfo = sVideoService.selectBySelective(sVideo, pageNum, pageSize);
         if (tUserPageInfo.getSize() > 0) {
-            return new VideoVo(VideoEnum.OK, tUserPageInfo);
+            return new ResultVo(ResultEnum.OK, tUserPageInfo);
         }
-        return new VideoVo(VideoEnum.FAIL);
+        return new ResultVo(ResultEnum.FAIL);
     }
 
 
@@ -54,12 +54,12 @@ public class VideoController {
     @ApiResponses({@ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 1002, message = "失败"),
             @ApiResponse(code = 500, message = "服务器内部异常")})
-    public VideoVo getVideoById(@RequestParam(name = "id") Long id) {
+    public ResultVo getVideoById(@RequestParam(name = "id") Long id) {
         SVideo sVideo = sVideoService.selectByPrimaryKey(id);
         if (sVideo != null) {
-            return new VideoVo(VideoEnum.OK, sVideo);
+            return new ResultVo(ResultEnum.OK, sVideo);
         }
-        return new VideoVo(VideoEnum.FAIL);
+        return new ResultVo(ResultEnum.FAIL);
     }
 
 
@@ -69,16 +69,16 @@ public class VideoController {
     @ApiResponses({@ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 1002, message = "失败"),
             @ApiResponse(code = 500, message = "服务器内部异常")})
-    public VideoVo insertVideo(
-            @RequestParam(value = "pid") Long pid,
-            @RequestParam(value = "videoPathUrl") String videoPathUrl,
+    @Deprecated
+    public ResultVo insertVideo(
+            @ApiParam(name = "视频对象 ", value = "传入json格式", required = true) SVideo sVideo,
             @RequestParam(value = "scale") double scale,
             @RequestParam(value = "imageFile") MultipartFile imageFile) {
-        int num = sVideoService.insert(pid, videoPathUrl, scale, imageFile);
+        int num = sVideoService.insert(sVideo, scale, imageFile);
         if (num > 0) {
-            return new VideoVo(VideoEnum.OK);
+            return new ResultVo(ResultEnum.OK);
         }
-        return new VideoVo(VideoEnum.FAIL);
+        return new ResultVo(ResultEnum.FAIL);
     }
 
     @PutMapping("/video/insertVideoBySelective")
@@ -87,12 +87,14 @@ public class VideoController {
     @ApiResponses({@ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 1002, message = "失败"),
             @ApiResponse(code = 500, message = "服务器内部异常")})
-    public VideoVo insertVideoBySelective(@RequestBody @ApiParam(name = "视频对象 ", value = "传入json格式", required = true) SVideo sVideo) {
-        int num = sVideoService.insertSelective(sVideo);
+    public ResultVo insertVideoBySelective(@ApiParam(name = "视频对象 ", value = "传入json格式", required = true) SVideo sVideo,
+                                           @RequestParam(value = "scale") double scale,
+                                           @RequestParam(value = "imageFile") MultipartFile imageFile) {
+        int num = sVideoService.insertSelective(sVideo, scale, imageFile);
         if (num > 0) {
-            return new VideoVo(VideoEnum.OK);
+            return new ResultVo(ResultEnum.OK);
         }
-        return new VideoVo(VideoEnum.FAIL);
+        return new ResultVo(ResultEnum.FAIL);
     }
 
 
@@ -103,12 +105,13 @@ public class VideoController {
             @ApiResponse(code = 1002, message = "失败"),
             @ApiResponse(code = 1003, message = "更新失败,视频不存在或id不正确"),
             @ApiResponse(code = 500, message = "服务器内部异常")})
-    public VideoVo updateVideo(@RequestBody @ApiParam(name = "视频对象 ", value = "传入json格式", required = true) SVideo sVideo) {
+    @Deprecated
+    public ResultVo updateVideo(@RequestBody @ApiParam(name = "视频对象 ", value = "传入json格式", required = true) SVideo sVideo) {
         int num = sVideoService.updateByPrimaryKey(sVideo);
         if (num > 0) {
-            return new VideoVo(VideoEnum.OK);
+            return new ResultVo(ResultEnum.OK);
         }
-        return new VideoVo(VideoEnum.FAIL);
+        return new ResultVo(ResultEnum.FAIL);
     }
 
     @PostMapping("/video/updateVideoBySelective")
@@ -118,12 +121,12 @@ public class VideoController {
             @ApiResponse(code = 1002, message = "失败"),
             @ApiResponse(code = 1003, message = "更新失败,视频不存在或id不正确"),
             @ApiResponse(code = 500, message = "服务器内部异常")})
-    public VideoVo updateVideoBySelective(@RequestBody @ApiParam(name = "视频对象 ", value = "传入json格式", required = true) SVideo sVideo) {
+    public ResultVo updateVideoBySelective(@RequestBody @ApiParam(name = "视频对象 ", value = "传入json格式", required = true) SVideo sVideo) {
         int num = sVideoService.updateByPrimaryKeySelective(sVideo);
         if (num > 0) {
-            return new VideoVo(VideoEnum.OK);
+            return new ResultVo(ResultEnum.OK);
         }
-        return new VideoVo(VideoEnum.FAIL);
+        return new ResultVo(ResultEnum.FAIL);
     }
 
     @DeleteMapping("/video/deleteVideoById")
@@ -132,17 +135,11 @@ public class VideoController {
     @ApiResponses({@ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 1002, message = "失败"),
             @ApiResponse(code = 500, message = "服务器内部异常")})
-    public VideoVo deleteVideoById(@RequestParam(name = "id") Long id) {
+    public ResultVo deleteVideoById(@RequestParam(name = "id") Long id) {
         int num = sVideoService.deleteByPrimaryKey(id);
         if (num > 0) {
-            return new VideoVo(VideoEnum.OK);
+            return new ResultVo(ResultEnum.OK);
         }
-        return new VideoVo(VideoEnum.FAIL);
-    }
-
-    @GetMapping("/open/getPic")
-    @ApiOperation(value = "获取图片", notes = "通过传入的图片地址、输出大小为缩放比例（0.1f~1f之间）、格式的图片")
-    public void getPic(@RequestParam(name = "source") String source, @RequestParam(name = "scale") double scale, @RequestParam(name = "format") String format, HttpServletResponse response) {
-        ThumbnailatorUtil.ImgBufferedImage(Global.VIDEO_PICTURE_PATH + source, response, scale, format);
+        return new ResultVo(ResultEnum.FAIL);
     }
 }

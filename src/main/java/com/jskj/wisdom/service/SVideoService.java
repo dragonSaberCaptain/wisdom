@@ -15,15 +15,15 @@ import java.util.List;
  * @date 2018-05-10 13:28 星期四
  */
 public interface SVideoService {
-    PageInfo<SVideo> selectBySelective(Long pid, boolean picToBase64, int pageNum, int pageSize);
+    PageInfo<SVideo> selectBySelective(SVideo sVideo, int pageNum, int pageSize);
 
     List<SVideo> selectBySelective(SVideo record);
 
     SVideo selectByPrimaryKey(Long id);
 
-    int insertSelective(SVideo record);
+    int insertSelective(SVideo record, double scale, MultipartFile imageFile);
 
-    int insert(Long pid, String videoPathUrl, double scale, MultipartFile imageFile);
+    int insert(SVideo record, double scale, MultipartFile imageFile);
 
     int updateByPrimaryKeySelective(SVideo record);
 

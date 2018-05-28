@@ -1,7 +1,6 @@
 package com.jskj.wisdom.vo;
 
 import com.jskj.wisdom.enums.ResultEnum;
-import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
@@ -17,7 +16,6 @@ import java.io.Serializable;
 public class ResultVo implements Serializable {
     protected String code;
     protected String msg;
-    @ApiModelProperty(value = "返回数据", required = true)
     protected Object data;
 
     public ResultVo(ResultEnum resultEnum) {

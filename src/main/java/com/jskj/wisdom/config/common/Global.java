@@ -20,6 +20,10 @@ public class Global {
 
     public static final String SPOT = ".";
 
+    public static final String CODE = "code";
+    public static final String MSG  = "msg";
+    public static final String DATA = "data";
+
     //---------------------------------------------------------------数字常量-------------------------------------------------------------------------------
 
     public static final String ZERO_STRING = "0";
@@ -50,6 +54,8 @@ public class Global {
     /**
      * 视频缩略图路径
      */
+    public static final String USER_PICTURE_PATH = "C:/picture/user_picture/";
+
     public static final String VIDEO_PICTURE_PATH = "C:/picture/video_picture/";
 
     public static final String PROPERTY_PICTURE_PATH = "C:/picture/property_picture/";
@@ -59,6 +65,8 @@ public class Global {
     //---------------------------------------------------------------ip-------------------------------------------------------------------------------
 
     public static final String LOCALHOST = "127.0.0.1";
+
+    public static final String HOST = "192.168.0.116";
 
     //---------------------------------------------------------------前缀-------------------------------------------------------------------------------
 

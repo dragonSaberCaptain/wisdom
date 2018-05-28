@@ -65,7 +65,9 @@ public class SNoticeServiceImpl implements SNoticeService {
 
     @Override
     public List<SNotice> selectBySelective(SNotice record) {
-        record.setIsDelete(Global.ZERO_STRING);
+        if (record != null) {
+            record.setIsDelete(Global.ZERO_STRING);
+        }
         return sNoticeDAO.selectBySelective(record);
     }
 

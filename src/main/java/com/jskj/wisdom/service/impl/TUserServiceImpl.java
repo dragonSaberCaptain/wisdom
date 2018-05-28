@@ -94,8 +94,6 @@ public class TUserServiceImpl implements TUserService {
     @Override
     public PageInfo<TUser> selectBySelective(TUser tUser, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum - 1, pageSize);
-        tUser.setIsDelete(Global.ZERO_STRING);
-        tUser.setIsRegister(Global.ONE_STRING);
         List<TUser> listTUsers = selectBySelective(tUser);
         //脱敏处理
         for (TUser listTUser : listTUsers) {
@@ -107,6 +105,10 @@ public class TUserServiceImpl implements TUserService {
 
     @Override
     public List<TUser> selectBySelective(TUser tUser) {
+        if (tUser != null) {
+            tUser.setIsDelete(Global.ZERO_STRING);
+            tUser.setIsRegister(Global.ONE_STRING);
+        }
         return tUserDAO.selectBySelective(tUser);
     }
 
@@ -118,6 +120,8 @@ public class TUserServiceImpl implements TUserService {
             logger.error("用户已存在");
             throw new UserException(UserEnum.ALREADY_EXISTED);
         }
+
+        //TODO 这里有待优化
         String                    housingEstate = "flib_1";
         MongoCollection<Document> collection    = MongodbUtil.createCollection(housingEstate);
         Document                  document      = collection.find(eq("phone", tUser.getMobile())).first();
@@ -130,6 +134,7 @@ public class TUserServiceImpl implements TUserService {
                 throw new UserException(UserEnum.NO_REGISTER);
             }
         }
+
         MongodbUser mongodbUser = JSON.parseObject(document.toJson(), MongodbUser.class);
 
         Date date = new Date();
@@ -179,50 +184,29 @@ public class TUserServiceImpl implements TUserService {
         logger.info("向t_user表发起查询：查询条件" + tUser.toString());
         List<TUser> tUsers = tUserDAO.selectBySelective(tUser);
         if (tUsers.size() == 0) {
-            TUser user = insertSelective(tUser);
-            if (user != null) {
-                tUsers.add(user);
-            }
-        }
+            tUser = insertSelective(tUser);
+            tUsers.add(tUser);
+        } else
         if (tUsers.size() > 1) {
             logger.error("手机号不唯一");
             throw new UserException(UserEnum.MOBILE_NOT_UNIQUE);
-        }
+        } else
 
         if (tUsers.get(0).getIsDelete().equals(Global.ONE_STRING)) {
             logger.error("用户已删除");
             throw new UserException(UserEnum.DELETED);
-        }
+        } else
         if (tUsers.get(0).getIsRegister().equals(Global.ZERO_STRING)) {
             logger.error("用户未注册");
             throw new UserException((UserEnum.UNREGISTERED));
         }
 
-        TPcell tPcell = new TPcell();
-        tPcell.setUid(tUsers.get(0).getId());
-        logger.info("向t_pcell表发起查询：查询条件" + tPcell.toString());
-        List<TPcell> tPcells = tPcellDAO.selectBySelective(tPcell);
-        if (tPcells.size() != 0) {
-            List<TRoom> tRooms;
-            TRoom       tRoom;
-            for (TPcell pcell : tPcells) {
-                tRoom = new TRoom();
-                tRoom.setPcellId(pcell.getId());
-                logger.info("向t_room表发起查询：查询条件" + tRoom.toString());
-                tRooms = tRoomDAO.selectBySelective(tRoom);
-                if (tRooms.size() != 0) {
-                    pcell.settRooms(tRooms);
-                }
-            }
-            tUsers.get(0).settPcells(tPcells);
-        }
         boolean bool  = false;
         String  msgId = stringRedisTemplate.opsForValue().get(mobile + ":msgId");
         logger.info("从缓存中获取msgid:" + msgId);
         if (StringUtil.isBlank(msgId)) {
-
-            logger.error("发验证未通过,验证码不正确");
-            throw new UserException(UserEnum.VERIFICATION_FAILURE);
+            logger.error("验证码已超时");
+            throw new UserException(UserEnum.VERIFICATION_CODE_TIMEOUT);
         }
         try {
             logger.info("发送验证信息判断验证码是否正确");
@@ -231,7 +215,7 @@ public class TUserServiceImpl implements TUserService {
                 bool = validSMSResult.getIsValid();
             }
         } catch (Exception e) {
-            logger.error("验证未通过, 验证码不正确");
+            logger.error("验证码不正确");
             throw new UserException(UserEnum.VERIFICATION_FAILURE);
         }
 
@@ -252,17 +236,37 @@ public class TUserServiceImpl implements TUserService {
             AccountIdModel accountIdModel = fluoritService.getAccountId(accessTokenModel.getData().getAccessToken(), token, password);
             logger.info("生成萤石云子token后：" + accountIdModel.getData().toString());
 
+            TPcell tPcell = new TPcell();
+            tPcell.setUid(tUsers.get(0).getId());
+            logger.info("向t_pcell表发起查询：查询条件" + tPcell.toString());
+            List<TPcell> tPcells = tPcellDAO.selectBySelective(tPcell);
+            if (tPcells.size() != 0) {
+                List<TRoom> tRooms;
+                TRoom       tRoom;
+                for (TPcell pcell : tPcells) {
+                    tRoom = new TRoom();
+                    tRoom.setPcellId(pcell.getId());
+                    logger.info("向t_room表发起查询：查询条件" + tRoom.toString());
+                    tRooms = tRoomDAO.selectBySelective(tRoom);
+                    if (tRooms.size() != 0) {
+                        pcell.settRooms(tRooms);
+                    }
+                }
+                tUsers.get(0).settPcells(tPcells);
+            }
+
             resultMap.put("userInfo", tUsers.get(0));
             resultMap.put("accountId", accountIdModel.getData().getAccountId());
             resultMap.put("token", token);
             resultMap.put("uuid", uuid);
 
+            logger.info("存储用户token到redis并设置7天有效期");
+            stringRedisTemplate.opsForValue().set(Global.LOGIN_VALID_TOKEN + token, token);
+            stringRedisTemplate.expire(Global.LOGIN_VALID_TOKEN + token, 7, TimeUnit.DAYS);
+
             logger.info("存储用户记录到redis并设置7天有效期");
             stringRedisTemplate.opsForValue().set(Global.USER_INFO, JSON.toJSONString(resultMap));
             stringRedisTemplate.expire(Global.USER_INFO, 7, TimeUnit.DAYS);
-
-            stringRedisTemplate.opsForValue().set(Global.LOGIN_VALID_TOKEN + token, token);
-            stringRedisTemplate.expire(Global.LOGIN_VALID_TOKEN + token, 7, TimeUnit.DAYS);
 
         }
         return resultMap;

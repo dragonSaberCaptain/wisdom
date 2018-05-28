@@ -1,6 +1,7 @@
 package com.jskj.wisdom.filter;
 
 import com.jskj.wisdom.config.common.Global;
+import com.jskj.wisdom.enums.UserEnum;
 import com.jskj.wisdom.utils.ResultUtil;
 import com.jskj.wisdom.utils.ip.IpUtil;
 import com.jskj.wisdom.utils.safety.VerifyUtil;
@@ -68,8 +69,8 @@ public class ApiInterceptor implements HandlerInterceptor {
         String              uuid    = (String) requestMap.get("uuid");
 
         if (StringUtil.isBlank(token)) {
-            rec.put("code", "2002");
-            rec.put("msg", "token不能为空");
+            rec.put(Global.CODE, UserEnum.TOKEN_NOT_EMPTY.getCode());
+            rec.put(Global.MSG, UserEnum.TOKEN_NOT_EMPTY.getMsg());
             ResultUtil.writeJson(rec, httpServletResponse);
             return false;
         }
@@ -81,8 +82,8 @@ public class ApiInterceptor implements HandlerInterceptor {
             logger.error("ApiInterceptor--preHandle", e);
             e.printStackTrace();
 
-            rec.put("code", "2000");
-            rec.put("msg", "token不存在或已过期，请重新登陆");
+            rec.put(Global.CODE, UserEnum.TOKEN_NO_FIND.getCode());
+            rec.put(Global.MSG, UserEnum.TOKEN_NO_FIND.getMsg());
             ResultUtil.writeJson(rec, httpServletResponse);
             return false;
         }
@@ -96,8 +97,8 @@ public class ApiInterceptor implements HandlerInterceptor {
             }
         }
 
-        rec.put("code", "2001");
-        rec.put("msg", "验证失败,token错误");
+        rec.put(Global.CODE, UserEnum.TOKEN_ERROR.getCode());
+        rec.put(Global.MSG, UserEnum.TOKEN_ERROR.getMsg());
         ResultUtil.writeJson(rec, httpServletResponse);
         return false;
     }

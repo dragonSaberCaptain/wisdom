@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jskj.wisdom.config.common.Global;
 import com.jskj.wisdom.dao.SVideoDAO;
-import com.jskj.wisdom.enums.VideoEnum;
+import com.jskj.wisdom.enums.ResultEnum;
 import com.jskj.wisdom.exception.VideoException;
 import com.jskj.wisdom.model.SVideo;
 import com.jskj.wisdom.service.SVideoService;
@@ -34,27 +34,23 @@ public class SVideoServiceImpl implements SVideoService {
     private              SVideoDAO sVideoDAO;
 
     @Override
-    public PageInfo<SVideo> selectBySelective(Long pid, boolean picToBase64, int pageNum, int pageSize) {
+    public PageInfo<SVideo> selectBySelective(SVideo record, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum - 1, pageSize);
-        SVideo sVideo = new SVideo();
-        sVideo.setPid(pid);
-        List<SVideo> listTUsers = selectBySelective(sVideo);
-        if (picToBase64) {
-            String result;
+        List<SVideo> listTUsers = sVideoDAO.selectBySelective(record);
+
+        String result;
             for (SVideo listTUser : listTUsers) {
-                result = PicUtil.getImageStr(Global.VIDEO_PICTURE_PATH + listTUser.getVideoPicUrl());
-                if (StringUtil.isBlank(result)) {
+                if (StringUtil.isBlank(listTUser.getVideoPicUrl())) {
                     continue;
                 }
+                result = "http://" + Global.HOST + "/open/getPic?source=" + listTUser.getVideoPicUrl() + "&scale=0.5&format=jpg";
                 listTUser.setVideoPicUrl(result);
             }
-        }
         return new PageInfo<>(listTUsers);
     }
 
     @Override
     public List<SVideo> selectBySelective(SVideo record) {
-        record.setIsDelete(Global.ZERO_STRING);
         return sVideoDAO.selectBySelective(record);
     }
 
@@ -64,39 +60,60 @@ public class SVideoServiceImpl implements SVideoService {
     }
 
     @Override
-    public int insertSelective(SVideo record) {
+    public int insertSelective(SVideo record, double scale, MultipartFile imageFile) {
+        String url = null;
+        if (imageFile != null) {
+            if (imageFile.getSize() >= Global.FILE_SIZE) {
+                throw new VideoException(ResultEnum.FILE_TOO_BIG);
+            }
+            url = PicUtil.savePic(Global.VIDEO_PICTURE_PATH, imageFile, scale);
+        }
+        Date   date   = new Date();
+        SVideo sVideo = new SVideo();
+        sVideo.setPid(record.getPid());
+        sVideo.setVideoPathUrl(record.getVideoPathUrl());
+        List<SVideo> sVideos = sVideoDAO.selectBySelective(sVideo);
+        if (sVideos.size() > 0) {
+            sVideos.get(0).setVideoPicUrl(url);
+            sVideos.get(0).setVideoType(record.getVideoType());
+            sVideos.get(0).setVideoName(record.getVideoName());
+            sVideos.get(0).setUpdateTime(date);
+            return sVideoDAO.updateByPrimaryKeySelective(sVideos.get(0));
+        }
+        sVideo.setVideoName(record.getVideoName());
+        sVideo.setVideoType(record.getVideoType());
+        sVideo.setVideoPicUrl(url);
+        sVideo.setUpdateTime(date);
+        sVideo.setCreateTime(date);
         return sVideoDAO.insertSelective(record);
     }
 
     @Override
-    public int insert(Long pid, String videoPathUrl, double scale, MultipartFile imageFile) {
-        if (imageFile == null) {
-            throw new VideoException(VideoEnum.PIC_IS_EMPTY);
-        }
-
-        if (imageFile.getSize() >= Global.FILE_SIZE) {
-            throw new VideoException(VideoEnum.PIC_TOO_BIG);
+    public int insert(SVideo record, double scale, MultipartFile imageFile) {
+        String url = null;
+        if (imageFile != null) {
+            if (imageFile.getSize() >= Global.FILE_SIZE) {
+                throw new VideoException(ResultEnum.FILE_TOO_BIG);
+            }
+            url = PicUtil.savePic(Global.VIDEO_PICTURE_PATH, imageFile, scale);
         }
         Date   date   = new Date();
         SVideo sVideo = new SVideo();
-        sVideo.setPid(pid);
-        sVideo.setVideoPathUrl(videoPathUrl);
+        sVideo.setPid(record.getPid());
+        sVideo.setVideoPathUrl(record.getVideoPathUrl());
         List<SVideo> sVideos = sVideoDAO.selectBySelective(sVideo);
-
-        String url = PicUtil.savePic(imageFile, scale);
-
         if (sVideos.size() > 0) {
-            sVideo = new SVideo();
-            sVideo.setId(sVideos.get(0).getId());
-            sVideo.setUpdateTime(date);
-            sVideo.setVideoPicUrl(url);
-            return sVideoDAO.updateByPrimaryKeySelective(sVideo);
+            sVideos.get(0).setVideoPicUrl(url);
+            sVideos.get(0).setVideoType(record.getVideoType());
+            sVideos.get(0).setVideoName(record.getVideoName());
+            sVideos.get(0).setUpdateTime(date);
+            return sVideoDAO.updateByPrimaryKeySelective(sVideos.get(0));
         }
-
-        sVideo.setIsDelete(Global.ZERO_STRING);
+        sVideo.setVideoName(record.getVideoName());
+        sVideo.setVideoType(record.getVideoType());
         sVideo.setVideoPicUrl(url);
-        sVideo.setCreateTime(date);
         sVideo.setUpdateTime(date);
+        sVideo.setCreateTime(date);
         return sVideoDAO.insert(sVideo);
     }
 
@@ -107,9 +124,6 @@ public class SVideoServiceImpl implements SVideoService {
 
     @Override
     public int updateByPrimaryKey(SVideo record) {
-        if (record.getId() <= 0) {
-            throw new VideoException(VideoEnum.UPDATE_FAIL);
-        }
         return sVideoDAO.updateByPrimaryKey(record);
     }
 

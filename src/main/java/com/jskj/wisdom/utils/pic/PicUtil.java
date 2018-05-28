@@ -1,6 +1,5 @@
 package com.jskj.wisdom.utils.pic;
 
-import com.jskj.wisdom.config.common.Global;
 import com.jskj.wisdom.utils.safety.UuidUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
@@ -23,11 +22,10 @@ import java.io.InputStream;
 public class PicUtil {
     private static final Logger logger = LoggerFactory.getLogger(PicUtil.class);
 
-    public static String savePic(MultipartFile imageFile, double scale) {
+    public static String savePic(String savePrefix, MultipartFile imageFile, double scale) {
         long timeStamp = System.currentTimeMillis();
 
-
-        String filePath = Global.VIDEO_PICTURE_PATH + timeStamp + "/";
+        String filePath = savePrefix + timeStamp + "/";
         File   picFile  = new File(filePath);
         //判断图片路径是否存在，若不存在则创建
         boolean bool = true;
@@ -43,7 +41,7 @@ public class PicUtil {
             ThumbnailatorUtil.ImgScale(imageFile, picPath, scale);
         }
         //返回的路径
-        return timeStamp + "/" + Uuid + ".jpg";
+        return picPath + ".jpg";
     }
 
     public static String getImageStr(String imgFile) {// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理

@@ -7,19 +7,19 @@ import com.jskj.wisdom.enums.ResultEnum;
  *
  * @author dragonSaberCaptain
  * @packageName com.jskj.wisdom.exception
- * @description
- * @date 2018-05-16 09:30 星期三
+ * //TODO
+ * @date 2018-05-28 16:29 Mon
  */
-public class VideoException extends RuntimeException {
+public class PropertyException extends RuntimeException {
     private String code;
     private String msg;
 
-    public VideoException(ResultEnum resultEnum) {
+    public PropertyException(ResultEnum resultEnum) {
         this.code = resultEnum.getCode();
         this.msg = resultEnum.getMsg();
     }
 
-    public VideoException(String code, String msg) {
+    public PropertyException(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }

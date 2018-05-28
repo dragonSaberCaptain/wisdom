@@ -2,10 +2,15 @@ package com.jskj.wisdom.controller;
 
 import cn.jsms.api.SendSMSResult;
 import com.jskj.wisdom.config.jpush.JpushConfig;
+import com.jskj.wisdom.enums.ResultEnum;
 import com.jskj.wisdom.enums.UserEnum;
 import com.jskj.wisdom.model.TUser;
 import com.jskj.wisdom.service.TUserService;
 import com.jskj.wisdom.utils.jpush.JpushSMSUtil;
+import com.jskj.wisdom.utils.pic.PicUtil;
+import com.jskj.wisdom.utils.pic.ThumbnailatorUtil;
+import com.jskj.wisdom.utils.string.StringUtil;
+import com.jskj.wisdom.vo.ResultVo;
 import com.jskj.wisdom.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +69,6 @@ public class LoginController {
             logger.info("发送短信验证码:" + sendSMSResult.toString());
             stringRedisTemplate.opsForValue().set(mobile + ":msgId", sendSMSResult.getMessageId());
             logger.info("存储msgId并设置有效期:" + mobile + ":msgId", sendSMSResult.getMessageId());
-
             return new UserVo(UserEnum.OK);
         }
         return new UserVo(UserEnum.NO_FIND_MOBILE);
@@ -84,6 +93,45 @@ public class LoginController {
         }
         return new UserVo(UserEnum.FAIL);
     }
+
+    @GetMapping("/open/getPic")
+    @ApiOperation(value = "获取图片", notes = "可以通过改变缩放比例和类型来输出图片")
+    @ResponseBody
+    public ResultVo getPic(@RequestParam(name = "source") String source, @RequestParam(name = "toBase64", defaultValue = "false", required = false) boolean toBase64, @RequestParam(name = "scale") double scale, @RequestParam(name = "format") String format, HttpServletResponse response) {
+        if (toBase64) {
+            String imageStr = PicUtil.getImageStr(source);
+            if (StringUtil.isBlank(imageStr)) {
+                return new ResultVo(ResultEnum.FAIL);
+            }
+            return new ResultVo(ResultEnum.OK, imageStr);
+        }
+        ServletOutputStream out = null;
+        try {
+            out = response.getOutputStream();
+            if (scale > 10L) {
+                scale = 10L;
+            }
+            BufferedImage buf = ThumbnailatorUtil.ImgBufferedImage(source, scale);
+            if (buf != null) {
+                ImageIO.write(buf, format, out);
+            }
+        } catch (Exception e) {
+            logger.error("LoginController--getPic", e);
+            e.printStackTrace();
+            return new ResultVo(ResultEnum.FAIL);
+        } finally {
+            if (out != null) {
+                try {
+                    out.flush();
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return new ResultVo(ResultEnum.OK);
+    }
+
 
     @RequestMapping({"/", "/index"})
     public String index() {

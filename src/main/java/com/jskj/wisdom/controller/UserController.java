@@ -26,7 +26,7 @@ public class UserController {
     private TUserService tUserService;
 
     @PostMapping("/user/updateUserInfo")
-    @ApiOperation(value = "修改用户信息", notes = "该接口用于修改用户的相关信息")
+    @ApiOperation(value = "修改用户信息(按条件)", notes = "该接口用于修改用户的相关信息")
     @ResponseBody
     @ApiResponses({@ApiResponse(code = 200, message = "成功"),
             @ApiResponse(code = 1002, message = "失败"),
