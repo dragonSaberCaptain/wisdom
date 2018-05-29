@@ -11,8 +11,10 @@ import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,8 +28,22 @@ import java.util.Map;
  * @date 2018-05-23 16:40 Wed
  */
 @Configuration
+@PropertySource("classpath:application-redis.yml")
 public class ShiroConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ShiroConfiguration.class);
+
+    @Value("${spring.redis.host}")
+    private String host;
+
+    @Value("${spring.redis.port}")
+    private int port;
+
+    @Value("${spring.redis.password}")
+    private String password;
+
+    @Value("${spring.redis.database}")
+    private int database;
+
 
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
@@ -132,12 +148,14 @@ public class ShiroConfiguration {
      */
     public RedisManager redisManager() {
         RedisManager redisManager = new RedisManager();
-        redisManager.setHost("127.0.0.1");
-        redisManager.setPort(6379);
+        redisManager.setHost(host);
+        redisManager.setPort(port);
         // 配置缓存过期时间
         redisManager.setExpire(1800);
-        redisManager.setTimeout(5000);
-        redisManager.setPassword(null);
+        redisManager.setDatabase(database);
+        //设置超时时间
+        redisManager.setTimeout(10000);
+        redisManager.setPassword(password);
         return redisManager;
     }
 

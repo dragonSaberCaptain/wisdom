@@ -168,7 +168,7 @@ public class DruidConfiguration {
             logger.error("druid configuration initialization filter", e);
         }
         datasource.setConnectionProperties(connectionProperties);
-        logger.info("----------------------------------注入Druid(德鲁伊)-----------------------------");
+        logger.info("----------------------------------------【注入Druid(德鲁伊)】------------------------------------");
         return datasource;
     }
 }

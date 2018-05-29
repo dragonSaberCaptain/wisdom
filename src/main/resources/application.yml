@@ -10,7 +10,7 @@ spring:
     name: wisdom
   profiles:
 #    运行环境（dev/prod) 数据库（mysql/oracle）
-    active: dev,mysql,redis
+    active: mysql,redis
   jpa:
     show-sql: true
     generate-ddl: true
@@ -43,4 +43,3 @@ logging:
   config: classpath:logback-spring.xml
   level:
     org.springframework.security: debug
-

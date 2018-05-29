@@ -37,6 +37,6 @@ public class Application {
      */
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        logger.info("My Spring Boot Application Started Success");
+        logger.info("-------------------------------------------【项目启动成功】--------------------------------------");
     }
 }
