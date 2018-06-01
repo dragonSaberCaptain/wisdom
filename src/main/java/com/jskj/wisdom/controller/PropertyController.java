@@ -41,23 +41,6 @@ public class PropertyController {
         return new ResultVo(ResultEnum.FAIL);
     }
 
-    @PutMapping(value = "/property/insert")
-    @ApiOperation(value = "添加物业信息", notes = "添加对象所有字段")
-    @ResponseBody
-    @ApiResponses({@ApiResponse(code = 200, message = "成功"),
-            @ApiResponse(code = 1002, message = "失败"),
-            @ApiResponse(code = 500, message = "服务器内部异常")})
-    @Deprecated
-    public ResultVo insert(@ApiParam(name = "公告对象", value = "传入json格式") SProperty sProperty,
-                           @RequestParam(value = "scale", defaultValue = "1", required = false) double scale,
-                           @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) {
-        int num = sPropertyService.insert(sProperty, scale, imageFile);
-        if (num > 0) {
-            return new ResultVo(ResultEnum.OK);
-        }
-        return new ResultVo(ResultEnum.FAIL);
-    }
-
     @PutMapping("/property/insertSelective")
     @ApiOperation(value = "添加物业信息(按条件)", notes = "添加对象对应字段")
     @ResponseBody
@@ -120,19 +103,4 @@ public class PropertyController {
 
     }
 
-
-    @PostMapping("/property/updateByPrimaryKey")
-    @ApiOperation(value = "更新物业信息", notes = "根据ID修改所有字段(必须含ID）")
-    @ResponseBody
-    @ApiResponses({@ApiResponse(code = 200, message = "成功"),
-            @ApiResponse(code = 1002, message = "失败"),
-            @ApiResponse(code = 500, message = "服务器内部异常")})
-    @Deprecated
-    public ResultVo updateByPrimaryKey(@RequestBody @ApiParam(name = "公告对象 ", value = "传入json格式") SProperty record) {
-        int num = sPropertyService.updateByPrimaryKey(record);
-        if (num > 0) {
-            return new ResultVo(ResultEnum.OK);
-        }
-        return new ResultVo(ResultEnum.FAIL);
-    }
 }

@@ -18,15 +18,11 @@ public interface SPropertyService {
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(SProperty record, double scale, MultipartFile imageFile);
-
     int insertSelective(SProperty record, double scale, MultipartFile imageFile);
 
     SProperty selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(SProperty record);
-
-    int updateByPrimaryKey(SProperty record);
 
     PageInfo<SProperty> selectBySelective(SProperty record, int pageNum, int pageSize);
 

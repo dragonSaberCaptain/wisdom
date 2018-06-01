@@ -23,11 +23,7 @@ public interface SVideoService {
 
     int insertSelective(SVideo record, double scale, MultipartFile imageFile);
 
-    int insert(SVideo record, double scale, MultipartFile imageFile);
-
     int updateByPrimaryKeySelective(SVideo record);
-
-    int updateByPrimaryKey(SVideo record);
 
     int deleteByPrimaryKey(Long id);
 }

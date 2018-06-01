@@ -110,10 +110,6 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new UserException(UserEnum.PROHIBIT_LANDING);
         }
 
-        //设置用户session
-//        Session session = SecurityUtils.getSubject().getSession();
-//        session.setAttribute("user", sysUsers.get(0));
-
         String md5Salt = DigestUtils.md5Hex(Global.MD5_SALT + sysUsers.get(0).getLoginName());
 
         return new SimpleAuthenticationInfo(sysUsers.get(0), sysUsers.get(0).getPassword(), ByteSource.Util.bytes(md5Salt), getName());

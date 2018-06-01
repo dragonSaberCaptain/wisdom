@@ -6,6 +6,7 @@ import com.jskj.wisdom.config.common.Global;
 import com.jskj.wisdom.dao.SNoticeDAO;
 import com.jskj.wisdom.model.SNotice;
 import com.jskj.wisdom.service.SNoticeService;
+import com.jskj.wisdom.utils.string.StringUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,14 +32,6 @@ public class SNoticeServiceImpl implements SNoticeService {
     }
 
     @Override
-    public int insert(SNotice record) {
-        Date date = new Date();
-        record.setCreateTime(date);
-        record.setUpdateTime(date);
-        return sNoticeDAO.insert(record);
-    }
-
-    @Override
     public int insertSelective(SNotice record) {
         Date date = new Date();
         record.setUpdateTime(date);
@@ -58,16 +51,7 @@ public class SNoticeServiceImpl implements SNoticeService {
     }
 
     @Override
-    public int updateByPrimaryKey(SNotice record) {
-        record.setUpdateTime(new Date());
-        return sNoticeDAO.updateByPrimaryKey(record);
-    }
-
-    @Override
     public List<SNotice> selectBySelective(SNotice record) {
-        if (record != null) {
-            record.setIsDelete(Global.ZERO_STRING);
-        }
         return sNoticeDAO.selectBySelective(record);
     }
 
@@ -75,8 +59,15 @@ public class SNoticeServiceImpl implements SNoticeService {
     public PageInfo<SNotice> selectBySelective(SNotice record, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum - 1, pageSize);
         List<SNotice> sNotices = selectBySelective(record);
+
+        String result;
+
         for (SNotice sNotice : sNotices) {
-            sNotice.setNoticePath(Global.NOTICE_PICTURE_PATH + sNotice.getNoticePath());
+            if (StringUtil.isBlank(sNotice.getNoticePath())) {
+                continue;
+            }
+            result = "http://" + Global.HTTP_HOST_POST + "/open/getPic?source=" + sNotice.getNoticePath() + "&scale=0.5&format=jpg";
+            sNotice.setNoticePath(result);
         }
         return new PageInfo<>(sNotices);
     }

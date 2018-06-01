@@ -36,30 +36,13 @@ public class SPropertyServiceImpl implements SPropertyService {
     }
 
     @Override
-    public int insert(SProperty record, double scale, MultipartFile imageFile) {
-        String url = null;
-        if (imageFile != null) {
-            if (imageFile.getSize() >= Global.FILE_SIZE) {
-                throw new PropertyException(ResultEnum.FILE_TOO_BIG);
-            }
-            url = PicUtil.savePic(Global.PROPERTY_PICTURE_PATH, imageFile, scale);
-        }
-
-        Date date = new Date();
-        record.setCreateTime(date);
-        record.setUpdateTime(date);
-        record.setPicPath(url);
-        return sPropertyDAO.insert(record);
-    }
-
-    @Override
     public int insertSelective(SProperty record, double scale, MultipartFile imageFile) {
         String url = null;
         if (imageFile != null) {
             if (imageFile.getSize() >= Global.FILE_SIZE) {
                 throw new PropertyException(ResultEnum.FILE_TOO_BIG);
             }
-            url = PicUtil.savePic(Global.PROPERTY_PICTURE_PATH, imageFile, scale);
+            url = PicUtil.savePic(Global.PIC_PREFIX, Global.PROPERTY_PICTURE, imageFile, scale);
         }
 
         Date date = new Date();
@@ -78,12 +61,6 @@ public class SPropertyServiceImpl implements SPropertyService {
     public int updateByPrimaryKeySelective(SProperty record) {
         record.setUpdateTime(new Date());
         return sPropertyDAO.updateByPrimaryKeySelective(record);
-    }
-
-    @Override
-    public int updateByPrimaryKey(SProperty record) {
-        record.setUpdateTime(new Date());
-        return sPropertyDAO.updateByPrimaryKey(record);
     }
 
     @Override

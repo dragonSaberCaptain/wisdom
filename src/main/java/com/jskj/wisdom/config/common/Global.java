@@ -1,5 +1,8 @@
 package com.jskj.wisdom.config.common;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+
 /**
  * Copyright © 2018 dragonSaberCaptain. All rights reserved.
  *
@@ -8,6 +11,7 @@ package com.jskj.wisdom.config.common;
  * @description 全局变量
  * @date 2018-05-06 14:57 星期日
  */
+@PropertySource("classpath:application.yml")
 public class Global {
     //---------------------------------------------------------------常量-------------------------------------------------------------------------------
 
@@ -52,21 +56,30 @@ public class Global {
     //---------------------------------------------------------------路径-------------------------------------------------------------------------------
 
     /**
-     * 视频缩略图路径
+     * 缩略图前缀
      */
-    public static final String USER_PICTURE_PATH = "C:/picture/user_picture/";
+    public static final String PIC_PREFIX = "C:/dragonSaberCaptain/pictures_pic/";
 
-    public static final String VIDEO_PICTURE_PATH = "C:/picture/video_picture/";
+    public static final String USER_PICTURE = "/user_picture/";
 
-    public static final String PROPERTY_PICTURE_PATH = "C:/picture/property_picture/";
+    public static final String VIDEO_PICTURE = "/video_picture/";
 
-    public static final String NOTICE_PICTURE_PATH = "C:/picture/notice_picture/";
+    public static final String PROPERTY_PICTURE = "/property_picture/";
+
+    public static final String NOTICE_PICTURE = "/notice_picture/";
 
     //---------------------------------------------------------------ip-------------------------------------------------------------------------------
 
     public static final String LOCALHOST = "127.0.0.1";
 
     public static final String HOST = "192.168.0.119";
+
+    @Value("${server.port}")
+    public static final String PORT = "80";
+
+    public static final String HTTP_HOST_POST = "http://" + HOST + ":" + PORT;
+
+    public static final String HTTPS_HOST_POST = "https://" + HOST + ":" + PORT;
 
     //---------------------------------------------------------------前缀-------------------------------------------------------------------------------
 

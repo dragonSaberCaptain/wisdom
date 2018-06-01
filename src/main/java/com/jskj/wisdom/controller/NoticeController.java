@@ -41,22 +41,6 @@ public class NoticeController {
         return new ResultVo(ResultEnum.FAIL);
     }
 
-    @PutMapping("/notice/insert")
-    @ApiOperation(value = "添加公告", notes = "添加对象所有字段")
-    @ResponseBody
-    @ApiResponses({@ApiResponse(code = 200, message = "成功"),
-            @ApiResponse(code = 1002, message = "失败"),
-            @ApiResponse(code = 500, message = "服务器内部异常")})
-    @Deprecated
-    public ResultVo insert(@RequestBody @ApiParam(name = "公告对象", value = "传入json格式") SNotice record) {
-        int num = sNoticeService.insert(record);
-        if (num > 0) {
-            return new ResultVo(ResultEnum.OK);
-        }
-        return new ResultVo(ResultEnum.FAIL);
-
-    }
-
     @PutMapping("/notice/insertSelective")
     @ApiOperation(value = "添加公告(按条件)", notes = "添加对象对应字段")
     @ResponseBody
@@ -118,18 +102,4 @@ public class NoticeController {
 
     }
 
-    @PostMapping("/notice/updateByPrimaryKey")
-    @ApiOperation(value = "更新公告", notes = "根据ID修改所有字段(必须含ID）")
-    @ResponseBody
-    @ApiResponses({@ApiResponse(code = 200, message = "成功"),
-            @ApiResponse(code = 1002, message = "失败"),
-            @ApiResponse(code = 500, message = "服务器内部异常")})
-    @Deprecated
-    public ResultVo updateByPrimaryKey(@RequestBody @ApiParam(name = "公告对象 ", value = "传入json格式") SNotice record) {
-        int num = sNoticeService.updateByPrimaryKey(record);
-        if (num > 0) {
-            return new ResultVo(ResultEnum.OK);
-        }
-        return new ResultVo(ResultEnum.FAIL);
-    }
 }

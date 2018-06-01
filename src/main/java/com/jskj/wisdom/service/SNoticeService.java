@@ -17,15 +17,11 @@ public interface SNoticeService {
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(SNotice record);
-
     int insertSelective(SNotice record);
 
     SNotice selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(SNotice record);
-
-    int updateByPrimaryKey(SNotice record);
 
     List<SNotice> selectBySelective(SNotice record);
 

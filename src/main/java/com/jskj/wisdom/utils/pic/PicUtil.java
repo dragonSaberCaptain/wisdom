@@ -22,10 +22,11 @@ import java.io.InputStream;
 public class PicUtil {
     private static final Logger logger = LoggerFactory.getLogger(PicUtil.class);
 
-    public static String savePic(String savePrefix, MultipartFile imageFile, double scale) {
+    public static String savePic(String picPrefix, String type_pic, MultipartFile imageFile, double scale) {
         long timeStamp = System.currentTimeMillis();
 
-        String filePath = savePrefix + timeStamp + "/";
+        String filePath = picPrefix + type_pic + timeStamp + "/";
+
         File   picFile  = new File(filePath);
         //判断图片路径是否存在，若不存在则创建
         boolean bool = true;
@@ -41,7 +42,7 @@ public class PicUtil {
             ThumbnailatorUtil.ImgScale(imageFile, picPath, scale);
         }
         //返回的路径
-        return picPath + ".jpg";
+        return type_pic + timeStamp + "/" + Uuid + ".jpg";
     }
 
     public static String getImageStr(String imgFile) {// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理

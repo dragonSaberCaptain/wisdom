@@ -1,7 +1,9 @@
 package com.jskj.wisdom.config.web;
 
+import com.jskj.wisdom.config.common.Global;
 import com.jskj.wisdom.filter.ApiInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -43,5 +45,11 @@ public class WebConfig implements WebMvcConfigurer {
         stringList.add("/error");
         //拦截规则:排除上面的，其余的都拦截
         registry.addInterceptor(new ApiInterceptor()).addPathPatterns("/**").excludePathPatterns(stringList);
+    }
+
+    //允许跨域请求
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/").allowedOrigins(Global.HTTP_HOST_POST);
     }
 }

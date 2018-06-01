@@ -1,6 +1,7 @@
 package com.jskj.wisdom.controller;
 
 import cn.jsms.api.SendSMSResult;
+import com.jskj.wisdom.config.common.Global;
 import com.jskj.wisdom.config.jpush.JpushConfig;
 import com.jskj.wisdom.enums.ResultEnum;
 import com.jskj.wisdom.enums.UserEnum;
@@ -16,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -102,6 +104,8 @@ public class LoginController {
     @ApiOperation(value = "获取图片", notes = "可以通过改变缩放比例和类型来输出图片")
     @ResponseBody
     public ResultVo getPic(@RequestParam(name = "source") String source, @RequestParam(name = "toBase64", defaultValue = "false", required = false) boolean toBase64, @RequestParam(name = "scale") double scale, @RequestParam(name = "format") String format, HttpServletResponse response) {
+
+        source = Global.PIC_PREFIX + source;
         if (toBase64) {
             String imageStr = PicUtil.getImageStr(source);
             if (StringUtil.isBlank(imageStr)) {
@@ -152,7 +156,7 @@ public class LoginController {
             return "redirect:swagger-ui.html";
         }
         // 把用户名和密码封装为UsernamePasswordToken 对象
-        UsernamePasswordToken token = new UsernamePasswordToken(userName.trim(), password.trim(), rememberMe);
+        UsernamePasswordToken token = new UsernamePasswordToken(userName.trim(), DigestUtils.md5Hex(password.trim()), rememberMe);
         try {
             // 执行登陆
             currentUser.login(token);
@@ -187,6 +191,12 @@ public class LoginController {
     public String login() {
         System.out.printf("--------------LoginController.login: %s %n", "login");
         return "/login";
+    }
+
+    @RequestMapping("/register")
+    public String register() {
+        System.out.printf("--------------LoginController.register: %s %n", "register");
+        return "/register";
     }
 
     @RequestMapping("/403")

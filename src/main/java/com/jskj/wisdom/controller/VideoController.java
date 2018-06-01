@@ -62,25 +62,6 @@ public class VideoController {
         return new ResultVo(ResultEnum.FAIL);
     }
 
-
-    @PutMapping(value = "/video/insertVideo")
-    @ApiOperation(value = "添加视频", notes = "添加对象所有字段")
-    @ResponseBody
-    @ApiResponses({@ApiResponse(code = 200, message = "成功"),
-            @ApiResponse(code = 1002, message = "失败"),
-            @ApiResponse(code = 500, message = "服务器内部异常")})
-    @Deprecated
-    public ResultVo insertVideo(
-            @ApiParam(name = "视频对象 ", value = "传入json格式", required = true) SVideo sVideo,
-            @RequestParam(value = "scale") double scale,
-            @RequestParam(value = "imageFile") MultipartFile imageFile) {
-        int num = sVideoService.insert(sVideo, scale, imageFile);
-        if (num > 0) {
-            return new ResultVo(ResultEnum.OK);
-        }
-        return new ResultVo(ResultEnum.FAIL);
-    }
-
     @PutMapping("/video/insertVideoBySelective")
     @ApiOperation(value = "添加视频(按条件)", notes = "添加对象对应字段")
     @ResponseBody
@@ -91,23 +72,6 @@ public class VideoController {
                                            @RequestParam(value = "scale") double scale,
                                            @RequestParam(value = "imageFile") MultipartFile imageFile) {
         int num = sVideoService.insertSelective(sVideo, scale, imageFile);
-        if (num > 0) {
-            return new ResultVo(ResultEnum.OK);
-        }
-        return new ResultVo(ResultEnum.FAIL);
-    }
-
-
-    @PostMapping("/video/updateVideo")
-    @ApiOperation(value = "更新视频", notes = "根据ID修改所有字段(必须含ID）")
-    @ResponseBody
-    @ApiResponses({@ApiResponse(code = 200, message = "成功"),
-            @ApiResponse(code = 1002, message = "失败"),
-            @ApiResponse(code = 1003, message = "更新失败,视频不存在或id不正确"),
-            @ApiResponse(code = 500, message = "服务器内部异常")})
-    @Deprecated
-    public ResultVo updateVideo(@RequestBody @ApiParam(name = "视频对象 ", value = "传入json格式", required = true) SVideo sVideo) {
-        int num = sVideoService.updateByPrimaryKey(sVideo);
         if (num > 0) {
             return new ResultVo(ResultEnum.OK);
         }

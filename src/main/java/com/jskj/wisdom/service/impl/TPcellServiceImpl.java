@@ -1,6 +1,5 @@
 package com.jskj.wisdom.service.impl;
 
-import com.jskj.wisdom.config.common.Global;
 import com.jskj.wisdom.dao.TPcellDAO;
 import com.jskj.wisdom.model.TPcell;
 import com.jskj.wisdom.service.TPcellService;
@@ -24,9 +23,6 @@ public class TPcellServiceImpl implements TPcellService {
 
     @Override
     public List<TPcell> selectBySelective(TPcell tPcell) {
-        if (tPcell != null) {
-            tPcell.setIsDelete(Global.ZERO_STRING);
-        }
         return tPcellDAO.selectBySelective(tPcell);
     }
 }

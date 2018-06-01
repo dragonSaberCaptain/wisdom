@@ -105,10 +105,6 @@ public class TUserServiceImpl implements TUserService {
 
     @Override
     public List<TUser> selectBySelective(TUser tUser) {
-        if (tUser != null) {
-            tUser.setIsDelete(Global.ZERO_STRING);
-            tUser.setIsRegister(Global.ONE_STRING);
-        }
         return tUserDAO.selectBySelective(tUser);
     }
 
