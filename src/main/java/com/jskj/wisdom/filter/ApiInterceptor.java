@@ -93,6 +93,7 @@ public class ApiInterceptor implements HandlerInterceptor {
             String  webSignMsg = DigestUtils.md5Hex(Global.MD5_SALT + uuid).toUpperCase();
             boolean bool       = webSignMsg.equalsIgnoreCase(signMsg);
             if (bool) {
+                logger.info("ApiInterceptor--preHandle", "验证通过");
                 return true;
             }
         }

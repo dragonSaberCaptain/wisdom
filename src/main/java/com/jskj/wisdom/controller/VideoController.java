@@ -63,7 +63,7 @@ public class VideoController {
     }
 
 
-    @PutMapping(value = "/video/insertVideo", consumes = "multipart/*", headers = "content-type=multipart/form-data")
+    @PutMapping(value = "/video/insertVideo")
     @ApiOperation(value = "添加视频", notes = "添加对象所有字段")
     @ResponseBody
     @ApiResponses({@ApiResponse(code = 200, message = "成功"),

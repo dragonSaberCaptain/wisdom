@@ -2,6 +2,7 @@ package com.jskj.wisdom.service;
 
 import com.github.pagehelper.PageInfo;
 import com.jskj.wisdom.model.TUser;
+import org.springframework.cache.annotation.CachePut;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @date 2018-05-04 12:23 星期五
  */
 public interface TUserService {
+    @CachePut(key = "#p0.id")
     int updateByPrimaryKeySelective(TUser tUser);
 
     TUser selectByPrimaryKey(Long userId);

@@ -13,7 +13,6 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
@@ -110,11 +109,13 @@ public class ShiroRealm extends AuthorizingRealm {
         if (Global.ONE_STRING.equals(sysUsers.get(0).getIsDelete())) {
             throw new UserException(UserEnum.PROHIBIT_LANDING);
         }
-        String md5Salt = DigestUtils.md5Hex(Global.MD5_SALT + sysUsers.get(0).getPassword());
 
         //设置用户session
-        Session session = SecurityUtils.getSubject().getSession();
+//        Session session = SecurityUtils.getSubject().getSession();
 //        session.setAttribute("user", sysUsers.get(0));
-        return new SimpleAuthenticationInfo(sysUsers.get(0), Global.MD5_SALT + sysUsers.get(0).getPassword(), ByteSource.Util.bytes(md5Salt), getName());
+
+        String md5Salt = DigestUtils.md5Hex(Global.MD5_SALT + sysUsers.get(0).getLoginName());
+
+        return new SimpleAuthenticationInfo(sysUsers.get(0), sysUsers.get(0).getPassword(), ByteSource.Util.bytes(md5Salt), getName());
     }
 }

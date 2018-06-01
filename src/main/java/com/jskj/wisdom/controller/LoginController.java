@@ -16,6 +16,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -134,9 +138,49 @@ public class LoginController {
 
 
     @RequestMapping({"/", "/index"})
-    public String index() {
-        System.out.printf("--------------LoginController.login: %s %n", "index");
-        return "/index";
+    public String index(@RequestParam(name = "userName") String userName, @RequestParam(name = "password") String password, @RequestParam(name = "rememberMe", required = false, defaultValue = "false") boolean rememberMe) {
+//        注册使用
+//        String result = new Md5Hash("fe7bfb09becc4e645420f3ad67b5147c(ps：前端传入的md5后的密码值)", DigestUtils.md5Hex(Global.MD5_SALT + userName), 1024).toString();
+
+        // 获取当前的Subject
+        Subject currentUser = SecurityUtils.getSubject();
+
+        // 测试当前的用户是否已经被认证，即是否已经登陆
+        // 调用Subject的isAuthenticated
+        if (currentUser.isAuthenticated()) {
+            System.out.printf("--------------LoginController.index: %s %n", "已登录！");
+            return "redirect:swagger-ui.html";
+        }
+        // 把用户名和密码封装为UsernamePasswordToken 对象
+        UsernamePasswordToken token = new UsernamePasswordToken(userName.trim(), password.trim(), rememberMe);
+        try {
+            // 执行登陆
+            currentUser.login(token);
+            return "redirect:swagger-ui.html";
+        } catch (IncorrectCredentialsException e) {
+            System.out.println("登录密码错误!!!" + e);
+        } catch (ExcessiveAttemptsException e) {
+            System.out.println("登录失败次数过多!!!" + e);
+        } catch (LockedAccountException e) {
+            System.out.println("帐号已被锁定!!!" + e);
+        } catch (DisabledAccountException e) {
+            System.out.println("帐号已被禁用!!!" + e);
+        } catch (ExpiredCredentialsException e) {
+            System.out.println("帐号已过期!!!" + e);
+        } catch (UnknownAccountException e) {
+            System.out.println("帐号不存在!!!" + e);
+        } catch (UnauthorizedException e) {
+            System.out.println("您没有得到相应的授权！" + e);
+        } catch (Exception e) {
+            System.out.println("出错！！！" + e);
+        }
+        return "/login";
+    }
+
+    @RequestMapping("/ajaxLogin")
+    public String ajaxLogin() {
+        System.out.printf("--------------LoginController.login: %s %n", "ajaxLogin");
+        return "/login";
     }
 
     @RequestMapping("/login")

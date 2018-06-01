@@ -29,6 +29,7 @@ spring:
         minIdle: 4
     # 连接超时时间（毫秒）
     timeout: 10000ms
+
 #    sentinel:
       #哨兵模式，不使用则不用开启）Redis服务器的名称。
 #      master:

@@ -1,5 +1,6 @@
 package com.jskj.wisdom.config.shiro;
 
+import com.jskj.wisdom.utils.string.StringUtil;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -58,8 +59,6 @@ public class ShiroConfiguration {
 //        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
 //        shiroFilterFactoryBean.setLoginUrl("login");
 //
-//
-//
 //        // 配置不会被拦截的链接 顺序判断
 //        filterChainDefinitionMap.put("/static/**", "anon");
 //
@@ -105,9 +104,10 @@ public class ShiroConfiguration {
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         //散列算法:这里使用MD5算法;
-        hashedCredentialsMatcher.setHashAlgorithmName("md5");
+        hashedCredentialsMatcher.setHashAlgorithmName("MD5");
         //散列的次数，比如散列两次，相当于 md5(md5(""));
-        hashedCredentialsMatcher.setHashIterations(5);
+        hashedCredentialsMatcher.setHashIterations(1024);
+        //表示是否存储散列后的密码为16进制，需要和生成密码时的一样，默认是base64；
         hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
         return hashedCredentialsMatcher;
     }
@@ -155,7 +155,9 @@ public class ShiroConfiguration {
         redisManager.setDatabase(database);
         //设置超时时间
         redisManager.setTimeout(10000);
-        redisManager.setPassword(password);
+        if (StringUtil.isNotBlank(password)) {
+            redisManager.setPassword(password);
+        }
         return redisManager;
     }
 
@@ -198,5 +200,4 @@ public class ShiroConfiguration {
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
-
 }

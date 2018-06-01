@@ -66,7 +66,7 @@ public class Global {
 
     public static final String LOCALHOST = "127.0.0.1";
 
-    public static final String HOST = "192.168.0.116";
+    public static final String HOST = "192.168.0.119";
 
     //---------------------------------------------------------------前缀-------------------------------------------------------------------------------
 

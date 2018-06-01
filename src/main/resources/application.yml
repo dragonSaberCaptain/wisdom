@@ -9,7 +9,6 @@ spring:
   application:
     name: wisdom
   profiles:
-#    运行环境（dev/prod) 数据库（mysql/oracle）
     active: mysql,redis
   jpa:
     show-sql: true
@@ -20,7 +19,7 @@ spring:
     mongodb:
       uri: mongodb://tshan_jv:javapwd@117.173.135.6:27017/gsis
   session:
-#    加入pring session 配置
+#    加入spring session 配置
     store-type: redis
   mvc:
     view:
