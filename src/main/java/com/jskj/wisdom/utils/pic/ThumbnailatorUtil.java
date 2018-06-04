@@ -86,9 +86,9 @@ public class ThumbnailatorUtil {
         }
     }
 
-    public static void ImgScale(MultipartFile imageFile, String output, double scale) {
+    public static void ImgScale(MultipartFile imageFile, String output, double scale, String format) {
         try {
-            Thumbnails.of(imageFile.getInputStream()).scale(scale).outputQuality(1f).outputFormat("jpg").toFile(output);
+            Thumbnails.of(imageFile.getInputStream()).scale(scale).outputQuality(1f).outputFormat(format).toFile(output);
         } catch (IOException e) {
             e.printStackTrace();
         }

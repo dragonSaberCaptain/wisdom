@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jskj.wisdom.dao.PPicturesDAO">
+    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.wisdom.PPictures">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="is_delete" jdbcType="VARCHAR" property="isDelete"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="pic_path" jdbcType="VARCHAR" property="picPath"/>
+        <result column="pic_type" jdbcType="VARCHAR" property="picType"/>
+        <result column="pic_type_id" jdbcType="BIGINT" property="picTypeId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="pic_host" jdbcType="VARCHAR" property="picHost"/>
+        <result column="file_hash" jdbcType="VARCHAR" property="fileHash"/>
+        <result column="pic_port" jdbcType="VARCHAR" property="picPort"/>
+        <result column="Interface_prefix" jdbcType="VARCHAR" property="interfacePrefix"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, create_id, create_time, is_delete, remark, update_id, update_time, pic_path,
+        pic_type, pic_type_id, user_id, pic_host, file_hash, pic_port, Interface_prefix
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p_pictures
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from p_pictures
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.wisdom.PPictures"
+            useGeneratedKeys="true">
+        insert into p_pictures (create_id, create_time, is_delete,
+            remark, update_id, update_time,
+            pic_path, pic_type, pic_type_id,
+            user_id, pic_host, file_hash,
+            pic_port, Interface_prefix)
+        values (#{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR},
+            #{remark,jdbcType=VARCHAR}, #{updateId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP},
+            #{picPath,jdbcType=VARCHAR}, #{picType,jdbcType=VARCHAR}, #{picTypeId,jdbcType=BIGINT},
+            #{userId,jdbcType=BIGINT}, #{picHost,jdbcType=VARCHAR}, #{fileHash,jdbcType=VARCHAR},
+            #{picPort,jdbcType=VARCHAR}, #{interfacePrefix,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.wisdom.PPictures"
+            useGeneratedKeys="true">
+        insert into p_pictures
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="picPath != null">
+                pic_path,
+            </if>
+            <if test="picType != null">
+                pic_type,
+            </if>
+            <if test="picTypeId != null">
+                pic_type_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="picHost != null">
+                pic_host,
+            </if>
+            <if test="fileHash != null">
+                file_hash,
+            </if>
+            <if test="picPort != null">
+                pic_port,
+            </if>
+            <if test="interfacePrefix != null">
+                Interface_prefix,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="picPath != null">
+                #{picPath,jdbcType=VARCHAR},
+            </if>
+            <if test="picType != null">
+                #{picType,jdbcType=VARCHAR},
+            </if>
+            <if test="picTypeId != null">
+                #{picTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="picHost != null">
+                #{picHost,jdbcType=VARCHAR},
+            </if>
+            <if test="fileHash != null">
+                #{fileHash,jdbcType=VARCHAR},
+            </if>
+            <if test="picPort != null">
+                #{picPort,jdbcType=VARCHAR},
+            </if>
+            <if test="interfacePrefix != null">
+                #{interfacePrefix,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into p_pictures (create_id, create_time, is_delete,
+        remark, update_id, update_time,
+        pic_path, pic_type, pic_type_id,
+        user_id, pic_host, file_hash,
+        pic_port, Interface_prefix)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.createId,jdbcType=BIGINT}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.isDelete,jdbcType=VARCHAR},
+            #{item.remark,jdbcType=VARCHAR}, #{item.updateId,jdbcType=BIGINT}, #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.picPath,jdbcType=VARCHAR}, #{item.picType,jdbcType=VARCHAR}, #{item.picTypeId,jdbcType=BIGINT},
+            #{item.userId,jdbcType=BIGINT}, #{item.picHost,jdbcType=VARCHAR}, #{item.fileHash,jdbcType=VARCHAR},
+            #{item.picPort,jdbcType=VARCHAR}, #{item.interfacePrefix,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+    <insert id="insertBatchSelective" keyColumn="id" keyProperty="id" parameterType="java.util.List"
+            useGeneratedKeys="true">
+        insert into p_pictures
+        (create_id, create_time, is_delete, remark, update_id, update_time, pic_path, pic_type,
+        pic_type_id, user_id, pic_host, file_hash, pic_port, Interface_prefix)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.createId != null">
+                    #{item.createId,jdbcType=BIGINT},
+                </if>
+                <if test="item.createId == null">
+                    NULL,
+                </if>
+                <if test="item.createTime != null">
+                    #{item.createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.createTime == null">
+                    NULL,
+                </if>
+                <if test="item.isDelete != null">
+                    #{item.isDelete,jdbcType=VARCHAR},
+                </if>
+                <if test="item.isDelete == null">
+                    NULL,
+                </if>
+                <if test="item.remark != null">
+                    #{item.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="item.remark == null">
+                    NULL,
+                </if>
+                <if test="item.updateId != null">
+                    #{item.updateId,jdbcType=BIGINT},
+                </if>
+                <if test="item.updateId == null">
+                    NULL,
+                </if>
+                <if test="item.updateTime != null">
+                    #{item.updateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.updateTime == null">
+                    NULL,
+                </if>
+                <if test="item.picPath != null">
+                    #{item.picPath,jdbcType=VARCHAR},
+                </if>
+                <if test="item.picPath == null">
+                    NULL,
+                </if>
+                <if test="item.picType != null">
+                    #{item.picType,jdbcType=VARCHAR},
+                </if>
+                <if test="item.picType == null">
+                    NULL,
+                </if>
+                <if test="item.picTypeId != null">
+                    #{item.picTypeId,jdbcType=BIGINT},
+                </if>
+                <if test="item.picTypeId == null">
+                    NULL,
+                </if>
+                <if test="item.userId != null">
+                    #{item.userId,jdbcType=BIGINT},
+                </if>
+                <if test="item.userId == null">
+                    NULL,
+                </if>
+                <if test="item.picHost != null">
+                    #{item.picHost,jdbcType=VARCHAR},
+                </if>
+                <if test="item.picHost == null">
+                    NULL,
+                </if>
+                <if test="item.fileHash != null">
+                    #{item.fileHash,jdbcType=VARCHAR},
+                </if>
+                <if test="item.fileHash == null">
+                    NULL,
+                </if>
+                <if test="item.picPort != null">
+                    #{item.picPort,jdbcType=VARCHAR},
+                </if>
+                <if test="item.picPort == null">
+                    NULL,
+                </if>
+                <if test="item.interfacePrefix != null">
+                    #{item.interfacePrefix,jdbcType=VARCHAR},
+                </if>
+                <if test="item.interfacePrefix == null">
+                    NULL,
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.wisdom.PPictures">
+        update p_pictures
+        <set>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="picPath != null">
+                pic_path = #{picPath,jdbcType=VARCHAR},
+            </if>
+            <if test="picType != null">
+                pic_type = #{picType,jdbcType=VARCHAR},
+            </if>
+            <if test="picTypeId != null">
+                pic_type_id = #{picTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="picHost != null">
+                pic_host = #{picHost,jdbcType=VARCHAR},
+            </if>
+            <if test="fileHash != null">
+                file_hash = #{fileHash,jdbcType=VARCHAR},
+            </if>
+            <if test="picPort != null">
+                pic_port = #{picPort,jdbcType=VARCHAR},
+            </if>
+            <if test="interfacePrefix != null">
+                Interface_prefix = #{interfacePrefix,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.wisdom.PPictures">
+        update p_pictures
+        set create_id = #{createId,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            is_delete = #{isDelete,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            pic_path = #{picPath,jdbcType=VARCHAR},
+            pic_type = #{picType,jdbcType=VARCHAR},
+            pic_type_id = #{picTypeId,jdbcType=BIGINT},
+            user_id = #{userId,jdbcType=BIGINT},
+            pic_host = #{picHost,jdbcType=VARCHAR},
+            file_hash = #{fileHash,jdbcType=VARCHAR},
+            pic_port = #{picPort,jdbcType=VARCHAR},
+            Interface_prefix = #{interfacePrefix,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id !=null ">
+                id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="createTime != null">
+                and <![CDATA[  create_time <= #{createTime,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="updateTime != null">
+                and <![CDATA[  update_time <= #{updateTime,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="createId != null">
+                and create_id = #{createId,jdbcType=BIGINT}
+            </if>
+            <if test="isDelete != null">
+                and is_delete = #{isDelete,jdbcType=VARCHAR}
+            </if>
+            <if test="remark != null">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="updateId != null">
+                and update_id = #{updateId,jdbcType=BIGINT}
+            </if>
+            <if test="picPath != null">
+                and pic_path = #{picPath,jdbcType=VARCHAR}
+            </if>
+            <if test="picType != null">
+                and pic_type = #{picType,jdbcType=VARCHAR}
+            </if>
+            <if test="picTypeId != null">
+                and pic_type_id = #{picTypeId,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="picHost != null">
+                and pic_host = #{picHost,jdbcType=VARCHAR}
+            </if>
+            <if test="fileHash != null">
+                and file_hash = #{fileHash,jdbcType=VARCHAR}
+            </if>
+            <if test="picPort != null">
+                and pic_port = #{picPort,jdbcType=VARCHAR}
+            </if>
+            <if test="interfacePrefix != null">
+                and Interface_prefix = #{interfacePrefix,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.wisdom.PPictures"
+            resultMap="BaseResultMap">
+        select
+        distinct
+        <include refid="Base_Column_List"/>
+        from p_pictures
+        <include refid="searchBy"/>
+    </select>
+</mapper>

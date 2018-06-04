@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jskj.wisdom.dao.TRoomDAO">
-    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.TRoom">
+    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.wisdom.TRoom">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="pcell_id" jdbcType="BIGINT" property="pcellId"/>
         <result column="room_name" jdbcType="VARCHAR" property="roomName"/>
@@ -31,7 +31,7 @@
         delete from t_room
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.TRoom"
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.wisdom.TRoom"
             useGeneratedKeys="true">
         insert into t_room (id, pcell_id, room_name,
         room_number, room_lease_category, room_tower,
@@ -44,7 +44,7 @@
         #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT},
         #{remark,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.TRoom"
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.wisdom.TRoom"
             useGeneratedKeys="true">
         insert into t_room
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -245,7 +245,7 @@
             </trim>
         </foreach>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.TRoom">
+    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.wisdom.TRoom">
         update t_room
         <set>
             <if test="pcellId != null">
@@ -290,7 +290,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.TRoom">
+    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.wisdom.TRoom">
         update t_room
         set pcell_id = #{pcellId,jdbcType=BIGINT},
             room_name = #{roomName,jdbcType=VARCHAR},
@@ -336,13 +336,13 @@
                 and room_unit = #{roomUnit,jdbcType=VARCHAR}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime,jdbcType=TIMESTAMP}
+                and <![CDATA[  create_time <= #{createTime,jdbcType=TIMESTAMP} ]]>
             </if>
             <if test="createId != null">
                 and create_id = #{createId,jdbcType=BIGINT}
             </if>
             <if test="updateTime != null">
-                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+                and <![CDATA[  update_time <= #{updateTime,jdbcType=TIMESTAMP} ]]>
             </if>
             <if test="updateId != null">
                 and update_id = #{updateId,jdbcType=BIGINT}
@@ -356,7 +356,7 @@
         </trim>
     </sql>
 
-    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.TRoom" resultMap="BaseResultMap">
+    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.wisdom.TRoom" resultMap="BaseResultMap">
         select
         distinct
         <include refid="Base_Column_List"/>

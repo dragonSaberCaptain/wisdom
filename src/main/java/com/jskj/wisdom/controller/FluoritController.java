@@ -1,10 +1,9 @@
 package com.jskj.wisdom.controller;
 
+import com.jskj.wisdom.dto.ResultDto;
 import com.jskj.wisdom.enums.ResultEnum;
-import com.jskj.wisdom.model.fluorit.AccessTokenModel;
 import com.jskj.wisdom.model.fluorit.AccountIdModel;
 import com.jskj.wisdom.service.FluoritService;
-import com.jskj.wisdom.vo.ResultVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
@@ -28,15 +27,18 @@ public class FluoritController {
     @Resource
     private FluoritService fluoritService;
 
-    @PostMapping("/fluorit/getSubAccount")
+    @PostMapping("/open/getSubAccount")
     @ResponseBody
-    @ApiOperation(value = "获取萤石云子账户", notes = "通过名称和密码生成子账户")
-    @Deprecated
-    public ResultVo getSubAccount(@RequestParam(name = "accountName") String accountName,
-                                  @RequestParam(name = "password") String password) {
-        AccessTokenModel accessTokenModel = fluoritService.getAccessToken(null, null);
-        AccountIdModel   accountIdModel   = fluoritService.getAccountId(accessTokenModel.getData().getAccessToken(), accountName, password);
-        return new ResultVo(ResultEnum.OK, accountIdModel);
+    @ApiOperation(value = "获取萤石云子账户(随机)", notes = "通过名称和密码生成子账户")
+    public ResultDto<String> getSubAccount(
+            @RequestParam(name = "accessToken", required = false) String accessToken,
+            @RequestParam(name = "accountName", required = false) String accountName,
+            @RequestParam(name = "password", required = false) String password) {
+        AccountIdModel accountIdModel = fluoritService.getAccountId(accessToken, accountName, password);
+        if (accountIdModel != null) {
+            return new ResultDto<>(ResultEnum.OK, accountIdModel.getData().getAccountId());
+        }
+        return new ResultDto<>(ResultEnum.FAIL);
     }
 
 }

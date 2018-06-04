@@ -14,16 +14,6 @@ import java.util.List;
  */
 public interface SysUserServer {
     /**
-     * 添加对象所有字段
-     *
-     * @param record 插入字段对象
-     * @return int
-     * @author dragonSaberCaptain
-     * @date 2018-05-24 09:49:19
-     */
-    int insert(SysUser record);
-
-    /**
      * 添加对象对应字段
      *
      * @param record 插入字段对象
@@ -33,6 +23,8 @@ public interface SysUserServer {
      */
 
     int insertSelective(SysUser record);
+
+    int insertSelective(String loginName, String password);
 
     /**
      * 根据ID删除
@@ -45,8 +37,6 @@ public interface SysUserServer {
     int deleteByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(SysUser record);
-
-    int updateByPrimaryKey(SysUser record);
 
     SysUser selectByPrimaryKey(Long id);
 

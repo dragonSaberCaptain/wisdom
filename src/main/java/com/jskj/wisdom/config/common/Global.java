@@ -13,6 +13,11 @@ import org.springframework.context.annotation.PropertySource;
  */
 @PropertySource("classpath:application.yml")
 public class Global {
+    //---------------------------------------------------------------debug模式 true：开启-------------------------------------------------------------------------------
+
+    @Value("${server.config.global.debug}")
+    public static final boolean DEBUG = false;
+
     //---------------------------------------------------------------常量-------------------------------------------------------------------------------
 
     public static final String USER_AGENT = "User-Agent";
@@ -20,6 +25,7 @@ public class Global {
     /**
      * 上传文件大小
      */
+    @Value("${server.config.global.fileSize}")
     public static final int FILE_SIZE = 10 * 1024 * 1024;
 
     public static final String SPOT = ".";
@@ -49,44 +55,60 @@ public class Global {
     public static final String FIVE_STING = "5";
     public static final int    FIVE_INT   = 5;
 
+    public static final String TEN_STING  = "10";
+    public static final int    TEN_INT    = 10;
+    public static final double TEN_DOUBLE = 10;
+
     public static final String FIFTEEN_STING = "15";
     public static final int    FIFTEEN_INT   = 15;
 
 
     //---------------------------------------------------------------路径-------------------------------------------------------------------------------
 
-    /**
-     * 缩略图前缀
-     */
-    public static final String PIC_PREFIX = "C:/dragonSaberCaptain/pictures_pic/";
-
     public static final String USER_PICTURE = "/user_picture/";
 
     public static final String VIDEO_PICTURE = "/video_picture/";
 
-    public static final String PROPERTY_PICTURE = "/property_picture/";
+    public static final String JOURNALISM_PICTURE = "/journalism_picture/";
 
     public static final String NOTICE_PICTURE = "/notice_picture/";
+
+    public static final String REPAIR_PICTURE = "/repair_picture/";
+
+    public static final String COMPLAINT_PICTURE = "/complaint_picture/";
 
     //---------------------------------------------------------------ip-------------------------------------------------------------------------------
 
     public static final String LOCALHOST = "127.0.0.1";
 
+    @Value("${server.config.global.host}")
     public static final String HOST = "192.168.0.119";
 
-    @Value("${server.port}")
+    public static final String DOMAIN_NAME = "dt.cnxnu.com";
+
+    @Value("${server.config.global.port}")
     public static final String PORT = "80";
 
-    public static final String HTTP_HOST_POST = "http://" + HOST + ":" + PORT;
+    public static final String HTTP = "http://";
 
-    public static final String HTTPS_HOST_POST = "https://" + HOST + ":" + PORT;
+    public static final String HTTPS = "https://";
+
+    public static final String HTTP_HOST_POST = HTTP + HOST + ":" + PORT;
+
+    public static final String HTTPS_HOST_POST = HTTPS + HOST + ":" + PORT;
 
     //---------------------------------------------------------------前缀-------------------------------------------------------------------------------
-
     /**
      * 开放接口前缀
      */
+    @Value("${server.config.global.open}")
     public static final String OPEN = "/open";
+
+    /**
+     * 图片接口前缀
+     */
+    @Value("${server.config.global.picInterfacePrefix}")
+    public static final String PIC_INTERFACE_PREFIX = "/open/getPic?source=";
 
     /**
      * 缓存用户token前缀
@@ -98,15 +120,22 @@ public class Global {
      */
     public static final String USER_INFO = "userInfo:";
 
+    /**
+     * 图片地址前缀
+     */
+    @Value("${server.config.global.picPrefix}")
+    public static final String PIC_PREFIX = "C:/dragonSaberCaptain/pictures_pic/";
     //---------------------------------------------------------------盐-------------------------------------------------------------------------------
 
     /**
      * 盐原始值
      */
+    @Value("${server.config.global.salt}")
     public static final String SALT     = "dragonSaberCaptain";
     /**
      * 盐md5后的值
      */
+    @Value("${server.config.global.md5Salt}")
     public static final String MD5_SALT = "e5a5be7e769d12575d7ea8efa004b154";
 
 }

@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jskj.wisdom.dao.AccountTokenDAO">
+    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.wisdom.AccountToken">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="is_delete" jdbcType="VARCHAR" property="isDelete"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="third_name" jdbcType="VARCHAR" property="thirdName"/>
+        <result column="third_party_id" jdbcType="VARCHAR" property="thirdPartyId"/>
+        <result column="third_party_name" jdbcType="VARCHAR" property="thirdPartyName"/>
+        <result column="third_party_password" jdbcType="VARCHAR" property="thirdPartyPassword"/>
+        <result column="third_party_pic_url" jdbcType="VARCHAR" property="thirdPartyPicUrl"/>
+        <result column="third_party_token" jdbcType="VARCHAR" property="thirdPartyToken"/>
+        <result column="third_party_type" jdbcType="VARCHAR" property="thirdPartyType"/>
+        <result column="third_party_url" jdbcType="VARCHAR" property="thirdPartyUrl"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, create_id, create_time, is_delete, remark, update_id, update_time, third_name,
+        third_party_id, third_party_name, third_party_password, third_party_pic_url, third_party_token,
+        third_party_type, third_party_url, user_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from account_token
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from account_token
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.wisdom.AccountToken"
+            useGeneratedKeys="true">
+        insert into account_token (create_id, create_time, is_delete,
+            remark, update_id, update_time,
+            third_name, third_party_id, third_party_name,
+            third_party_password, third_party_pic_url,
+            third_party_token, third_party_type, third_party_url,
+            user_id)
+        values (#{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR},
+            #{remark,jdbcType=VARCHAR}, #{updateId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP},
+            #{thirdName,jdbcType=VARCHAR}, #{thirdPartyId,jdbcType=VARCHAR}, #{thirdPartyName,jdbcType=VARCHAR},
+            #{thirdPartyPassword,jdbcType=VARCHAR}, #{thirdPartyPicUrl,jdbcType=VARCHAR},
+            #{thirdPartyToken,jdbcType=VARCHAR}, #{thirdPartyType,jdbcType=VARCHAR}, #{thirdPartyUrl,jdbcType=VARCHAR},
+            #{userId,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.jskj.wisdom.model.wisdom.AccountToken"
+            useGeneratedKeys="true">
+        insert into account_token
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="thirdName != null">
+                third_name,
+            </if>
+            <if test="thirdPartyId != null">
+                third_party_id,
+            </if>
+            <if test="thirdPartyName != null">
+                third_party_name,
+            </if>
+            <if test="thirdPartyPassword != null">
+                third_party_password,
+            </if>
+            <if test="thirdPartyPicUrl != null">
+                third_party_pic_url,
+            </if>
+            <if test="thirdPartyToken != null">
+                third_party_token,
+            </if>
+            <if test="thirdPartyType != null">
+                third_party_type,
+            </if>
+            <if test="thirdPartyUrl != null">
+                third_party_url,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="thirdName != null">
+                #{thirdName,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyId != null">
+                #{thirdPartyId,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyName != null">
+                #{thirdPartyName,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyPassword != null">
+                #{thirdPartyPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyPicUrl != null">
+                #{thirdPartyPicUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyToken != null">
+                #{thirdPartyToken,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyType != null">
+                #{thirdPartyType,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyUrl != null">
+                #{thirdPartyUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into account_token (create_id, create_time, is_delete,
+        remark, update_id, update_time,
+        third_name, third_party_id, third_party_name,
+        third_party_password, third_party_pic_url,
+        third_party_token, third_party_type,
+        third_party_url, user_id)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.createId,jdbcType=BIGINT}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.isDelete,jdbcType=VARCHAR},
+            #{item.remark,jdbcType=VARCHAR}, #{item.updateId,jdbcType=BIGINT}, #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.thirdName,jdbcType=VARCHAR}, #{item.thirdPartyId,jdbcType=VARCHAR},
+            #{item.thirdPartyName,jdbcType=VARCHAR},
+            #{item.thirdPartyPassword,jdbcType=VARCHAR}, #{item.thirdPartyPicUrl,jdbcType=VARCHAR},
+            #{item.thirdPartyToken,jdbcType=VARCHAR}, #{item.thirdPartyType,jdbcType=VARCHAR},
+            #{item.thirdPartyUrl,jdbcType=VARCHAR}, #{item.userId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+    <insert id="insertBatchSelective" keyColumn="id" keyProperty="id" parameterType="java.util.List"
+            useGeneratedKeys="true">
+        insert into account_token
+        (create_id, create_time, is_delete, remark, update_id, update_time, third_name, third_party_id,
+        third_party_name, third_party_password, third_party_pic_url, third_party_token,
+        third_party_type, third_party_url, user_id)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.createId != null">
+                    #{item.createId,jdbcType=BIGINT},
+                </if>
+                <if test="item.createId == null">
+                    NULL,
+                </if>
+                <if test="item.createTime != null">
+                    #{item.createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.createTime == null">
+                    NULL,
+                </if>
+                <if test="item.isDelete != null">
+                    #{item.isDelete,jdbcType=VARCHAR},
+                </if>
+                <if test="item.isDelete == null">
+                    NULL,
+                </if>
+                <if test="item.remark != null">
+                    #{item.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="item.remark == null">
+                    NULL,
+                </if>
+                <if test="item.updateId != null">
+                    #{item.updateId,jdbcType=BIGINT},
+                </if>
+                <if test="item.updateId == null">
+                    NULL,
+                </if>
+                <if test="item.updateTime != null">
+                    #{item.updateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.updateTime == null">
+                    NULL,
+                </if>
+                <if test="item.thirdName != null">
+                    #{item.thirdName,jdbcType=VARCHAR},
+                </if>
+                <if test="item.thirdName == null">
+                    NULL,
+                </if>
+                <if test="item.thirdPartyId != null">
+                    #{item.thirdPartyId,jdbcType=VARCHAR},
+                </if>
+                <if test="item.thirdPartyId == null">
+                    NULL,
+                </if>
+                <if test="item.thirdPartyName != null">
+                    #{item.thirdPartyName,jdbcType=VARCHAR},
+                </if>
+                <if test="item.thirdPartyName == null">
+                    NULL,
+                </if>
+                <if test="item.thirdPartyPassword != null">
+                    #{item.thirdPartyPassword,jdbcType=VARCHAR},
+                </if>
+                <if test="item.thirdPartyPassword == null">
+                    NULL,
+                </if>
+                <if test="item.thirdPartyPicUrl != null">
+                    #{item.thirdPartyPicUrl,jdbcType=VARCHAR},
+                </if>
+                <if test="item.thirdPartyPicUrl == null">
+                    NULL,
+                </if>
+                <if test="item.thirdPartyToken != null">
+                    #{item.thirdPartyToken,jdbcType=VARCHAR},
+                </if>
+                <if test="item.thirdPartyToken == null">
+                    NULL,
+                </if>
+                <if test="item.thirdPartyType != null">
+                    #{item.thirdPartyType,jdbcType=VARCHAR},
+                </if>
+                <if test="item.thirdPartyType == null">
+                    NULL,
+                </if>
+                <if test="item.thirdPartyUrl != null">
+                    #{item.thirdPartyUrl,jdbcType=VARCHAR},
+                </if>
+                <if test="item.thirdPartyUrl == null">
+                    NULL,
+                </if>
+                <if test="item.userId != null">
+                    #{item.userId,jdbcType=BIGINT},
+                </if>
+                <if test="item.userId == null">
+                    NULL,
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.wisdom.AccountToken">
+        update account_token
+        <set>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="thirdName != null">
+                third_name = #{thirdName,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyId != null">
+                third_party_id = #{thirdPartyId,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyName != null">
+                third_party_name = #{thirdPartyName,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyPassword != null">
+                third_party_password = #{thirdPartyPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyPicUrl != null">
+                third_party_pic_url = #{thirdPartyPicUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyToken != null">
+                third_party_token = #{thirdPartyToken,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyType != null">
+                third_party_type = #{thirdPartyType,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdPartyUrl != null">
+                third_party_url = #{thirdPartyUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.wisdom.AccountToken">
+        update account_token
+        set create_id = #{createId,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            is_delete = #{isDelete,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            third_name = #{thirdName,jdbcType=VARCHAR},
+            third_party_id = #{thirdPartyId,jdbcType=VARCHAR},
+            third_party_name = #{thirdPartyName,jdbcType=VARCHAR},
+            third_party_password = #{thirdPartyPassword,jdbcType=VARCHAR},
+            third_party_pic_url = #{thirdPartyPicUrl,jdbcType=VARCHAR},
+            third_party_token = #{thirdPartyToken,jdbcType=VARCHAR},
+            third_party_type = #{thirdPartyType,jdbcType=VARCHAR},
+            third_party_url = #{thirdPartyUrl,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id !=null ">
+                id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="createTime != null">
+                and <![CDATA[  create_time <= #{createTime,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="updateTime != null">
+                and <![CDATA[  update_time <= #{updateTime,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="createId != null">
+                and create_id = #{createId,jdbcType=BIGINT}
+            </if>
+            <if test="isDelete != null">
+                and is_delete = #{isDelete,jdbcType=VARCHAR}
+            </if>
+            <if test="remark != null">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="updateId != null">
+                and update_id = #{updateId,jdbcType=BIGINT}
+            </if>
+            <if test="thirdName != null">
+                and third_name = #{thirdName,jdbcType=VARCHAR}
+            </if>
+            <if test="thirdPartyId != null">
+                and third_party_id = #{thirdPartyId,jdbcType=VARCHAR}
+            </if>
+            <if test="thirdPartyName != null">
+                and third_party_name = #{thirdPartyName,jdbcType=VARCHAR}
+            </if>
+            <if test="thirdPartyPassword != null">
+                and third_party_password = #{thirdPartyPassword,jdbcType=VARCHAR}
+            </if>
+            <if test="thirdPartyPicUrl != null">
+                and third_party_pic_url = #{thirdPartyPicUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="thirdPartyToken != null">
+                and third_party_token = #{thirdPartyToken,jdbcType=VARCHAR}
+            </if>
+            <if test="thirdPartyType != null">
+                and third_party_type = #{thirdPartyType,jdbcType=VARCHAR}
+            </if>
+            <if test="thirdPartyUrl != null">
+                and third_party_url = #{thirdPartyUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+        </trim>
+    </sql>
+    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.wisdom.AccountToken"
+            resultMap="BaseResultMap">
+        select
+        distinct
+        <include refid="Base_Column_List"/>
+        from account_token
+        <include refid="searchBy"/>
+    </select>
+</mapper>

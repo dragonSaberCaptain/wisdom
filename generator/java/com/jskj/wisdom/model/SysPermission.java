@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class SysPermission implements Serializable {
     //串行版本ID
-    private static final long serialVersionUID = 502674080067113899L;
+    private static final long serialVersionUID = 1001643856390511464L;
 
     // 主键id
     private Long id;
@@ -37,6 +37,9 @@ public class SysPermission implements Serializable {
 
     // 权限名称
     private String name;
+
+    // 排序
+    private String sort;
 
     // 权限url
     private String permissionUrl;
@@ -186,6 +189,22 @@ public class SysPermission implements Serializable {
     }
 
     /** 
+     * 获取 排序 sys_permission.sort
+     * @return 排序
+     */
+    public String getSort() {
+        return sort;
+    }
+
+    /** 
+     * 设置 排序 sys_permission.sort
+     * @param sort 排序
+     */
+    public void setSort(String sort) {
+        this.sort = sort == null ? null : sort.trim();
+    }
+
+    /** 
      * 获取 权限url sys_permission.permission_url
      * @return 权限url
      */
@@ -216,6 +235,7 @@ public class SysPermission implements Serializable {
         sb.append(", updateTime=").append(updateTime);
         sb.append(", method=").append(method);
         sb.append(", name=").append(name);
+        sb.append(", sort=").append(sort);
         sb.append(", permissionUrl=").append(permissionUrl);
         sb.append("]");
         return sb.toString();
@@ -242,6 +262,7 @@ public class SysPermission implements Serializable {
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getMethod() == null ? other.getMethod() == null : this.getMethod().equals(other.getMethod()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getSort() == null ? other.getSort() == null : this.getSort().equals(other.getSort()))
             && (this.getPermissionUrl() == null ? other.getPermissionUrl() == null : this.getPermissionUrl().equals(other.getPermissionUrl()));
     }
 
@@ -258,6 +279,7 @@ public class SysPermission implements Serializable {
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getMethod() == null) ? 0 : getMethod().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getSort() == null) ? 0 : getSort().hashCode());
         result = prime * result + ((getPermissionUrl() == null) ? 0 : getPermissionUrl().hashCode());
         return result;
     }

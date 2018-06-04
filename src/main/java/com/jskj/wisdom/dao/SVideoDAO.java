@@ -1,7 +1,7 @@
 /* https://github.com/orange1438 */
 package com.jskj.wisdom.dao;
 
-import com.jskj.wisdom.model.SVideo;
+import com.jskj.wisdom.model.wisdom.SVideo;
 
 import java.util.List;
 

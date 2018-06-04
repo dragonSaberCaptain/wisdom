@@ -53,11 +53,16 @@ public class SwaggerConfig {
     private Predicate<String> apiPaths() {
         return or(
                 regex(Global.OPEN + "/.*"),
+                regex("/home/.*"),
                 regex("/user/.*"),
                 regex("/video/.*"),
                 regex("/fluorit/.*"),
                 regex("/notice/.*"),
-                regex("/property/.*")
+                regex("/property/.*"),
+                regex("/complaint/.*"),
+                regex("/repair/.*"),
+                regex("/picture/.*"),
+                regex("/test/.*")
         );
     }
 

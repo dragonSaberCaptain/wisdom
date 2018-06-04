@@ -23,7 +23,7 @@ public class SysUser implements Serializable {
     // 创建时间
     private Date createTime;
 
-    // 是否删除：0否 1是  默认：0  默认：0
+    // 是否删除：0否 1是  默认：0
     private String isDelete;
 
     // 备注
@@ -38,7 +38,7 @@ public class SysUser implements Serializable {
     // 邮箱
     private String email;
 
-    // 登录标志
+    // 登录标志: 0否 1是 默认：0
     private String loginFlag;
 
     // 登录账号

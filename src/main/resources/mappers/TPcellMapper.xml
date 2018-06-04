@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jskj.wisdom.dao.TPcellDAO">
-    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.TPcell">
+    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.wisdom.TPcell">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="uid" jdbcType="BIGINT" property="uid"/>
         <result column="pcell_name" jdbcType="VARCHAR" property="pcellName"/>
@@ -27,7 +27,7 @@
         delete from t_pcell
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.TPcell"
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.wisdom.TPcell"
             useGeneratedKeys="true">
         insert into t_pcell (id, uid, pcell_name,
         pcell_number, create_time, create_id,
@@ -38,7 +38,7 @@
         #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR},
         #{isDelete,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.TPcell"
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.wisdom.TPcell"
             useGeneratedKeys="true">
         insert into t_pcell
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -186,7 +186,7 @@
             </trim>
         </foreach>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.TPcell">
+    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.wisdom.TPcell">
         update t_pcell
         <set>
             <if test="uid != null">
@@ -219,7 +219,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.TPcell">
+    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.wisdom.TPcell">
         update t_pcell
         set uid = #{uid,jdbcType=BIGINT},
             pcell_name = #{pcellName,jdbcType=VARCHAR},
@@ -240,13 +240,13 @@
                 id = #{id,jdbcType=BIGINT}
             </if>
             <if test="createTime != null ">
-                and create_time = #{createTime,jdbcType=VARCHAR}
+                and <![CDATA[  create_time <= #{createTime,jdbcType=TIMESTAMP} ]]>
             </if>
             <if test="createId != null ">
                 and create_id = #{createId,jdbcType=VARCHAR}
             </if>
             <if test="updateTime != null ">
-                and update_time = #{updateTime,jdbcType=VARCHAR}
+                and <![CDATA[  update_time <= #{updateTime,jdbcType=TIMESTAMP} ]]>
             </if>
             <if test="updateId != null ">
                 and update_id = #{updateId,jdbcType=VARCHAR}
@@ -269,7 +269,7 @@
         </trim>
     </sql>
 
-    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.TPcell" resultMap="BaseResultMap">
+    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.wisdom.TPcell" resultMap="BaseResultMap">
         select
         distinct
         <include refid="Base_Column_List"/>

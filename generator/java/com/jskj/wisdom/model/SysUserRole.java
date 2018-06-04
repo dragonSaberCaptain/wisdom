@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class SysUserRole implements Serializable {
     //串行版本ID
-    private static final long serialVersionUID = -4228745760515443001L;
+    private static final long serialVersionUID = 2893263266609583753L;
 
     // 主键id
     private Long id;

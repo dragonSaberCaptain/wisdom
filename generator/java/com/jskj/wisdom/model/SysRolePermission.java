@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class SysRolePermission implements Serializable {
     //串行版本ID
-    private static final long serialVersionUID = 7183148012100785507L;
+    private static final long serialVersionUID = 3512835820830473887L;
 
     // 主键id
     private Long id;
@@ -33,9 +33,13 @@ public class SysRolePermission implements Serializable {
     private Date updateTime;
 
     // 权限表id
-    private Long permissionid;
+    private Long permissionId;
 
+    // 角色表id
     private Long roleId;
+
+    // 权限表id
+    private Long permissionid;
 
     /** 
      * 获取 主键id sys_role_permission.id
@@ -150,6 +154,38 @@ public class SysRolePermission implements Serializable {
     }
 
     /** 
+     * 获取 权限表id sys_role_permission.permission_id
+     * @return 权限表id
+     */
+    public Long getPermissionId() {
+        return permissionId;
+    }
+
+    /** 
+     * 设置 权限表id sys_role_permission.permission_id
+     * @param permissionId 权限表id
+     */
+    public void setPermissionId(Long permissionId) {
+        this.permissionId = permissionId;
+    }
+
+    /** 
+     * 获取 角色表id sys_role_permission.role_id
+     * @return 角色表id
+     */
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    /** 
+     * 设置 角色表id sys_role_permission.role_id
+     * @param roleId 角色表id
+     */
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    /** 
      * 获取 权限表id sys_role_permission.permissionid
      * @return 权限表id
      */
@@ -165,22 +201,6 @@ public class SysRolePermission implements Serializable {
         this.permissionid = permissionid;
     }
 
-    /** 
-     * 获取 sys_role_permission.role_id
-     * @return sys_role_permission.role_id
-     */
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    /** 
-     * 设置 sys_role_permission.role_id
-     * @param roleId sys_role_permission.role_id
-     */
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -194,8 +214,9 @@ public class SysRolePermission implements Serializable {
         sb.append(", remark=").append(remark);
         sb.append(", updateId=").append(updateId);
         sb.append(", updateTime=").append(updateTime);
-        sb.append(", permissionid=").append(permissionid);
+        sb.append(", permissionId=").append(permissionId);
         sb.append(", roleId=").append(roleId);
+        sb.append(", permissionid=").append(permissionid);
         sb.append("]");
         return sb.toString();
     }
@@ -219,8 +240,9 @@ public class SysRolePermission implements Serializable {
             && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
             && (this.getUpdateId() == null ? other.getUpdateId() == null : this.getUpdateId().equals(other.getUpdateId()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getPermissionid() == null ? other.getPermissionid() == null : this.getPermissionid().equals(other.getPermissionid()))
-            && (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()));
+            && (this.getPermissionId() == null ? other.getPermissionId() == null : this.getPermissionId().equals(other.getPermissionId()))
+            && (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()))
+            && (this.getPermissionid() == null ? other.getPermissionid() == null : this.getPermissionid().equals(other.getPermissionid()));
     }
 
     @Override
@@ -234,8 +256,9 @@ public class SysRolePermission implements Serializable {
         result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
         result = prime * result + ((getUpdateId() == null) ? 0 : getUpdateId().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        result = prime * result + ((getPermissionid() == null) ? 0 : getPermissionid().hashCode());
+        result = prime * result + ((getPermissionId() == null) ? 0 : getPermissionId().hashCode());
         result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
+        result = prime * result + ((getPermissionid() == null) ? 0 : getPermissionid().hashCode());
         return result;
     }
 }

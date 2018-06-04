@@ -12,10 +12,8 @@ import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,22 +27,21 @@ import java.util.Map;
  * @date 2018-05-23 16:40 Wed
  */
 @Configuration
-@PropertySource("classpath:application-redis.yml")
+//@PropertySource("classpath:application-redis.yml")
 public class ShiroConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ShiroConfiguration.class);
 
-    @Value("${spring.redis.host}")
+    //    @Value("${spring.redis.host}")
     private String host;
 
-    @Value("${spring.redis.port}")
+    //    @Value("${spring.redis.port}")
     private int port;
 
-    @Value("${spring.redis.password}")
+    //    @Value("${spring.redis.password}")
     private String password;
 
-    @Value("${spring.redis.database}")
+    //    @Value("${spring.redis.database}")
     private int database;
-
 
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
@@ -56,7 +53,13 @@ public class ShiroConfiguration {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
 //        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-//        shiroFilterFactoryBean.setLoginUrl("login");
+//        shiroFilterFactoryBean.setLoginUrl("/login");
+//
+//        // 登录成功后要跳转的链接
+//        shiroFilterFactoryBean.setSuccessUrl("/home");
+//
+//        //未授权界面;
+//        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 //
 //        // 配置不会被拦截的链接 顺序判断
 //        filterChainDefinitionMap.put("/static/**", "anon");
@@ -64,29 +67,13 @@ public class ShiroConfiguration {
 //        //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
 //        filterChainDefinitionMap.put("/logout", "logout");
 //
-//        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
-//        filterChainDefinitionMap.put("/swagger/**", "anon");
-//        filterChainDefinitionMap.put("/webjars/**", "anon");
-//        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
-//        filterChainDefinitionMap.put("/v2/**", "anon");
-
-//        filterChainDefinitionManager.put("/user/**", "authc,roles[ROLE_USER]");
-//        filterChainDefinitionManager.put("/events/**", "authc,roles[ROLE_ADMIN]");
-//        filterChainDefinitionManager.put("/user/edit/**", "authc,perms[user:edit]");// 这里为了测试，固定写死的值，也可以从数据库或其他配置中读取
-
+////        filterChainDefinitionManager.put("/user/**", "authc,roles[ROLE_USER]");
+////        filterChainDefinitionManager.put("/events/**", "authc,roles[ROLE_ADMIN]");
+////        filterChainDefinitionManager.put("/user/edit/**", "authc,perms[user:edit]");// 这里为了测试，固定写死的值，也可以从数据库或其他配置中读取
 //
 //        //<!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
 //        //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
 //        filterChainDefinitionMap.put("/**", "authc");
-//
-//        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-//        shiroFilterFactoryBean.setLoginUrl("/login");
-//
-//        // 登录成功后要跳转的链接
-//        shiroFilterFactoryBean.setSuccessUrl("/index");
-//
-//        //未授权界面;
-//        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
@@ -103,7 +90,7 @@ public class ShiroConfiguration {
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         //散列算法:这里使用MD5算法;
-        hashedCredentialsMatcher.setHashAlgorithmName("MD5");
+        hashedCredentialsMatcher.setHashAlgorithmName("SHA-512");
         //散列的次数，比如散列两次，相当于 md5(md5(""));
         hashedCredentialsMatcher.setHashIterations(1024);
         //表示是否存储散列后的密码为16进制，需要和生成密码时的一样，默认是base64；
@@ -173,6 +160,7 @@ public class ShiroConfiguration {
         redisCacheManager.setRedisManager(redisManager());
         return redisCacheManager;
     }
+
 
     /**
      * RedisSessionDAO shiro sessionDao层的实现 通过redis

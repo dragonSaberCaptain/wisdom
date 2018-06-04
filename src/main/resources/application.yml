@@ -5,11 +5,22 @@
 server:
   #服务器端口
   port: 80
+  config:
+    global:
+      host: 192.168.0.119
+      fileSize: 10 * 1024 * 1024
+      debug: false
+      picPrefix: C:/dragonSaberCaptain/pictures_pic/
+      md5Salt: e5a5be7e769d12575d7ea8efa004b154
+      salt: dragonSaberCaptain
+      open: /open
+      picInterfacePrefix: /open/getPic?source=
+  max-http-header-size: 3145728
 spring:
   application:
     name: wisdom
   profiles:
-    active: mysql,redis
+    active: mysql
   jpa:
     show-sql: true
     generate-ddl: true
@@ -30,14 +41,15 @@ spring:
     suffix: .html
   http:
     encoding.charset: UTF-8
-    encoding.enabled: true
     encoding.force: true
+    encoding:
+      enabled: true
   transaction:
     rollback-on-commit-failure: true
 mybatis:
   typeAliasesPackage: com.jskj.wisdom.model
   mapperLocations: classpath:/mappers/*.xml,classpath:/mappers/system/*.xml
-  configLocations: classpath:/mybatis/mybatis-config.xml
+  config-location: classpath:/mybatis/mybatis-config.xml
 logging:
   config: classpath:logback-spring.xml
   level:

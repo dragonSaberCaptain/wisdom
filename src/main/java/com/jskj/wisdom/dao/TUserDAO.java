@@ -1,7 +1,7 @@
 /* https://github.com/orange1438 */
 package com.jskj.wisdom.dao;
 
-import com.jskj.wisdom.model.TUser;
+import com.jskj.wisdom.model.wisdom.TUser;
 
 import java.util.List;
 

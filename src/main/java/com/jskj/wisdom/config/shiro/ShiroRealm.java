@@ -6,7 +6,9 @@ import com.jskj.wisdom.exception.UserException;
 import com.jskj.wisdom.model.system.SysPermission;
 import com.jskj.wisdom.model.system.SysRole;
 import com.jskj.wisdom.model.system.SysUser;
-import com.jskj.wisdom.service.system.*;
+import com.jskj.wisdom.service.system.SysPermissionServer;
+import com.jskj.wisdom.service.system.SysRoleServer;
+import com.jskj.wisdom.service.system.SysUserServer;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -36,13 +38,7 @@ public class ShiroRealm extends AuthorizingRealm {
     private SysUserServer sysUserServer;
 
     @Resource
-    private SysUserRoleServer sysUserRoleServer;
-
-    @Resource
     private SysRoleServer sysRoleServer;
-
-    @Resource
-    private SysRolePermissionServer sysRolePermissionServer;
 
     @Resource
     private SysPermissionServer sysPermissionServer;

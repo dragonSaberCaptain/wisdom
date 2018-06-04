@@ -1,5 +1,6 @@
 package com.jskj.wisdom;
 
+import com.jskj.wisdom.utils.database.redis.JedisUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +12,21 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.jms.JndiConnectionFactoryAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import redis.clients.jedis.HostAndPort;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import javax.servlet.MultipartConfigElement;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Copyright © 2018 dragonSaberCaptain. All rights reserved.
@@ -25,18 +38,59 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication
 @MapperScan("com.jskj.wisdom.dao")
+@ComponentScan
 @EnableScheduling
 @ServletComponentScan
 @EnableSwagger2
 @EnableAutoConfiguration(exclude = {JndiConnectionFactoryAutoConfiguration.class, DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
-public class Application {
+public class Application extends SpringBootServletInitializer {
     private static Logger logger = LoggerFactory.getLogger(Application.class);
-
     /**
      * Main Start
      */
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-        logger.info("-------------------------------------------【项目启动成功】--------------------------------------");
+        Set<HostAndPort> nodes = new HashSet<>();
+        nodes.add(new HostAndPort("127.0.0.1", 6379));
+        boolean bool = JedisUtil.createPool(nodes, null, false);
+        if (bool) {
+            SpringApplication.run(Application.class, args);
+            logger.info("-------------------------------------------【项目启动成功】--------------------------------------");
+        } else {
+            logger.info("-------------------------------------------【项目启动失败缓存没有开启】--------------------------------------");
+        }
+    }
+
+    /**
+     * 文件上传配置
+     */
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        //单个文件最大 KB,MB
+        factory.setMaxFileSize("10240KB");
+        /// 设置总上传数据总大小
+        factory.setMaxRequestSize("102400KB");
+        return factory.createMultipartConfig();
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(
+            SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
+
+    /**
+     * 统一处理编码问题
+     */
+    @Bean
+    public FilterRegistrationBean encodingFilter() {
+        CharacterEncodingFilter filter           = new CharacterEncodingFilter();
+        FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(filter);
+        registrationBean.addInitParameter("encoding", "UTF-8");
+        registrationBean.addInitParameter("forceEncoding", "true");
+        registrationBean.setName("encodingFilter");
+        registrationBean.addUrlPatterns("/*");
+        return registrationBean;
     }
 }

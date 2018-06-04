@@ -1,7 +1,11 @@
 package com.jskj.wisdom.utils.pic;
 
+import com.jskj.wisdom.config.common.Global;
 import com.jskj.wisdom.utils.safety.UuidUtil;
+import com.jskj.wisdom.utils.string.StringUtil;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,13 +23,18 @@ import java.io.InputStream;
  * @description
  * @date 2018-05-18 10:38 星期五
  */
-public class PicUtil {
+public class PicUtil<T> {
     private static final Logger logger = LoggerFactory.getLogger(PicUtil.class);
 
-    public static String savePic(String picPrefix, String type_pic, MultipartFile imageFile, double scale) {
+    public static String savePic(String picPrefix, String typePic, MultipartFile imageFile, final double scale) {
+
         long timeStamp = System.currentTimeMillis();
 
-        String filePath = picPrefix + type_pic + timeStamp + "/";
+        if (StringUtil.isBlank(typePic)) {
+            typePic = "/all/";
+        }
+
+        String filePath = picPrefix + typePic + timeStamp + "/";
 
         File   picFile  = new File(filePath);
         //判断图片路径是否存在，若不存在则创建
@@ -39,10 +48,10 @@ public class PicUtil {
         String picPath = filePath + Uuid;
         if (bool) {
             // 先尝试压缩并保存图片
-            ThumbnailatorUtil.ImgScale(imageFile, picPath, scale);
+            ThumbnailatorUtil.ImgScale(imageFile, picPath, scale, "jpg");
         }
         //返回的路径
-        return type_pic + timeStamp + "/" + Uuid + ".jpg";
+        return timeStamp + "/" + Uuid + ".jpg&scale=0.5&format=jpg";
     }
 
     public static String getImageStr(String imgFile) {// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
@@ -77,5 +86,16 @@ public class PicUtil {
         }
         // 返回Base64编码过的字节数组字符串
         return Base64.encodeBase64String(data);
+    }
+
+    public static String getFileHash(MultipartFile imageFile) {
+        byte[] bytes = new byte[0];
+        try {
+            bytes = imageFile.getBytes();
+        } catch (Exception e) {
+            logger.error("PicUtil--getFileHash", e);
+            e.printStackTrace();
+        }
+        return new Sha512Hash(bytes, DigestUtils.sha512Hex(Global.MD5_SALT + imageFile.getSize()), 1).toString();
     }
 }

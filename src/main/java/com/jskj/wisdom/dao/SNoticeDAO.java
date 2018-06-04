@@ -1,7 +1,7 @@
 /* https://github.com/orange1438 */
 package com.jskj.wisdom.dao;
 
-import com.jskj.wisdom.model.SNotice;
+import com.jskj.wisdom.model.wisdom.SNotice;
 
 import java.util.List;
 
@@ -54,4 +54,6 @@ public interface SNoticeDAO {
     int updateByPrimaryKey(SNotice record);
 
     List<SNotice> selectBySelective(SNotice record);
+
+    List<SNotice> selectByUpdateTime(Integer topNum);
 }

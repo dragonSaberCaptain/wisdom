@@ -2,6 +2,8 @@ package com.jskj.wisdom.service;
 
 import com.jskj.wisdom.model.fluorit.AccessTokenModel;
 import com.jskj.wisdom.model.fluorit.AccountIdModel;
+import com.jskj.wisdom.model.wisdom.AccountToken;
+import com.jskj.wisdom.model.wisdom.TUser;
 
 /**
  * Copyright © 2018 dragonSaberCaptain. All rights reserved.
@@ -35,4 +37,6 @@ public interface FluoritService {
      * @date 2018-05-08 17:53:36
      */
     AccountIdModel getAccountId(String accessToken, String accountName, String password);
+
+    AccountToken createAccountId(TUser tUser, String token, String uuid);
 }

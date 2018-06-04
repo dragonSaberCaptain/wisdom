@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jskj.wisdom.dao.TUserDAO">
-    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.TUser">
+    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.wisdom.TUser">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -30,7 +30,7 @@
         delete from t_user
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.TUser"
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.wisdom.TUser"
             useGeneratedKeys="true">
         insert into t_user (id, username, password,
         nickname, mobile, id_number,
@@ -43,7 +43,7 @@
         #{updateId,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR},
         #{isRegister,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.TUser"
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.wisdom.TUser"
             useGeneratedKeys="true">
         insert into t_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -230,7 +230,7 @@
             </trim>
         </foreach>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.TUser">
+    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.wisdom.TUser">
         update t_user
         <set>
             <if test="username != null">
@@ -272,7 +272,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.TUser">
+    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.wisdom.TUser">
         update t_user
         set username = #{username,jdbcType=VARCHAR},
             password = #{password,jdbcType=VARCHAR},
@@ -312,13 +312,13 @@
                 and id_number = #{idNumber,jdbcType=VARCHAR}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime,jdbcType=TIMESTAMP}
+                and <![CDATA[  create_time <= #{createTime,jdbcType=TIMESTAMP} ]]>
             </if>
             <if test="createId != null">
                 and create_id = #{createId,jdbcType=BIGINT}
             </if>
             <if test="updateTime != null">
-                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+                and <![CDATA[  update_time <= #{updateTime,jdbcType=TIMESTAMP} ]]>
             </if>
             <if test="updateId != null">
                 and update_id = #{updateId,jdbcType=BIGINT}
@@ -334,7 +334,7 @@
             </if>
         </trim>
     </sql>
-    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.TUser" resultMap="BaseResultMap">
+    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.wisdom.TUser" resultMap="BaseResultMap">
         select
         distinct
         <include refid="Base_Column_List"/>

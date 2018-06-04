@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jskj.wisdom.dao.SVideoDAO">
-    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.SVideo">
+    <resultMap id="BaseResultMap" type="com.jskj.wisdom.model.wisdom.SVideo">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="create_id" jdbcType="BIGINT" property="createId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -11,13 +11,12 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="pid" jdbcType="BIGINT" property="pid"/>
         <result column="video_path_url" jdbcType="VARCHAR" property="videoPathUrl"/>
-        <result column="video_pic_url" jdbcType="VARCHAR" property="videoPicUrl"/>
         <result column="video_type" jdbcType="VARCHAR" property="videoType"/>
         <result column="video_name" jdbcType="VARCHAR" property="videoName"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, create_id, create_time, is_delete, remark, update_id, update_time, pid, video_path_url,
-        video_pic_url, video_type, video_name
+        video_type, video_name
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -29,18 +28,18 @@
         delete from s_video
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.SVideo"
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.wisdom.SVideo"
             useGeneratedKeys="true">
         insert into s_video (create_id, create_time, is_delete,
             remark, update_id, update_time,
-            pid, video_path_url, video_pic_url,
-            video_type, video_name)
+            pid, video_path_url, video_type,
+            video_name)
         values (#{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR},
             #{remark,jdbcType=VARCHAR}, #{updateId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP},
-            #{pid,jdbcType=BIGINT}, #{videoPathUrl,jdbcType=VARCHAR}, #{videoPicUrl,jdbcType=VARCHAR},
-            #{videoType,jdbcType=VARCHAR}, #{videoName,jdbcType=VARCHAR})
+            #{pid,jdbcType=BIGINT}, #{videoPathUrl,jdbcType=VARCHAR}, #{videoType,jdbcType=VARCHAR},
+            #{videoName,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.SVideo"
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jskj.wisdom.model.wisdom.SVideo"
             useGeneratedKeys="true">
         insert into s_video
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -67,9 +66,6 @@
             </if>
             <if test="videoPathUrl != null">
                 video_path_url,
-            </if>
-            <if test="videoPicUrl != null">
-                video_pic_url,
             </if>
             <if test="videoType != null">
                 video_type,
@@ -103,9 +99,6 @@
             <if test="videoPathUrl != null">
                 #{videoPathUrl,jdbcType=VARCHAR},
             </if>
-            <if test="videoPicUrl != null">
-                #{videoPicUrl,jdbcType=VARCHAR},
-            </if>
             <if test="videoType != null">
                 #{videoType,jdbcType=VARCHAR},
             </if>
@@ -117,21 +110,21 @@
     <insert id="insertBatch" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
         insert into s_video (create_id, create_time, is_delete,
         remark, update_id, update_time,
-        pid, video_path_url, video_pic_url,
-        video_type, video_name)
+        pid, video_path_url, video_type,
+        video_name)
         values
         <foreach collection="list" index="index" item="item" separator=",">
             (#{item.createId,jdbcType=BIGINT}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.isDelete,jdbcType=VARCHAR},
             #{item.remark,jdbcType=VARCHAR}, #{item.updateId,jdbcType=BIGINT}, #{item.updateTime,jdbcType=TIMESTAMP},
-            #{item.pid,jdbcType=BIGINT}, #{item.videoPathUrl,jdbcType=VARCHAR}, #{item.videoPicUrl,jdbcType=VARCHAR},
-            #{item.videoType,jdbcType=VARCHAR}, #{item.videoName,jdbcType=VARCHAR})
+            #{item.pid,jdbcType=BIGINT}, #{item.videoPathUrl,jdbcType=VARCHAR}, #{item.videoType,jdbcType=VARCHAR},
+            #{item.videoName,jdbcType=VARCHAR})
         </foreach>
     </insert>
     <insert id="insertBatchSelective" keyColumn="id" keyProperty="id" parameterType="java.util.List"
             useGeneratedKeys="true">
         insert into s_video
         (create_id, create_time, is_delete, remark, update_id, update_time, pid, video_path_url,
-        video_pic_url, video_type, video_name)
+        video_type, video_name)
         values
         <foreach collection="list" index="index" item="item" separator=",">
             <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -183,12 +176,6 @@
                 <if test="item.videoPathUrl == null">
                     NULL,
                 </if>
-                <if test="item.videoPicUrl != null">
-                    #{item.videoPicUrl,jdbcType=VARCHAR},
-                </if>
-                <if test="item.videoPicUrl == null">
-                    NULL,
-                </if>
                 <if test="item.videoType != null">
                     #{item.videoType,jdbcType=VARCHAR},
                 </if>
@@ -204,7 +191,7 @@
             </trim>
         </foreach>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.SVideo">
+    <update id="updateByPrimaryKeySelective" parameterType="com.jskj.wisdom.model.wisdom.SVideo">
         update s_video
         <set>
             <if test="createId != null">
@@ -231,9 +218,6 @@
             <if test="videoPathUrl != null">
                 video_path_url = #{videoPathUrl,jdbcType=VARCHAR},
             </if>
-            <if test="videoPicUrl != null">
-                video_pic_url = #{videoPicUrl,jdbcType=VARCHAR},
-            </if>
             <if test="videoType != null">
                 video_type = #{videoType,jdbcType=VARCHAR},
             </if>
@@ -243,7 +227,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.SVideo">
+    <update id="updateByPrimaryKey" parameterType="com.jskj.wisdom.model.wisdom.SVideo">
         update s_video
         set create_id = #{createId,jdbcType=BIGINT},
             create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -253,7 +237,6 @@
             update_time = #{updateTime,jdbcType=TIMESTAMP},
             pid = #{pid,jdbcType=BIGINT},
             video_path_url = #{videoPathUrl,jdbcType=VARCHAR},
-            video_pic_url = #{videoPicUrl,jdbcType=VARCHAR},
             video_type = #{videoType,jdbcType=VARCHAR},
             video_name = #{videoName,jdbcType=VARCHAR}
         where id = #{id,jdbcType=BIGINT}
@@ -269,7 +252,7 @@
                 and create_id = #{createId,jdbcType=BIGINT}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime,jdbcType=TIMESTAMP}
+                and <![CDATA[  create_time <= #{createTime,jdbcType=TIMESTAMP} ]]>
             </if>
             <if test="isDelete != null">
                 and is_delete = #{isDelete,jdbcType=VARCHAR}
@@ -281,7 +264,7 @@
                 and update_id = #{updateId,jdbcType=BIGINT}
             </if>
             <if test="updateTime != null">
-                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+                and <![CDATA[  update_time <= #{updateTime,jdbcType=TIMESTAMP} ]]>
             </if>
             <if test="pid != null">
                 and pid = #{pid,jdbcType=BIGINT}
@@ -289,10 +272,6 @@
             <if test="videoPathUrl != null">
                 and video_path_url = #{videoPathUrl,jdbcType=VARCHAR}
             </if>
-            <if test="videoPicUrl != null">
-                and video_pic_url = #{videoPicUrl,jdbcType=VARCHAR}
-            </if>
-
             <if test="videoType != null">
                 and video_type = #{videoType,jdbcType=VARCHAR}
             </if>
@@ -302,7 +281,7 @@
         </trim>
     </sql>
 
-    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.SVideo" resultMap="BaseResultMap">
+    <select id="selectBySelective" parameterType="com.jskj.wisdom.model.wisdom.SVideo" resultMap="BaseResultMap">
         select
         distinct
         <include refid="Base_Column_List"/>

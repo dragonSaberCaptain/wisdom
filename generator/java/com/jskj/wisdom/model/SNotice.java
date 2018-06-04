@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class SNotice implements Serializable {
     //串行版本ID
-    private static final long serialVersionUID = -869001330091428772L;
+    private static final long serialVersionUID = 3470376950248792606L;
 
     // 主键id
     private Long id;
@@ -35,11 +35,14 @@ public class SNotice implements Serializable {
     // 公告详情描述
     private String depict;
 
-    // 公告图片地址
-    private String noticePath;
-
     // 公告状态
     private String status;
+
+    // 公告标题
+    private String title;
+
+    // 公告url
+    private String noticeUrl;
 
     /** 
      * 获取 主键id s_notice.id
@@ -170,22 +173,6 @@ public class SNotice implements Serializable {
     }
 
     /** 
-     * 获取 公告图片地址 s_notice.notice_path
-     * @return 公告图片地址
-     */
-    public String getNoticePath() {
-        return noticePath;
-    }
-
-    /** 
-     * 设置 公告图片地址 s_notice.notice_path
-     * @param noticePath 公告图片地址
-     */
-    public void setNoticePath(String noticePath) {
-        this.noticePath = noticePath == null ? null : noticePath.trim();
-    }
-
-    /** 
      * 获取 公告状态 s_notice.status
      * @return 公告状态
      */
@@ -199,6 +186,38 @@ public class SNotice implements Serializable {
      */
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    /** 
+     * 获取 公告标题 s_notice.title
+     * @return 公告标题
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /** 
+     * 设置 公告标题 s_notice.title
+     * @param title 公告标题
+     */
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
+
+    /** 
+     * 获取 公告url s_notice.notice_url
+     * @return 公告url
+     */
+    public String getNoticeUrl() {
+        return noticeUrl;
+    }
+
+    /** 
+     * 设置 公告url s_notice.notice_url
+     * @param noticeUrl 公告url
+     */
+    public void setNoticeUrl(String noticeUrl) {
+        this.noticeUrl = noticeUrl == null ? null : noticeUrl.trim();
     }
 
     @Override
@@ -215,8 +234,9 @@ public class SNotice implements Serializable {
         sb.append(", updateId=").append(updateId);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", depict=").append(depict);
-        sb.append(", noticePath=").append(noticePath);
         sb.append(", status=").append(status);
+        sb.append(", title=").append(title);
+        sb.append(", noticeUrl=").append(noticeUrl);
         sb.append("]");
         return sb.toString();
     }
@@ -241,8 +261,9 @@ public class SNotice implements Serializable {
             && (this.getUpdateId() == null ? other.getUpdateId() == null : this.getUpdateId().equals(other.getUpdateId()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getDepict() == null ? other.getDepict() == null : this.getDepict().equals(other.getDepict()))
-            && (this.getNoticePath() == null ? other.getNoticePath() == null : this.getNoticePath().equals(other.getNoticePath()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
+            && (this.getNoticeUrl() == null ? other.getNoticeUrl() == null : this.getNoticeUrl().equals(other.getNoticeUrl()));
     }
 
     @Override
@@ -257,8 +278,9 @@ public class SNotice implements Serializable {
         result = prime * result + ((getUpdateId() == null) ? 0 : getUpdateId().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getDepict() == null) ? 0 : getDepict().hashCode());
-        result = prime * result + ((getNoticePath() == null) ? 0 : getNoticePath().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
+        result = prime * result + ((getNoticeUrl() == null) ? 0 : getNoticeUrl().hashCode());
         return result;
     }
 }

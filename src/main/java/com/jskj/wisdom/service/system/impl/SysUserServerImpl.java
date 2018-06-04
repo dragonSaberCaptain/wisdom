@@ -28,21 +28,22 @@ public class SysUserServerImpl implements SysUserServer {
     private SysUserRoleServer sysUserRoleServer;
 
     @Override
-    public int insert(SysUser record) {
-        Date date = new Date();
-        record.setCreateTime(date);
-        record.setUpdateTime(date);
-        record.setNickName("未填写");
-        return sysUserDAO.insert(record);
-    }
-
-    @Override
     public int insertSelective(SysUser record) {
         Date date = new Date();
         record.setCreateTime(date);
         record.setUpdateTime(date);
         record.setNickName("未填写");
         return sysUserDAO.insertSelective(record);
+    }
+
+    @Override
+    public int insertSelective(String loginName, String password) {
+//        String  result  = new Sha512Hash(password, DigestUtils.md5Hex(Global.MD5_SALT + loginName), 1024).toString();
+        SysUser sysUser = new SysUser();
+        sysUser.setLoginName(loginName);
+        sysUser.setPassword(password);
+        sysUser.setLoginFlag("0");
+        return 0;
     }
 
     @Override
@@ -54,12 +55,6 @@ public class SysUserServerImpl implements SysUserServer {
     public int updateByPrimaryKeySelective(SysUser record) {
         record.setUpdateTime(new Date());
         return sysUserDAO.updateByPrimaryKeySelective(record);
-    }
-
-    @Override
-    public int updateByPrimaryKey(SysUser record) {
-        record.setUpdateTime(new Date());
-        return sysUserDAO.updateByPrimaryKey(record);
     }
 
     @Override
