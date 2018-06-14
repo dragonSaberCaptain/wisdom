@@ -37,12 +37,12 @@ import java.util.Set;
  * @date 2018-05-03 21:53 星期四
  */
 @SpringBootApplication
+@EnableAutoConfiguration(exclude = {JndiConnectionFactoryAutoConfiguration.class, DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 @MapperScan("com.jskj.wisdom.dao")
 @ComponentScan
 @EnableScheduling
 @ServletComponentScan
 @EnableSwagger2
-@EnableAutoConfiguration(exclude = {JndiConnectionFactoryAutoConfiguration.class, DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class Application extends SpringBootServletInitializer {
     private static Logger logger = LoggerFactory.getLogger(Application.class);
     /**
