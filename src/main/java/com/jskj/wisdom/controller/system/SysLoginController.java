@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @date 2018-06-04 09:09 星期一
  */
 @Controller
-public class sysLoginController {
+public class SysLoginController {
 
     @Resource
     private SysUserServer sysUserServer;
@@ -64,8 +64,9 @@ public class sysLoginController {
 
     @RequestMapping({"", "/home"})
     public String home() {
-        System.out.printf("--------------LoginController.login: %s %n", "ajaxLogin");
-        return "/home";
+        System.out.printf("--------------LoginController.login: %s %n", "home");
+//        return "/home";
+        return "redirect:swagger-ui.html";
     }
 
     @RequestMapping("/ajaxLogin")
