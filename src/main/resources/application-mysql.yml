@@ -3,9 +3,9 @@ spring:
       type: com.alibaba.druid.pool.DruidDataSource
       #指定driver的类名，默认从jdbc url中自动探测.
       driverClassName: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:1023/wisdom?useUnicode=true&amp;autoReconnect=true
+      url: jdbc:mysql://localhost:3306/wisdom?useUnicode=true&amp;autoReconnect=true
       username: root
-      password: YSW1023
+      password: YSW1023@qq.com
       druid:
         #配置初始化大小、最小、最大
         initialSize: 1

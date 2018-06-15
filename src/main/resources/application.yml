@@ -16,6 +16,8 @@ server:
       open: /open
       picInterfacePrefix: /open/getPic?source=
   max-http-header-size: 3145728
+  tomcat:
+    uri-encoding: utf-8
 spring:
   application:
     name: wisdom
@@ -46,6 +48,8 @@ spring:
       enabled: true
   transaction:
     rollback-on-commit-failure: true
+  messages:
+    encoding: UTF-8
 mybatis:
   typeAliasesPackage: com.jskj.wisdom.model
   mapperLocations: classpath:/mappers/*.xml,classpath:/mappers/system/*.xml
