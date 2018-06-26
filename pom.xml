@@ -38,8 +38,6 @@
 
         <mybatis-spring-boot.version>1.3.0</mybatis-spring-boot.version>
 
-        <mysql-connector.version>5.1.38</mysql-connector.version>
-
         <!--接口文档版本-->
         <swagger.version>2.7.0</swagger.version>
     </properties>
@@ -80,12 +78,19 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!--兼容mysql8.0-->
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.11</version>
         </dependency>
+
+        <!--mysql驱动-->
+        <!--<dependency>-->
+        <!--<groupId>mysql</groupId>-->
+        <!--<artifactId>mysql-connector-java</artifactId>-->
+        <!--<version>5.1.38</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>redis.clients</groupId>
@@ -117,13 +122,6 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${httpclient.version}</version>
-        </dependency>
-
-        <!--mysql驱动-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector.version}</version>
         </dependency>
 
         <!--oracle驱动-->
