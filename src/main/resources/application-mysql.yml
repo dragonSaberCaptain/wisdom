@@ -3,7 +3,8 @@ spring:
       type: com.alibaba.druid.pool.DruidDataSource
       #指定driver的类名，默认从jdbc url中自动探测.
       driverClassName: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.0.119:3306/wisdom
+      #dev
+      url: jdbc:mysql://192.168.0.119:3306/wisdom?
       username: root
       password: YSW1023@qq.com
       druid:
