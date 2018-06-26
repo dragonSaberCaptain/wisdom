@@ -12,14 +12,12 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.jms.JndiConnectionFactoryAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.MultipartConfigElement;
@@ -66,20 +64,5 @@ public class Application extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(
             SpringApplicationBuilder application) {
         return application.sources(Application.class);
-    }
-
-    /**
-     * 统一处理编码问题
-     */
-    @Bean
-    public FilterRegistrationBean encodingFilter() {
-        CharacterEncodingFilter filter           = new CharacterEncodingFilter();
-        FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(filter);
-        registrationBean.addInitParameter("encoding", "UTF-8");
-        registrationBean.addInitParameter("forceEncoding", "true");
-        registrationBean.setName("encodingFilter");
-        registrationBean.addUrlPatterns("/*");
-        return registrationBean;
     }
 }
