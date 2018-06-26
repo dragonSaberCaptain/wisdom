@@ -80,6 +80,12 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!--兼容mysql8.0-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
 
         <dependency>
             <groupId>redis.clients</groupId>
@@ -228,7 +234,6 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-
         <!--<dependency>-->
         <!--<groupId>org.quartz-scheduler</groupId>-->
         <!--<artifactId>quartz</artifactId>-->
