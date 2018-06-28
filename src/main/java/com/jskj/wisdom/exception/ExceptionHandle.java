@@ -1,5 +1,6 @@
 package com.jskj.wisdom.exception;
 
+import cn.jiguang.common.resp.APIRequestException;
 import com.alibaba.fastjson.JSONException;
 import com.jskj.wisdom.dto.ResultDto;
 import com.jskj.wisdom.enums.ResultEnum;
@@ -69,6 +70,17 @@ public class ExceptionHandle {
             return new ResultDto(ResultEnum.INDEX_OUT_OF_BOUNDS);
         }
         logger.error("【运行时异常】", e);
+        return new ResultDto(ResultEnum.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public ResultDto handle(Exception e) {
+        if (e instanceof APIRequestException) {
+            APIRequestException e1 = (APIRequestException) e;
+            logger.error("【极光推送异常】", e1);
+            return new ResultDto(String.valueOf(e1.getErrorCode()), e1.getErrorMessage());
+        }
         return new ResultDto(ResultEnum.INTERNAL_SERVER_ERROR);
     }
 
