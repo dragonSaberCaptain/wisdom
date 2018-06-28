@@ -7,7 +7,6 @@ import com.jskj.wisdom.dto.ResultDto;
 import com.jskj.wisdom.dto.UserDto;
 import com.jskj.wisdom.enums.ResultEnum;
 import com.jskj.wisdom.enums.UserEnum;
-import com.jskj.wisdom.model.wisdom.TUser;
 import com.jskj.wisdom.service.NoticeService;
 import com.jskj.wisdom.service.PicturesService;
 import com.jskj.wisdom.service.UserService;
@@ -35,7 +34,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,21 +66,15 @@ public class LoginController {
             @ApiResponse(code = 500, message = "服务器内部异常")})
     public UserDto getLoginCode(
             @RequestParam(name = "mobile") String mobile) throws Exception {
-        TUser tUser = new TUser();
-        tUser.setMobile(mobile);
-        List<TUser> tUsers = userService.selectBySelective(tUser);
-        if (tUsers.size() > 0) {
-            if (Global.DEBUG) {
-                return new UserDto(UserEnum.OK);
-            }
-            SendSMSResult sendSMSResult = JpushSMSUtil.sendSMSCode(mobile, JpushConfig.TEMPLD);
-            logger.info("发送短信验证码:" + sendSMSResult.toString());
-
-            JedisUtil.Strings.setEx(mobile + ":msgId", sendSMSResult.getMessageId(), 90);
-            logger.info("存储msgId并设置有效期:" + mobile + ":msgId", sendSMSResult.getMessageId());
+        if (Global.DEBUG) {
             return new UserDto(UserEnum.OK);
         }
-        return new UserDto(UserEnum.NO_FIND_MOBILE);
+        SendSMSResult sendSMSResult = JpushSMSUtil.sendSMSCode(mobile, JpushConfig.TEMPLD);
+        logger.info("发送短信验证码:" + sendSMSResult.toString());
+
+        JedisUtil.Strings.setEx(Global.APPLICATION_NAME + mobile + ":msgId", sendSMSResult.getMessageId(), 90);
+        logger.info("存储msgId并设置有效期:" + mobile + ":msgId", sendSMSResult.getMessageId());
+        return new UserDto(UserEnum.OK);
     }
 
     @GetMapping("/open/login")

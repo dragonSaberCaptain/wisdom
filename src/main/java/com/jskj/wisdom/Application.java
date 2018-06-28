@@ -1,5 +1,6 @@
 package com.jskj.wisdom;
 
+import com.jskj.wisdom.utils.database.redis.JedisUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +19,12 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import redis.clients.jedis.HostAndPort;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.MultipartConfigElement;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Copyright © 2018 dragonSaberCaptain. All rights reserved.
@@ -39,12 +43,20 @@ import javax.servlet.MultipartConfigElement;
 @EnableSwagger2
 public class Application extends SpringBootServletInitializer {
     private static Logger logger = LoggerFactory.getLogger(Application.class);
+
     /**
      * Main Start
      */
     public static void main(String[] args) {
+        Set<HostAndPort> nodes = new HashSet<>();
+        nodes.add(new HostAndPort("127.0.0.1", 6379));
+        boolean bool = JedisUtil.createPool(nodes, null, false);
+        if (bool) {
             SpringApplication.run(Application.class, args);
             logger.info("-------------------------------------------【项目启动成功】--------------------------------------");
+        } else {
+            logger.info("-------------------------------------------【项目启动失败缓存没有开启】--------------------------------------");
+        }
     }
 
     /**

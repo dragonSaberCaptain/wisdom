@@ -190,12 +190,11 @@ public class UserServiceImpl implements UserService {
             throw new UserException((UserEnum.UNREGISTERED));
         }
 
-        boolean bool;
+        boolean bool = false;
         if (Global.DEBUG) {
             bool = true;
         } else {
-            bool = false;
-            String msgId = JedisUtil.Strings.get(mobile + ":msgId");
+            String msgId = JedisUtil.Strings.get(Global.APPLICATION_NAME + mobile + ":msgId");
             logger.info("从缓存中获取msgid:" + msgId);
             if (StringUtil.isBlank(msgId)) {
                 logger.error("验证码已超时");
