@@ -65,7 +65,6 @@ public class SysLoginController {
     @RequestMapping({"", "/home"})
     public String home() {
         System.out.printf("--------------LoginController.login: %s %n", "home");
-//        return "/home";
         return "redirect:swagger-ui.html";
     }
 

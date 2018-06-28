@@ -1,8 +1,5 @@
 package com.jskj.wisdom.config.common;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-
 /**
  * Copyright © 2018 dragonSaberCaptain. All rights reserved.
  *
@@ -11,11 +8,9 @@ import org.springframework.context.annotation.PropertySource;
  * @description 全局变量
  * @date 2018-05-06 14:57 星期日
  */
-@PropertySource("classpath:application.yml")
 public class Global {
     //---------------------------------------------------------------debug模式 true：开启-------------------------------------------------------------------------------
 
-    @Value("${server.config.global.debug}")
     public static final boolean DEBUG = false;
 
     //---------------------------------------------------------------常量-------------------------------------------------------------------------------
@@ -25,7 +20,6 @@ public class Global {
     /**
      * 上传文件大小
      */
-    @Value("${server.config.global.fileSize}")
     public static final int FILE_SIZE = 10 * 1024 * 1024;
 
     public static final String SPOT = ".";
@@ -63,6 +57,37 @@ public class Global {
     public static final int    FIFTEEN_INT   = 15;
 
 
+    //---------------------------------------------------------------前缀-------------------------------------------------------------------------------
+    /**
+     * 开放接口前缀
+     */
+    public static final String OPEN = "/open";
+
+    /**
+     * 图片接口前缀
+     */
+    public static final String PIC_INTERFACE_PREFIX = "/open/getPic?source=";
+
+    /**
+     * 项目名称
+     */
+    public static final String APPLICATION_NAME = "wisdom";
+
+    /**
+     * 图片地址前缀
+     */
+    public static final String PIC_PREFIX = "C:/" + APPLICATION_NAME + "/pictures_pic/";
+
+    /**
+     * 缓存用户token前缀
+     */
+    public static final String LOGIN_VALID_TOKEN = APPLICATION_NAME + "userToken:";
+
+    /**
+     * 缓存用户信息前缀
+     */
+    public static final String USER_INFO = APPLICATION_NAME + "userInfo:";
+
     //---------------------------------------------------------------路径-------------------------------------------------------------------------------
 
     public static final String USER_PICTURE = "/user_picture/";
@@ -81,12 +106,10 @@ public class Global {
 
     public static final String LOCALHOST = "127.0.0.1";
 
-    @Value("${server.config.global.host}")
     public static final String HOST = "192.168.0.119";
 
     public static final String DOMAIN_NAME = "dt.cnxnu.com";
 
-    @Value("${server.config.global.port}")
     public static final String PORT = "80";
 
     public static final String HTTP = "http://";
@@ -97,45 +120,11 @@ public class Global {
 
     public static final String HTTPS_HOST_POST = HTTPS + HOST + ":" + PORT;
 
-    //---------------------------------------------------------------前缀-------------------------------------------------------------------------------
-    /**
-     * 开放接口前缀
-     */
-    @Value("${server.config.global.open}")
-    public static final String OPEN = "/open";
-
-    /**
-     * 图片接口前缀
-     */
-    @Value("${server.config.global.picInterfacePrefix}")
-    public static final String PIC_INTERFACE_PREFIX = "/open/getPic?source=";
-
-    /**
-     * 缓存用户token前缀
-     */
-    public static final String LOGIN_VALID_TOKEN = "userToken:";
-
-    /**
-     * 缓存用户信息前缀
-     */
-    public static final String USER_INFO = "userInfo:";
-
-    /**
-     * 图片地址前缀
-     */
-    @Value("${server.config.global.picPrefix}")
-    public static final String PIC_PREFIX = "C:/dragonSaberCaptain/pictures_pic/";
     //---------------------------------------------------------------盐-------------------------------------------------------------------------------
 
     /**
-     * 盐原始值
-     */
-    @Value("${server.config.global.salt}")
-    public static final String SALT     = "dragonSaberCaptain";
-    /**
      * 盐md5后的值
      */
-    @Value("${server.config.global.md5Salt}")
     public static final String MD5_SALT = "e5a5be7e769d12575d7ea8efa004b154";
 
 }
