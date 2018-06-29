@@ -16,7 +16,6 @@ import org.springframework.context.annotation.PropertySource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-
 /**
  * Copyright © 2017 LastChaosCaptain. All rights reserved.
  *

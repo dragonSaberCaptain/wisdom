@@ -27,7 +27,7 @@ import java.util.Map;
  * @date 2018-05-06 22:25 星期日
  */
 public class ApiInterceptor implements HandlerInterceptor {
-    private static final Logger logger = LoggerFactory
+    private static final Logger              logger = LoggerFactory
             .getLogger(ApiInterceptor.class);
 
     private Map<String, Object> getParams(HttpServletRequest request) {
@@ -67,7 +67,7 @@ public class ApiInterceptor implements HandlerInterceptor {
         if (!judgeismoblie) {
             return true;
         }
-        Map<String, Object> rec = new LinkedHashMap<>();
+        Map<String, Object> rec     = new LinkedHashMap<>();
 
         String token   = (String) requestMap.get("token");
         String signMsg = (String) requestMap.get("signMsg");

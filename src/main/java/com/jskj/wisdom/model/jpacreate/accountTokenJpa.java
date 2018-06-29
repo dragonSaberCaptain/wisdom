@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "account_token")
-public class AccountTokenJpa extends BaseModel {
+public class accountTokenJpa extends BaseModel {
 
     @Column(columnDefinition = " bigint(64) COMMENT '用户id'")
     private Long userId;

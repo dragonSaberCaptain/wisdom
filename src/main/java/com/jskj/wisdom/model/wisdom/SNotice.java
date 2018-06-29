@@ -46,7 +46,6 @@ public class SNotice implements Serializable {
 
     /**
      * 获取 主键id s_notice.id
-     *
      * @return 主键id
      */
     public Long getId() {
@@ -55,7 +54,6 @@ public class SNotice implements Serializable {
 
     /**
      * 设置 主键id s_notice.id
-     *
      * @param id 主键id
      */
     public void setId(Long id) {
@@ -64,7 +62,6 @@ public class SNotice implements Serializable {
 
     /**
      * 获取 创建者 s_notice.create_id
-     *
      * @return 创建者
      */
     public Long getCreateId() {
@@ -73,7 +70,6 @@ public class SNotice implements Serializable {
 
     /**
      * 设置 创建者 s_notice.create_id
-     *
      * @param createId 创建者
      */
     public void setCreateId(Long createId) {
@@ -82,7 +78,6 @@ public class SNotice implements Serializable {
 
     /**
      * 获取 创建时间 s_notice.create_time
-     *
      * @return 创建时间
      */
     public Date getCreateTime() {
@@ -91,7 +86,6 @@ public class SNotice implements Serializable {
 
     /**
      * 设置 创建时间 s_notice.create_time
-     *
      * @param createTime 创建时间
      */
     public void setCreateTime(Date createTime) {
@@ -100,7 +94,6 @@ public class SNotice implements Serializable {
 
     /**
      * 获取 是否删除：0否 1是  默认：0 s_notice.is_delete
-     *
      * @return 是否删除：0否 1是  默认：0
      */
     public String getIsDelete() {
@@ -109,7 +102,6 @@ public class SNotice implements Serializable {
 
     /**
      * 设置 是否删除：0否 1是  默认：0 s_notice.is_delete
-     *
      * @param isDelete 是否删除：0否 1是  默认：0
      */
     public void setIsDelete(String isDelete) {
@@ -118,7 +110,6 @@ public class SNotice implements Serializable {
 
     /**
      * 获取 备注 s_notice.remark
-     *
      * @return 备注
      */
     public String getRemark() {
@@ -127,7 +118,6 @@ public class SNotice implements Serializable {
 
     /**
      * 设置 备注 s_notice.remark
-     *
      * @param remark 备注
      */
     public void setRemark(String remark) {
@@ -136,7 +126,6 @@ public class SNotice implements Serializable {
 
     /**
      * 获取 更新者 s_notice.update_id
-     *
      * @return 更新者
      */
     public Long getUpdateId() {
@@ -145,7 +134,6 @@ public class SNotice implements Serializable {
 
     /**
      * 设置 更新者 s_notice.update_id
-     *
      * @param updateId 更新者
      */
     public void setUpdateId(Long updateId) {
@@ -154,7 +142,6 @@ public class SNotice implements Serializable {
 
     /**
      * 获取 更新时间 s_notice.update_time
-     *
      * @return 更新时间
      */
     public Date getUpdateTime() {
@@ -163,7 +150,6 @@ public class SNotice implements Serializable {
 
     /**
      * 设置 更新时间 s_notice.update_time
-     *
      * @param updateTime 更新时间
      */
     public void setUpdateTime(Date updateTime) {
@@ -172,7 +158,6 @@ public class SNotice implements Serializable {
 
     /**
      * 获取 公告详情描述 s_notice.depict
-     *
      * @return 公告详情描述
      */
     public String getDepict() {
@@ -181,7 +166,6 @@ public class SNotice implements Serializable {
 
     /**
      * 设置 公告详情描述 s_notice.depict
-     *
      * @param depict 公告详情描述
      */
     public void setDepict(String depict) {
@@ -190,7 +174,6 @@ public class SNotice implements Serializable {
 
     /**
      * 获取 公告状态 s_notice.status
-     *
      * @return 公告状态
      */
     public String getStatus() {
@@ -199,7 +182,6 @@ public class SNotice implements Serializable {
 
     /**
      * 设置 公告状态 s_notice.status
-     *
      * @param status 公告状态
      */
     public void setStatus(String status) {
@@ -276,13 +258,13 @@ public class SNotice implements Serializable {
         }
         SNotice other = (SNotice) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getCreateId() == null ? other.getCreateId() == null : this.getCreateId().equals(other.getCreateId()))
-                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-                && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
-                && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
-                && (this.getUpdateId() == null ? other.getUpdateId() == null : this.getUpdateId().equals(other.getUpdateId()))
-                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-                && (this.getDepict() == null ? other.getDepict() == null : this.getDepict().equals(other.getDepict()))
+            && (this.getCreateId() == null ? other.getCreateId() == null : this.getCreateId().equals(other.getCreateId()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
+            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
+            && (this.getUpdateId() == null ? other.getUpdateId() == null : this.getUpdateId().equals(other.getUpdateId()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getDepict() == null ? other.getDepict() == null : this.getDepict().equals(other.getDepict()))
                 && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
                 && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
                 && (this.getNoticeUrl() == null ? other.getNoticeUrl() == null : this.getNoticeUrl().equals(other.getNoticeUrl()));
@@ -290,8 +272,8 @@ public class SNotice implements Serializable {
 
     @Override
     public int hashCode() {
-        final int prime  = 31;
-        int       result = 1;
+        final int prime = 31;
+        int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getCreateId() == null) ? 0 : getCreateId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
