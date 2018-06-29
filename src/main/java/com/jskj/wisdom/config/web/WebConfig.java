@@ -52,5 +52,4 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/").allowedOrigins(Global.HTTP_HOST_POST);
     }
-
 }

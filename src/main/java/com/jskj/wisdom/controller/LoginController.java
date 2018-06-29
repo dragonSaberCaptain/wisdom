@@ -66,15 +66,15 @@ public class LoginController {
             @ApiResponse(code = 500, message = "服务器内部异常")})
     public UserDto getLoginCode(
             @RequestParam(name = "mobile") String mobile) throws Exception {
-        if (Global.DEBUG) {
-            return new UserDto(UserEnum.OK);
-        }
-        SendSMSResult sendSMSResult = JpushSMSUtil.sendSMSCode(mobile, JpushConfig.TEMPLD);
-        logger.info("发送短信验证码:" + sendSMSResult.toString());
+            if (Global.DEBUG) {
+                return new UserDto(UserEnum.OK);
+            }
+            SendSMSResult sendSMSResult = JpushSMSUtil.sendSMSCode(mobile, JpushConfig.TEMPLD);
+            logger.info("发送短信验证码:" + sendSMSResult.toString());
 
         JedisUtil.Strings.setEx(Global.APPLICATION_NAME + mobile + ":msgId", sendSMSResult.getMessageId(), 90);
-        logger.info("存储msgId并设置有效期:" + mobile + ":msgId", sendSMSResult.getMessageId());
-        return new UserDto(UserEnum.OK);
+            logger.info("存储msgId并设置有效期:" + mobile + ":msgId", sendSMSResult.getMessageId());
+            return new UserDto(UserEnum.OK);
     }
 
     @GetMapping("/open/login")
