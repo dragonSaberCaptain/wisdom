@@ -52,7 +52,6 @@ public class SRepair implements Serializable {
 
     /**
      * 获取 主键id s_repair.id
-     *
      * @return 主键id
      */
     public Long getId() {
@@ -61,7 +60,6 @@ public class SRepair implements Serializable {
 
     /**
      * 设置 主键id s_repair.id
-     *
      * @param id 主键id
      */
     public void setId(Long id) {
@@ -70,7 +68,6 @@ public class SRepair implements Serializable {
 
     /**
      * 获取 创建者 s_repair.create_id
-     *
      * @return 创建者
      */
     public Long getCreateId() {
@@ -79,7 +76,6 @@ public class SRepair implements Serializable {
 
     /**
      * 设置 创建者 s_repair.create_id
-     *
      * @param createId 创建者
      */
     public void setCreateId(Long createId) {
@@ -88,7 +84,6 @@ public class SRepair implements Serializable {
 
     /**
      * 获取 创建时间 s_repair.create_time
-     *
      * @return 创建时间
      */
     public Date getCreateTime() {
@@ -97,7 +92,6 @@ public class SRepair implements Serializable {
 
     /**
      * 设置 创建时间 s_repair.create_time
-     *
      * @param createTime 创建时间
      */
     public void setCreateTime(Date createTime) {
@@ -106,7 +100,6 @@ public class SRepair implements Serializable {
 
     /**
      * 获取 是否删除：0否 1是  默认：0 s_repair.is_delete
-     *
      * @return 是否删除：0否 1是  默认：0
      */
     public String getIsDelete() {
@@ -115,7 +108,6 @@ public class SRepair implements Serializable {
 
     /**
      * 设置 是否删除：0否 1是  默认：0 s_repair.is_delete
-     *
      * @param isDelete 是否删除：0否 1是  默认：0
      */
     public void setIsDelete(String isDelete) {
@@ -124,7 +116,6 @@ public class SRepair implements Serializable {
 
     /**
      * 获取 备注 s_repair.remark
-     *
      * @return 备注
      */
     public String getRemark() {
@@ -133,7 +124,6 @@ public class SRepair implements Serializable {
 
     /**
      * 设置 备注 s_repair.remark
-     *
      * @param remark 备注
      */
     public void setRemark(String remark) {
@@ -142,7 +132,6 @@ public class SRepair implements Serializable {
 
     /**
      * 获取 更新者 s_repair.update_id
-     *
      * @return 更新者
      */
     public Long getUpdateId() {
@@ -151,7 +140,6 @@ public class SRepair implements Serializable {
 
     /**
      * 设置 更新者 s_repair.update_id
-     *
      * @param updateId 更新者
      */
     public void setUpdateId(Long updateId) {
@@ -160,7 +148,6 @@ public class SRepair implements Serializable {
 
     /**
      * 获取 更新时间 s_repair.update_time
-     *
      * @return 更新时间
      */
     public Date getUpdateTime() {
@@ -169,7 +156,6 @@ public class SRepair implements Serializable {
 
     /**
      * 设置 更新时间 s_repair.update_time
-     *
      * @param updateTime 更新时间
      */
     public void setUpdateTime(Date updateTime) {
@@ -232,7 +218,6 @@ public class SRepair implements Serializable {
 
     /**
      * 获取 报修标题 s_repair.title
-     *
      * @return 报修标题
      */
     public String getTitle() {
@@ -241,7 +226,6 @@ public class SRepair implements Serializable {
 
     /**
      * 设置 报修标题 s_repair.title
-     *
      * @param title 报修标题
      */
     public void setTitle(String title) {
@@ -250,7 +234,6 @@ public class SRepair implements Serializable {
 
     /**
      * 获取 用户id s_repair.user_id
-     *
      * @return 用户id
      */
     public Long getUserId() {
@@ -259,7 +242,6 @@ public class SRepair implements Serializable {
 
     /**
      * 设置 用户id s_repair.user_id
-     *
      * @param userId 用户id
      */
     public void setUserId(Long userId) {
@@ -320,12 +302,12 @@ public class SRepair implements Serializable {
         }
         SRepair other = (SRepair) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getCreateId() == null ? other.getCreateId() == null : this.getCreateId().equals(other.getCreateId()))
-                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-                && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
-                && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
-                && (this.getUpdateId() == null ? other.getUpdateId() == null : this.getUpdateId().equals(other.getUpdateId()))
-                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getCreateId() == null ? other.getCreateId() == null : this.getCreateId().equals(other.getCreateId()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
+            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
+            && (this.getUpdateId() == null ? other.getUpdateId() == null : this.getUpdateId().equals(other.getUpdateId()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
                 && (this.getDepict() == null ? other.getDepict() == null : this.getDepict().equals(other.getDepict()))
                 && (this.getPlace() == null ? other.getPlace() == null : this.getPlace().equals(other.getPlace()))
                 && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
@@ -336,8 +318,8 @@ public class SRepair implements Serializable {
 
     @Override
     public int hashCode() {
-        final int prime  = 31;
-        int       result = 1;
+        final int prime = 31;
+        int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getCreateId() == null) ? 0 : getCreateId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
