@@ -9,7 +9,7 @@ import javax.persistence.Table;
  *
  * @author dragonSaberCaptain
  * @packageName com.jskj.wisdom.model.jpacreate
- * //TODO
+ * // TODO 第三方账号
  * @date 2018-06-13 17:36 星期三
  */
 @Entity
@@ -42,4 +42,5 @@ public class accountTokenJpa extends BaseModel {
 
     @Column(columnDefinition = " varchar(64) COMMENT '第三方账户密码'")
     private String thirdPartyPassword;
+
 }
