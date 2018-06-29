@@ -36,7 +36,7 @@ public class PicUtil<T> {
 
         String filePath = picPrefix + typePic + timeStamp + "/";
 
-        File picFile = new File(filePath);
+        File   picFile  = new File(filePath);
         //判断图片路径是否存在，若不存在则创建
         boolean bool = true;
         if (!picFile.exists()) {

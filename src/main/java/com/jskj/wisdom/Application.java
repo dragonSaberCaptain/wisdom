@@ -43,7 +43,6 @@ import java.util.Set;
 @EnableSwagger2
 public class Application extends SpringBootServletInitializer {
     private static Logger logger = LoggerFactory.getLogger(Application.class);
-
     /**
      * Main Start
      */
