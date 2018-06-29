@@ -236,6 +236,8 @@ fastlane/test_output
 fastlane/readme.md
 ### SVN template
 .svn/
-/generator/
-/src/test/
+
 /src/main/resources/mybatis/generatorConfig.xml
+/generator/
+/deployer/
+/src/test/
