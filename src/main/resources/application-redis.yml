@@ -1,10 +1,10 @@
 spring:
   redis:
-#    cluster:
+    #cluster:
       #(普通集群，不使用则不用开启）在群集中执行命令时要遵循的最大重定向数目。)
-#      maxRedirects:
+      #maxRedirects:
       #(普通集群，不使用则不用开启）以逗号分隔的“主机：端口”对列表进行引导。
-#      nodes:
+      #nodes:
     # 连接工厂使用的数据库索引(默认为0)
     database: 0
     #连接URL，将覆盖主机，端口和密码（用户将被忽略），例如：redis://user:password@example.com:6379
@@ -29,8 +29,8 @@ spring:
         maxWait: 2ms
     # 连接超时时间（毫秒）
     timeout: 10000ms
-#    sentinel:
+    #sentinel:
       #哨兵模式，不使用则不用开启）Redis服务器的名称。
-#      master:
+      #master:
       #（哨兵模式，不使用则不用开启）主机：端口对的逗号分隔列表。
-#      nodes:
+      #nodes:

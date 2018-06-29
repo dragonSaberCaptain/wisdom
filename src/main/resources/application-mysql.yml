@@ -6,7 +6,7 @@ spring:
       #dev
       url: jdbc:mysql://192.168.0.119:3306/wisdom?
       username: root
-      password: YSW1023@qq.com
+      password: Ysw1023@qq.com
       druid:
         #配置初始化大小、最小、最大
         initialSize: 1

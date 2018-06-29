@@ -51,42 +51,55 @@ public class JedisUtil {
     public static final String          HASH_PREFIX       = "hash_";
     public static final String          SORT_SET_PREFIX   = "sortSet_";
     public static final String          LIST_PREFIX       = "list_";
+
     /**
      * 该工具类是否可用
      */
-    public static       boolean         utilsIsUsable     = false;
+    public static boolean utilsIsUsable = false;
+
     /**
      * 单机版连接池
      */
     private static      JedisPool       jedisPools        = null;
+
     /**
      * 集群连接池
      */
     private static      JedisCluster    jedisClusters     = null;
+
     /**
      * 连接池配置
      */
-    private static      JedisPoolConfig poolConfig;
+    private static JedisPoolConfig poolConfig = null;
+
     /**
      * 集群模式，默认关闭
      */
     private static      boolean         clusterPattern    = false;
+
     /**
      * 缓存生存时间
      */
-    private static      int             expire            = 60000;
+    private static int EXPIRE;
+
     /**
      * 连接超时时间
      */
-    private static      int             connectionTimeout = 60000;
+    private static int CONNECTION_TIMEOUT;
+
     /**  */
-    private static      int             soTimeout         = 60000;
+    private static int SO_TIMEOUT;
+
     /**
      * 重连次数
      */
-    private static      int             maxAttempts       = 3;
+    private static int MAX_ATTEMPTS;
 
     static {
+        MAX_ATTEMPTS = 3;
+        SO_TIMEOUT = 60000;
+        CONNECTION_TIMEOUT = 60000;
+        EXPIRE = 60000;
         poolConfig = new JedisPoolConfig();
 
         /* 最大连接数 */
@@ -138,8 +151,8 @@ public class JedisUtil {
         password = StringUtils.isBlank(password) ? null : password.trim();
         if (isCluster) {
             try {
-                jedisClusters = new JedisCluster(nodes, connectionTimeout,
-                        soTimeout, maxAttempts, password, poolConfig);
+                jedisClusters = new JedisCluster(nodes, CONNECTION_TIMEOUT,
+                        SO_TIMEOUT, MAX_ATTEMPTS, password, poolConfig);
             } catch (JedisDataException e) {
                 e.printStackTrace();
                 throw new JedisDataException("该实例不支持集群");
@@ -155,7 +168,7 @@ public class JedisUtil {
                 for (HostAndPort hostAndPort : nodes) {
                     jedisPools = new JedisPool(poolConfig,
                             hostAndPort.getHost(), hostAndPort.getPort(),
-                            connectionTimeout, password);
+                            CONNECTION_TIMEOUT, password);
                 }
                 Jedis jedis = getJedis();
                 if (jedis != null) {
@@ -277,7 +290,7 @@ public class JedisUtil {
          * @author dragonSaberCaptain
          */
         public static void expire(String key) {
-            expire(key, expire);
+            expire(key, EXPIRE);
         }
 
         /**
@@ -285,7 +298,7 @@ public class JedisUtil {
          */
         public static String flushAll() {
             Jedis  jedis  = getJedis();
-            String result = jedis.flushAll();
+            String result = getJedis().flushAll();
             jedis.close();
             return result;
         }
@@ -644,8 +657,8 @@ public class JedisUtil {
         /**
          * 向Set添加一条记录 <br/>
          *
-         * @param key
-         * @param member
+         * @param key 钥匙
+         * @param member 值
          * @return 操作码 0(不存在) 1(存在)
          * @createDate: 2017年12月18日 上午10:18:56
          * @author dragonSaberCaptain
@@ -992,7 +1005,7 @@ public class JedisUtil {
          * @return 合并后的结果集合
          * @createDate: 2017年12月18日 上午10:49:44
          * @author dragonSaberCaptain
-         * @see sunionstore
+         * see sunionstore
          */
         public static Set<String> sunion(String... keys) {
             Set<String> result = null;
@@ -1298,7 +1311,7 @@ public class JedisUtil {
          * @return 位置
          * @createDate: 2017年12月18日 上午11:16:55
          * @author dragonSaberCaptain
-         * @see zrevrank
+         * see zrevrank
          */
         public static long zrank(String key, String member) {
             long result = -1;
