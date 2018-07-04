@@ -112,14 +112,6 @@
             <version>${httpclient.version}</version>
         </dependency>
 
-        <!--oracle驱动-->
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.3</version>
-            <scope>test</scope>
-        </dependency>
-
         <!--权限相关-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
