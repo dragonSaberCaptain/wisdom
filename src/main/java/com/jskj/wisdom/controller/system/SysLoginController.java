@@ -1,10 +1,7 @@
 package com.jskj.wisdom.controller.system;
 
 import com.jskj.wisdom.service.system.SysUserServer;
-import com.jskj.wisdom.utils.string.StringUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 
@@ -62,32 +59,32 @@ public class SysLoginController {
 //    }
 
 
-    @RequestMapping({"", "/home"})
-    public String home() {
-        System.out.printf("--------------LoginController.login: %s %n", "home");
-        return "redirect:swagger-ui.html";
-    }
-
-    @RequestMapping("/ajaxLogin")
-    public String ajaxLogin() {
-        return "/login";
-    }
-
-    @RequestMapping("/register")
-    public String register(@RequestParam(name = "userName", required = false) String userName, @RequestParam(name = "password", required = false) String password) {
-        if (StringUtil.isBlank(userName) || StringUtil.isBlank(password)) {
-            return "/register";
-        }
-        int num = sysUserServer.insertSelective(userName, password);
-        if (num > 0) {
-            return "/login";
-        }
-        return "/register";
-    }
-
-    @RequestMapping("/403")
-    public String unauthorizedRole() {
-        System.out.println("------没有权限-------");
-        return "403";
-    }
+//    @RequestMapping({"", "/home"})
+//    public String home() {
+//        System.out.printf("--------------LoginController.login: %s %n", "home");
+//        return "redirect:swagger-ui.html";
+//    }
+//
+//    @RequestMapping("/ajaxLogin")
+//    public String ajaxLogin() {
+//        return "/login";
+//    }
+//
+//    @RequestMapping("/register")
+//    public String register(@RequestParam(name = "userName", required = false) String userName, @RequestParam(name = "password", required = false) String password) {
+//        if (StringUtil.isBlank(userName) || StringUtil.isBlank(password)) {
+//            return "/register";
+//        }
+//        int num = sysUserServer.insertSelective(userName, password);
+//        if (num > 0) {
+//            return "/login";
+//        }
+//        return "/register";
+//    }
+//
+//    @RequestMapping("/403")
+//    public String unauthorizedRole() {
+//        System.out.println("------没有权限-------");
+//        return "403";
+//    }
 }
