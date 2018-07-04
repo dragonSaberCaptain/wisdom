@@ -18,9 +18,6 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
-  data:
-    mongodb:
-      uri: mongodb://tshan_jv:javapwd@117.173.135.6:27017/gsis
   session:
 #    加入spring session 配置
     store-type: redis
