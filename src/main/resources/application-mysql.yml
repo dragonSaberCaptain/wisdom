@@ -4,14 +4,9 @@ spring:
       #指定driver的类名，默认从jdbc url中自动探测.
       driverClassName: com.mysql.jdbc.Driver
       #dev
-#      url: jdbc:mysql://192.168.0.119:3306/wisdom?
-#      username: root
-#      password: Ysw1023@qq.com
-
-      #pro
-      url: jdbc:mysql://47.94.198.203:3306/wisdom?
-      username: jsxakj
-      password: Cu5fQPUgFt?w
+      url: jdbc:mysql://192.168.0.119:3306/wisdom?
+      username: root
+      password: Ysw1023@qq.com
 
       druid:
         #配置初始化大小、最小、最大
