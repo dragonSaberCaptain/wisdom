@@ -73,18 +73,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--mysql驱动-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.11</version>
+            <version>5.1.38</version>
         </dependency>
-
-        <!--mysql驱动-->
-        <!--<dependency>-->
-        <!--<groupId>mysql</groupId>-->
-        <!--<artifactId>mysql-connector-java</artifactId>-->
-        <!--<version>5.1.38</version>-->
-        <!--</dependency>-->
 
         <!--mongodb -->
         <dependency>
