@@ -1,6 +1,7 @@
 package com.jskj.wisdom.config.swagger;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.jskj.wisdom.config.common.Global;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,7 +14,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import static com.google.common.base.Predicates.or;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 /**
@@ -51,19 +51,26 @@ public class SwaggerConfig {
      * @date 2018-05-10 13:18:23
      */
     private Predicate<String> apiPaths() {
-        return or(
-                regex(Global.OPEN + "/.*"),
-                regex("/home/.*"),
-                regex("/user/.*"),
-                regex("/video/.*"),
-                regex("/fluorit/.*"),
-                regex("/notice/.*"),
-                regex("/property/.*"),
-                regex("/complaint/.*"),
-                regex("/repair/.*"),
-                regex("/picture/.*"),
-                regex("/test/.*")
-        );
+        if (Global.DEV) {
+            return Predicates.or(
+                    regex( Global.OPEN + "/.*" ),
+                    regex( "/home/.*" ),
+                    regex( "/user/.*" ),
+                    regex( "/video/.*" ),
+                    regex( "/fluorit/.*" ),
+                    regex( "/notice/.*" ),
+                    regex( "/property/.*" ),
+                    regex( "/complaint/.*" ),
+                    regex( "/repair/.*" ),
+                    regex( "/picture/.*" ),
+                    regex( "/test/.*" )
+            );
+        } else {
+            return Predicates.or(
+                    regex( "/test/.*" ),
+                    regex( Global.OPEN + "/.*" )
+            );
+        }
     }
 
     private ApiInfo platformApiInfo() {

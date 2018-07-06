@@ -3,16 +3,17 @@ package com.jskj.wisdom.filter;
 import com.jskj.wisdom.config.common.Global;
 import com.jskj.wisdom.enums.UserEnum;
 import com.jskj.wisdom.utils.ResultUtil;
-import com.jskj.wisdom.utils.database.redis.JedisUtil;
 import com.jskj.wisdom.utils.ip.IpUtil;
 import com.jskj.wisdom.utils.safety.VerifyUtil;
 import com.jskj.wisdom.utils.string.StringUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedHashMap;
@@ -30,6 +31,8 @@ public class ApiInterceptor implements HandlerInterceptor {
     private static final Logger logger = LoggerFactory
             .getLogger(ApiInterceptor.class);
 
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
     private Map<String, Object> getParams(HttpServletRequest request) {
         Map<String, String[]> rec    = request.getParameterMap();
         Map<String, Object>   result = new LinkedHashMap<String, Object>();
@@ -53,10 +56,9 @@ public class ApiInterceptor implements HandlerInterceptor {
         logger.info("请求来源： " + agent);
 
         //判断是否开启debug模式
-        if (Global.DEBUG) {
+        if (Global.DEV) {
             return true;
         }
-
         Map<String, Object> requestMap = getParams(httpServletRequest);
 
 //        判断请求是否来自手机 返回true表示是手机
@@ -82,7 +84,8 @@ public class ApiInterceptor implements HandlerInterceptor {
         //从缓存中获取token
         String webToken;
         try {
-            webToken = JedisUtil.Strings.get(Global.LOGIN_VALID_TOKEN + token);
+            webToken = stringRedisTemplate.opsForValue().get( Global.LOGIN_VALID_TOKEN + token );
+            System.out.printf( "--------------ApiInterceptor.preHandle: %s %n", webToken );
         } catch (Exception e) {
             logger.error("ApiInterceptor--preHandle", e);
             e.printStackTrace();

@@ -10,7 +10,7 @@ spring:
     #连接URL，将覆盖主机，端口和密码（用户将被忽略），例如：redis://user:password@example.com:6379
     url:
     # Redis服务器主机
-    host: 192.168.0.119
+    host: 127.0.0.1
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）

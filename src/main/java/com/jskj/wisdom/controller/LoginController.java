@@ -8,9 +8,7 @@ import com.jskj.wisdom.dto.UserDto;
 import com.jskj.wisdom.enums.ResultEnum;
 import com.jskj.wisdom.enums.UserEnum;
 import com.jskj.wisdom.service.NoticeService;
-import com.jskj.wisdom.service.PicturesService;
 import com.jskj.wisdom.service.UserService;
-import com.jskj.wisdom.utils.database.redis.JedisUtil;
 import com.jskj.wisdom.utils.jpush.JpushSMSUtil;
 import com.jskj.wisdom.utils.pic.PicUtil;
 import com.jskj.wisdom.utils.pic.ThumbnailatorUtil;
@@ -21,6 +19,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +34,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Copyright © 2018 dragonSaberCaptain. All rights reserved.
@@ -56,7 +56,7 @@ public class LoginController {
     private NoticeService noticeService;
 
     @Resource
-    private PicturesService picturesService;
+    private StringRedisTemplate stringRedisTemplate;
 
     @GetMapping("/open/getLoginCode")
     @ApiOperation(value = "获取短信验证码", notes = "通过用户手机号获取短信验证码")
@@ -66,13 +66,13 @@ public class LoginController {
             @ApiResponse(code = 500, message = "服务器内部异常")})
     public UserDto getLoginCode(
             @RequestParam(name = "mobile") String mobile) throws Exception {
-        if (Global.DEBUG) {
+        if (Global.DEV) {
             return new UserDto(UserEnum.OK);
         }
         SendSMSResult sendSMSResult = JpushSMSUtil.sendSMSCode(mobile, JpushConfig.TEMPLD);
         logger.info("发送短信验证码:" + sendSMSResult.toString());
 
-        JedisUtil.Strings.setEx(Global.APPLICATION_NAME + mobile + ":msgId", sendSMSResult.getMessageId(), 90);
+        stringRedisTemplate.opsForValue().set( Global.APPLICATION_NAME + mobile + ":msgId", sendSMSResult.getMessageId(), 90, TimeUnit.SECONDS );
         logger.info("存储msgId并设置有效期:" + mobile + ":msgId", sendSMSResult.getMessageId());
         return new UserDto(UserEnum.OK);
     }
@@ -104,8 +104,8 @@ public class LoginController {
             @ApiResponse(code = 1002, message = "失败"),
             @ApiResponse(code = 500, message = "服务器内部异常")})
     public UserDto<Map<String, Object>> logout(@RequestParam(name = "token") String token) {
-        Long result = JedisUtil.Keys.del(Global.LOGIN_VALID_TOKEN + token);
-        if (result > 0) {
+        Boolean bool = stringRedisTemplate.delete( Global.LOGIN_VALID_TOKEN + token );
+        if (bool) {
             return new UserDto<>(UserEnum.OK);
         }
         return new UserDto<>(UserEnum.FAIL);

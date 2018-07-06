@@ -12,7 +12,6 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -24,7 +23,6 @@ import java.sql.SQLException;
  * @date: 2017/9/12 0012 15:20 星期二
  */
 @Configuration
-@PropertySource("classpath:application-mysql.yml")
 public class DruidConfiguration {
     private static Logger logger = LoggerFactory.getLogger(DruidConfiguration.class);
 

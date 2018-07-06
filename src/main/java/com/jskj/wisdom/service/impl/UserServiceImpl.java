@@ -17,7 +17,6 @@ import com.jskj.wisdom.model.wisdom.TUser;
 import com.jskj.wisdom.service.FluoritService;
 import com.jskj.wisdom.service.UserService;
 import com.jskj.wisdom.utils.database.mongodb.MongodbUtil;
-import com.jskj.wisdom.utils.database.redis.JedisUtil;
 import com.jskj.wisdom.utils.jpush.JpushSMSUtil;
 import com.jskj.wisdom.utils.safety.UuidUtil;
 import com.jskj.wisdom.utils.safety.VerifyUtil;
@@ -27,6 +26,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -60,6 +61,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private FluoritService fluoritService;
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public int updateByPrimaryKeySelective(TUser tUser) {
@@ -191,10 +195,10 @@ public class UserServiceImpl implements UserService {
         }
 
         boolean bool = false;
-        if (Global.DEBUG) {
+        if (Global.DEV) {
             bool = true;
         } else {
-            String msgId = JedisUtil.Strings.get(Global.APPLICATION_NAME + mobile + ":msgId");
+            String msgId = stringRedisTemplate.opsForValue().get( Global.APPLICATION_NAME + mobile + ":msgId" );
             logger.info("从缓存中获取msgid:" + msgId);
             if (StringUtil.isBlank(msgId)) {
                 logger.error("验证码已超时");
@@ -247,10 +251,10 @@ public class UserServiceImpl implements UserService {
             resultMap.put("accountId", fluoritService.createAccountId(tUsers.get(0), token, uuid).getThirdPartyId());
             resultMap.put("uuid", uuid);
 
-            JedisUtil.Strings.setEx(Global.LOGIN_VALID_TOKEN + token, token, 604800);
+            stringRedisTemplate.opsForValue().set( Global.LOGIN_VALID_TOKEN + token, token, 604800, TimeUnit.SECONDS );
             logger.info("存储用户token到redis并设置7天有效期,token:" + token);
 
-            JedisUtil.Strings.setEx(Global.USER_INFO + token, JSON.toJSONString(resultMap), 604800);
+            stringRedisTemplate.opsForValue().set( Global.USER_INFO + token, JSON.toJSONString( resultMap ), 604800, TimeUnit.SECONDS );
             logger.info("存储用户记录到redis并设置7天有效期");
         }
         return resultMap;

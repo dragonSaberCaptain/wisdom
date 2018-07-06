@@ -5,8 +5,8 @@
     <property name="rolling.policy.file.name.pattern" value="yyyy-MM-dd HH"/>
     <property name="conversion.pattern" value="9527 %d %-5level %logger{30}[%line]: %m%n"/>
     <property name="root.level" value="info"/>
-    <property name="log.dir" value="/logs/jskj"/>
-    <property name="context.name" value="jskj"/>
+    <property name="log.dir" value="/logs/wisdom"/>
+    <property name="context.name" value="wisdom"/>
 
     <contextName>${context.name}</contextName>                         <!-- 本项目的名字 -->
 

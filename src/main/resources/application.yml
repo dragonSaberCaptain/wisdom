@@ -12,7 +12,7 @@ spring:
   application:
     name: wisdom
   profiles:
-    active: mysql
+    active: mysql,redis
   jpa:
     show-sql: true
     generate-ddl: true
@@ -37,6 +37,8 @@ spring:
     rollback-on-commit-failure: true
   messages:
     encoding: UTF-8
+  jmx:
+    default-domain: wisdom-jmx
 mybatis:
   typeAliasesPackage: com.jskj.wisdom.model
   mapperLocations: classpath:/mappers/*.xml,classpath:/mappers/system/*.xml

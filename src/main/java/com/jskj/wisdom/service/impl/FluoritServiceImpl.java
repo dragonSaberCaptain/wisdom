@@ -9,13 +9,13 @@ import com.jskj.wisdom.model.fluorit.AccountIdModel;
 import com.jskj.wisdom.model.wisdom.AccountToken;
 import com.jskj.wisdom.model.wisdom.TUser;
 import com.jskj.wisdom.service.FluoritService;
-import com.jskj.wisdom.utils.database.redis.JedisUtil;
 import com.jskj.wisdom.utils.http.HttpClientUtil;
 import com.jskj.wisdom.utils.safety.UuidUtil;
 import com.jskj.wisdom.utils.string.StringUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,6 +38,9 @@ public class FluoritServiceImpl implements FluoritService {
 
     @Resource
     private AccountTokenDAO accountTokenDAO;
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public AccessTokenModel getAccessToken(String appKey, String appSecret) {
@@ -86,8 +89,7 @@ public class FluoritServiceImpl implements FluoritService {
     public AccountToken createAccountId(TUser tUser, String token, String uuid) {
         AccountToken accountToken = new AccountToken();
 
-        String accountId = JedisUtil.Strings.get(tUser.getId() + "_fluorite-cloudt_accountId");
-
+        String accountId = stringRedisTemplate.opsForValue().get( tUser.getId() + "_fluorite-cloudt_accountId" );
         logger.info("先从缓存中找萤石云子账户id:" + accountId);
 
         if (StringUtil.isBlank(accountId)) {
@@ -122,7 +124,7 @@ public class FluoritServiceImpl implements FluoritService {
                 int i = accountTokenDAO.insertSelective(accountToken);
                 if (i > 0) {
                     logger.info("保存生成的萤石云子账户id到缓存中:" + accountToken.getThirdPartyId());
-                    JedisUtil.Strings.set(tUser.getId() + "_fluorite-cloud_accountId", accountToken.getThirdPartyId());
+                    stringRedisTemplate.opsForValue().set( tUser.getId() + "_fluorite-cloud_accountId", accountToken.getThirdPartyId() );
                     return accountToken;
                 }
             }
